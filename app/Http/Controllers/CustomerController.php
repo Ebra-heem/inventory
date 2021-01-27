@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\SaleInvoice;
+use App\CustomerDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -123,5 +124,45 @@ class CustomerController extends Controller
         $all_due= DB::table('sale_invoices')->sum('due');
 
         return view('backend.customer.all_dues',compact('sales','all_due'));
+    }
+
+    public function ledger(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required',
+            'date' => 'required',
+            'invoice_id' => 'required',
+            'amount' => 'required'
+        ]);
+       // return $request;
+       
+        CustomerDetail::create([
+            'customer_id'=>$request->customer_id,
+            'date'=>$request->date,
+            'particular'=>$request->particular,
+            'amount'=>$request->amount,
+            'account_type'=>$request->account_type,
+            'section'=>'paid',
+            'invoice_id'=>$request->invoice_id,
+           ]);
+
+           $fee_total=0;
+           $paid_total=0;
+           //total fee
+        $particulars_fee= CustomerDetail::where('customer_id',$request->customer_id)->where('invoice_id',$request->invoice_id)->where('account_type','Dr')->get();
+        foreach ($particulars_fee as $fee){
+            $fee_total+=$fee->amount;
+        }
+        
+        $particulars_paid= CustomerDetail::where('customer_id',$request->customer_id)->where('invoice_id',$request->invoice_id)->where('account_type','Cr')->get();
+        foreach ($particulars_paid as $paid){
+            $paid_total+=$paid->amount;
+        }
+
+        SaleInvoice::where('id',$request->invoice_id)
+        ->update(['total'=>$fee_total,'paid'=>$paid_total,'due'=>$fee_total-$paid_total,'status'=>($fee_total==$paid_total)?1:0]);
+
+        toastr()->success('Supplier Bill Save Successfully', 'System Says');
+        return redirect()->back();
     }
 }

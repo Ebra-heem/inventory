@@ -11,6 +11,7 @@ use App\Customer;
 use App\Purchase;
 use Carbon\Carbon;
 use App\SaleInvoice;
+use App\CustomerDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -115,8 +116,23 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        $invoice = SaleInvoice::find($id);
-        return view('backend.invoice.edit',compact('invoice'));
+       
+        $purchase=SaleInvoice::find($id);
+        
+        $supplier= Customer::find($purchase->customer_id);
+        //return $supplier;
+        $today = Carbon::today();
+        $particulars_fee=CustomerDetail::where('customer_id',$purchase->customer_id)->where('invoice_id',$purchase->id)->where('account_type','Dr')->where('section','sale')->get();
+        //return $particulars_fee;
+        $particulars_bill=CustomerDetail::where('customer_id',$purchase->customer_id)->where('invoice_id',$purchase->id)->where('account_type','Cr')->where('section','paid')->get();
+        $details = DB::table('sale_invoices')
+            ->join('invoice_details', 'sale_invoices.id', '=', 'invoice_details.invoice_id')
+            ->select('sale_invoices.*', 'invoice_details.product_id', 'invoice_details.price','invoice_details.qty')
+            ->where('invoice_details.invoice_id','=',$id)
+            ->get()
+            ->toArray();
+        return view('backend.invoice.edit',compact('purchase','particulars_fee','particulars_fee','particulars_bill','today','details','supplier'));
+       
     }
 
     /**
@@ -240,15 +256,24 @@ class InvoiceController extends Controller
           }
 
         $grandTotal=$total-$discount+$shipping;
-        SaleInvoice::create([
+        $invoice=SaleInvoice::create([
             'date'=>$dateJunk,
             'customer_id'=>$customer_id,
             'shipping'=>$shipping,
             'discount'=>$discount,
             'total'=>$grandTotal
         ]);
-        $invoice=SaleInvoice::latest()->first();
-       // return $invoice;
+       
+       
+       CustomerDetail::create([
+        'date'=>$dateJunk,
+        'customer_id'=>$customer_id,
+        'invoice_id'=>$invoice->id,
+        'particular'=>'Sale Products',
+        'amount'=>$grandTotal,
+        'account_type'=>'Dr',
+        'section'=>'sale',
+    ]);
         foreach($final_data as $data){
             
             DB::table('invoice_details')->insert([

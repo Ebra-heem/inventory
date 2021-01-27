@@ -50,7 +50,7 @@
                                         
                                         <td>
                                             <a href="{{url('/invoice-details',$invoice->id)}}" class="btn btn-md btn-warning"><i class="fas fa-print"></i>Print</a>
-                                            <a href="{{route('invoice.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Edit</a>
+                                            <a href="{{route('invoice.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Bill Received</a>
                                             
                                             {!! Form::open(['method' => 'DELETE','route' => ['invoice.destroy', $invoice->id],'style'=>'display:inline']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}
