@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2021 at 06:15 AM
+-- Generation Time: Feb 18, 2021 at 08:46 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.2.21
 
@@ -33,8 +33,8 @@ CREATE TABLE `customers` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -44,7 +44,47 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `name`, `phone`, `email`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(8, 'shuvo', '01300418575', 'shuvo@gmail.com', 'Dhaka', 1, '2021-01-25 04:18:43', '2021-01-25 04:18:43');
+(8, 'shuvo', '01300418575', 'shuvo@gmail.com', 'Dhaka', 1, '2021-01-25 04:18:43', '2021-01-25 04:18:43'),
+(9, 'Shahidul Islam', '1232323331', 'royel@gmail.com', 'Village: South Charkumaria, Holding No-106', 1, '2021-02-18 07:01:28', '2021-02-18 07:01:28'),
+(10, 'MD EBRAHIM', '01300418575', 'im.ibrahim420@gmail.com', 'Village: South Charkumaria, Holding No-106', 1, '2021-02-18 07:33:18', '2021-02-18 07:33:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_details`
+--
+
+CREATE TABLE `customer_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `customer_id` int(10) UNSIGNED NOT NULL,
+  `invoice_id` int(10) UNSIGNED NOT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_details`
+--
+
+INSERT INTO `customer_details` (`id`, `date`, `customer_id`, `invoice_id`, `particular`, `amount`, `account_type`, `section`, `created_at`, `updated_at`) VALUES
+(6, '2021-01-26', 8, 17, 'Sale Products', '3000', 'Dr', 'sale', '2021-01-26 07:18:56', '2021-01-26 07:18:56'),
+(7, '2021-01-26', 8, 17, 'Cash payment', '2000', 'Cr', 'paid', '2021-01-26 07:22:03', '2021-01-26 07:22:03'),
+(8, '2021-02-16', 8, 17, 'Cash payment', '1000', 'Cr', 'paid', '2021-02-16 07:57:15', '2021-02-16 07:57:15'),
+(9, '2021-02-18', 8, 18, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:49:41', '2021-02-18 06:49:41'),
+(10, '2021-02-18', 8, 19, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:52:07', '2021-02-18 06:52:07'),
+(11, '2021-02-18', 8, 20, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:52:22', '2021-02-18 06:52:22'),
+(12, '2021-02-18', 8, 21, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:53:12', '2021-02-18 06:53:12'),
+(13, '2021-02-18', 8, 22, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:53:53', '2021-02-18 06:53:53'),
+(14, '2021-02-18', 9, 23, 'Sale Products', '3000', 'Dr', 'sale', '2021-02-18 07:04:10', '2021-02-18 07:04:10'),
+(15, '2021-02-18', 9, 24, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 07:04:22', '2021-02-18 07:04:22'),
+(16, '2021-02-18', 10, 25, 'Sale Products', '20000', 'Dr', 'sale', '2021-02-18 07:34:42', '2021-02-18 07:34:42'),
+(17, '2021-02-18', 10, 25, 'Advanced Payment', '10000', 'Cr', 'paid', '2021-02-18 07:34:42', '2021-02-18 07:34:42'),
+(18, '2021-02-18', 10, 25, 'Cash payment', '10000', 'Cr', 'paid', '2021-02-18 07:35:19', '2021-02-18 07:35:19');
 
 -- --------------------------------------------------------
 
@@ -134,6 +174,15 @@ CREATE TABLE `invoice_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `invoice_details`
+--
+
+INSERT INTO `invoice_details` (`id`, `product_id`, `invoice_id`, `price`, `qty`, `created_at`, `updated_at`) VALUES
+(19, 11, 17, '600', '5', NULL, NULL),
+(20, 11, 23, '600', '5', NULL, NULL),
+(21, 12, 25, '1000', '20', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -174,7 +223,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2020_11_22_233651_create_employees_table', 8),
 (25, '2021_01_07_210804_create_stocks_table', 9),
 (26, '2021_01_11_224910_create_purchase_details_table', 10),
-(27, '2021_01_25_102129_create_supplier_details_table', 11);
+(27, '2021_01_25_102129_create_supplier_details_table', 11),
+(28, '2021_01_26_120812_create_customer_details_table', 12);
 
 -- --------------------------------------------------------
 
@@ -258,7 +308,7 @@ CREATE TABLE `products` (
   `unit` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `origin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -268,7 +318,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `code`, `name`, `width`, `unit`, `origin`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(11, 'FVL-112-A', 'Curtain', '56\'\'', 'meter', 'China', 'n/a', 1, '2021-01-25 04:19:34', '2021-01-25 04:19:34');
+(11, 'FVL-112-A', 'Curtain', '56\'\'', 'meter', 'China', 'n/a', 1, '2021-01-25 04:19:34', '2021-01-25 04:19:34'),
+(12, 'FLV-111-B', 'sofa', '56\'\'', 'meter', 'N/A', 'gd', 1, '2021-02-04 05:13:39', '2021-02-04 05:13:39');
 
 -- --------------------------------------------------------
 
@@ -295,7 +346,9 @@ CREATE TABLE `purchases` (
 --
 
 INSERT INTO `purchases` (`id`, `date`, `supplier_id`, `total`, `paid`, `previous_due`, `due`, `note`, `status`, `created_at`, `updated_at`) VALUES
-(20, '2021-01-25', 3, '25000', '25000', NULL, '0', NULL, 1, '2021-01-25 05:15:38', '2021-01-25 07:46:17');
+(20, '2021-01-25', 3, '25000', '25000', NULL, '0', NULL, 1, '2021-01-25 05:15:38', '2021-01-25 07:46:17'),
+(21, '2021-02-18', 5, '26500', '10000', NULL, '16500', NULL, 0, '2021-02-18 04:51:43', '2021-02-18 05:01:18'),
+(22, '2021-02-18', 3, '29200', '0', NULL, '29200', NULL, 0, '2021-02-18 05:03:43', '2021-02-18 05:03:43');
 
 -- --------------------------------------------------------
 
@@ -320,7 +373,11 @@ CREATE TABLE `purchase_details` (
 --
 
 INSERT INTO `purchase_details` (`id`, `purchase_id`, `supplier_id`, `product_id`, `purchase_qty`, `buy_price`, `sell_price`, `created_at`, `updated_at`) VALUES
-(18, 20, 3, 11, '50', '500', NULL, NULL, NULL);
+(18, 20, 3, 11, '50', '500', NULL, NULL, NULL),
+(19, 21, 5, 12, '20', '200', NULL, NULL, NULL),
+(20, 21, 5, 11, '15', '1500', NULL, NULL, NULL),
+(21, 22, 3, 11, '32', '600', NULL, NULL, NULL),
+(22, 22, 3, 12, '10', '1000', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -416,8 +473,8 @@ CREATE TABLE `sale_invoices` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `date` date NOT NULL,
   `customer_id` int(11) UNSIGNED NOT NULL,
-  `discount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `advance` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paid` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `due` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -426,6 +483,15 @@ CREATE TABLE `sale_invoices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sale_invoices`
+--
+
+INSERT INTO `sale_invoices` (`id`, `date`, `customer_id`, `advance`, `delivery_date`, `total`, `paid`, `due`, `status`, `delivery_status`, `created_at`, `updated_at`) VALUES
+(17, '2021-01-26', 8, '0', '0', '3000', '3000', '0', 1, 1, '2021-01-26 07:18:56', '2021-02-16 07:57:15'),
+(23, '2021-02-18', 9, '0', '0', '3000', NULL, NULL, 0, 0, '2021-02-18 07:04:10', '2021-02-18 07:04:10'),
+(25, '2021-02-18', 10, NULL, NULL, '20000', '20000', '0', 1, 1, '2021-02-18 07:34:42', '2021-02-18 07:37:44');
 
 -- --------------------------------------------------------
 
@@ -439,6 +505,8 @@ CREATE TABLE `stocks` (
   `wirehouse_id` int(11) NOT NULL,
   `wh_qty` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sr_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avg_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` tinyint(191) DEFAULT 0,
   `sale_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -448,8 +516,9 @@ CREATE TABLE `stocks` (
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `product_id`, `wirehouse_id`, `wh_qty`, `sr_qty`, `sale_qty`, `created_at`, `updated_at`) VALUES
-(6, 11, 1, '100', NULL, NULL, '2021-01-25 04:20:25', '2021-01-25 05:15:38');
+INSERT INTO `stocks` (`id`, `product_id`, `wirehouse_id`, `wh_qty`, `sr_qty`, `avg_price`, `type`, `sale_qty`, `created_at`, `updated_at`) VALUES
+(6, 11, 1, '180', '7', '1200', 0, '10', '2021-01-25 04:20:25', '2021-02-18 07:29:19'),
+(11, 12, 1, '100', '10', '1000', 0, '40', '2021-02-04 05:35:37', '2021-02-18 07:34:42');
 
 -- --------------------------------------------------------
 
@@ -461,8 +530,8 @@ CREATE TABLE `suppliers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -472,7 +541,8 @@ CREATE TABLE `suppliers` (
 --
 
 INSERT INTO `suppliers` (`id`, `name`, `phone`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'Kazi Trading', '01776020288', 'Elephant Road', 1, '2021-01-05 08:09:00', '2021-01-05 08:09:00');
+(3, 'Kazi Trading', '01776020288', 'Elephant Road', 1, '2021-01-05 08:09:00', '2021-01-05 08:09:00'),
+(5, 'abd', '1232323331', NULL, 1, '2021-02-18 03:24:20', '2021-02-18 03:24:20');
 
 -- --------------------------------------------------------
 
@@ -502,7 +572,10 @@ INSERT INTO `supplier_details` (`id`, `date`, `supplier_id`, `purchase_id`, `par
 (3, '2021-01-25', 3, 20, 'supplier bill', '5000', 'Cr', 'bill', '2021-01-25 07:11:49', '2021-01-25 07:11:49'),
 (4, '2021-01-25', 3, 20, 'Bank Payment', '10000', 'Cr', 'bill', '2021-01-25 07:15:45', '2021-01-25 07:15:45'),
 (5, '2021-01-25', 3, 20, 'Cash payment', '5000', 'Cr', 'bill', '2021-01-25 07:45:30', '2021-01-25 07:45:30'),
-(6, '2021-01-25', 3, 20, 'Bank Payment TBL-136', '5000', 'Cr', 'bill', '2021-01-25 07:46:17', '2021-01-25 07:46:17');
+(6, '2021-01-25', 3, 20, 'Bank Payment TBL-136', '5000', 'Cr', 'bill', '2021-01-25 07:46:17', '2021-01-25 07:46:17'),
+(7, '2021-02-18', 5, 21, 'Purchase Product', '26500', 'Dr', 'purchase', '2021-02-18 04:51:43', '2021-02-18 04:51:43'),
+(8, '2021-02-18', 5, 21, 'Cash payment', '10000', 'Cr', 'bill', '2021-02-18 05:01:18', '2021-02-18 05:01:18'),
+(9, '2021-02-18', 3, 22, 'Purchase Product', '29200', 'Dr', 'purchase', '2021-02-18 05:03:43', '2021-02-18 05:03:43');
 
 -- --------------------------------------------------------
 
@@ -563,6 +636,12 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customers_name_unique` (`name`),
   ADD UNIQUE KEY `customers_email_unique` (`email`);
+
+--
+-- Indexes for table `customer_details`
+--
+ALTER TABLE `customer_details`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employees`
@@ -711,7 +790,13 @@ ALTER TABLE `wirehouses`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `customer_details`
+--
+ALTER TABLE `customer_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -735,13 +820,13 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -753,19 +838,19 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `purchase_details`
 --
 ALTER TABLE `purchase_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `racks`
@@ -789,25 +874,25 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `sale_invoices`
 --
 ALTER TABLE `sale_invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `supplier_details`
 --
 ALTER TABLE `supplier_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
