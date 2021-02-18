@@ -92,7 +92,7 @@
                                             <th>Paid</th>
                                             <th>Due</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,14 +112,7 @@
                                         <td class="badge badge-danger">Due</td>
                                         @endif
                                         
-                                        <td>
-                                            <a href="{{url('/invoice-details',$invoice->id)}}" class="btn btn-md btn-warning"><i class="fas fa-print"></i>Print</a>
-                                            <a href="{{route('invoice.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Edit</a>
-                                            
-                                            {!! Form::open(['method' => 'DELETE','route' => ['invoice.destroy', $invoice->id],'style'=>'display:inline']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}
-                                             {!! Form::close() !!}
-                                        </td>
+                                        
                                         </tr>
                                         @endforeach
                                     </tbody>

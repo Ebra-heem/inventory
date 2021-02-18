@@ -6,11 +6,11 @@
     @csrf
     {{ method_field('PUT') }}
       <div class="card-header">
-        <h4>supplier Edit</h4>
+        <h4>Supplier Edit<small class="text-danger">[* fields are mendatory]</small></h4>
       </div>
       <div class="card-body pb-0">
         <div class="form-group">
-          <label>supplier Name</label>
+          <label>Supplier Name<small class="text-danger">*</small></label>
           <div class="input-group">
             
           <input type="text" name="name" value="{{$supplier->name}}" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label>supplier Phone</label>
+          <label>Supplier Phone<small class="text-danger">*</small></label>
           <div class="input-group">
             
           <input type="text" name="phone" value="{{$supplier->phone}}" class="form-control @error('phone') is-invalid @enderror" placeholder="Name">

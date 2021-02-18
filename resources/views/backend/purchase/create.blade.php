@@ -87,7 +87,7 @@ function fill_unit_select_box()
                                 </select></td>
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                        +ADD
+                                        +ADD SUPPLIER
                                       </button>
                                 </td>
                                 <td>
@@ -125,8 +125,8 @@ function fill_unit_select_box()
                             <td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>
                             <td></td>
                             <td></td>
-                            <td class="text-right"><strong>Paid Amount</strong></td>
-                            <td><input class="form-control" name="discount" id="discount" value="0" type="text"></td>
+                            <td class="text-right"><strong></strong></td>
+                            <td><input class="form-control" name="discount" id="discount" value="0" type="hidden"></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -238,14 +238,15 @@ function fill_unit_select_box()
                           </div>
                       </div>
                       <div class="card-footer pt-">
-                        <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"> <i class="fas fa-check"></i> Save</button>
                       </div>
                     </form>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          
+          
         </div>
       </div>
     </div>

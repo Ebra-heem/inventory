@@ -1,247 +1,132 @@
-@extends('layouts.master')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <!------ Include the above in your HEAD tag ---------->
+    <title>Order Book</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row p-5">
+                        <div class="col-md-5">
+                            <img src="https://i.ibb.co/CBXMvGX/fabric.jpg" class="float-right" width="100px;" height="100px;">
+                        </div>
+                        <div class="col-md-6">
+                          <h2 style="font-family: 'Permanent Marker', cursive; color:rgb(243, 102, 8)">FABRICS VIEW</h2>
+                          <h2 style="font-family: 'Permanent Marker', cursive; color:rgb(243, 102, 8)" class="px-3">ফেব্রিক্‌স ভিউ </h2>
+                          <p class="px-5">Shop for Interior <br> &nbsp; SINCE 1999</p>
+                      </div>
+                      <div class="col-md-12">
+                          <p class="text-center">Cha-104/1 (Ground Floor), Pragoti Sarani, Bir-Uttam Rafiqul Islam avenue (Near of Badda General Hospital Oposite A.M.Z Hospital), Uttar Badda, Dhaka-1212, Bangladesh</p>
+                          <p class="text-center">Mob: 01305-642804, 01732-648748,01881-017301, Phone: 02222284953,02222249370, 02-41081583</p>
+                          <p class="text-center">E-mail: ahmed.royel123@gmail.com, fabricsviewltd@gmail.com</p>
+                          <h3 class="text-center">@if ($invoice->delivery_status==1)
+                            <span class="badge badge-success">Invoice</span>
+                            @else
+                            <span class="badge badge-danger">ORDER BOOK</span>
+                            @endif</h3>
+                          <p class="text-center">Customer Copy</p>
+                      </div>
+                    </div>
+                    
+                    <div class="row  pl-5">
+                        <div class="col-md-8">
+                            <p>Order No: {{$invoice->id}}</p>
+                            <p>Client: {{$invoice->customers->name}}</p>
+                            <p>Address: {{$invoice->customers->address}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Date: {{date_format($invoice->created_at,"j F Y")}}</p>
+                            <p>Tel: {{$invoice->customers->phone}}</p>
+                        </div>
+                    </div>
+                    <div class="row p-5">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-0 text-uppercase small font-weight-bold">SL NO</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Description</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Yrd/Feet/MTR</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Rate</th>
+                                        <th class="border-0 text-uppercase small font-weight-bold">Taka</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($details as $item)
+                                    @php
+                                    $product =\App\Product::where('id', '=',$item->product_id)->first();
+                                @endphp
+                                        <tr class="item">
+                                            <td>{{ $loop->index+1}}</td>
+                                          <td>
+                                            {{$product->code}}-{{$product->name}}
+                                          </td>
 
-@section('extra-css')
+                                          <td>
+                                              {{$item->qty}}/{{$product->unit}}
+                                          </td>
+                                    
+                                          <td>
+                                            &#2547; {{$item->price}}
+                                          </td>
+                                          <td>
+                                              {{$item->qty * $item->price}}
+                                          </td>
+                                        </tr>
+                                        @endforeach
+                                  
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>Total</td>
+                                        <td></td>
+                                        <td>{{$invoice->total}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>Advance</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>Due</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p><b>N.B Advance 75%, Goods Once sold are not Returnable.</b></p>
+                        <p>Date of Delivery:</p>
+                        </div>
+                        <hr>
+                        
+                        <div class="col-md-6">
+                            Receiver's Signature
+                        </div>
+                        <div class="col-md-6 text-right">Signature</div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-light mt-5 mb-5 text-center small"> </div>
 
-<style>
-    .invoice-box {
-  max-width: 800px;
-  margin: auto;
-  padding: 30px;
-  border: 1px solid #eee;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-  font-size: 16px;
-  line-height: 24px;
-  font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-  color: #555;
-}
+</div>
 
-.invoice-box table {
-  width: 100%;
-  line-height: inherit;
-  text-align: left;
-}
-
-.invoice-box table td {
-  padding: 5px;
-  vertical-align: top;
-}
-
-.invoice-box table tr td:nth-child(n+2) {
-  text-align: right;
-}
-
-.invoice-box table tr.top table td {
-  padding-bottom: 20px;
-}
-
-.invoice-box table tr.top table td.title {
-  font-size: 45px;
-  line-height: 45px;
-  color: #333;
-}
-
-.invoice-box table tr.information table td {
-  padding-bottom: 40px;
-}
-
-.invoice-box table tr.heading td {
-  background: #eee;
-  border-bottom: 1px solid #ddd;
-  font-weight: bold;
-}
-
-.invoice-box table tr.details td {
-  padding-bottom: 20px;
-}
-
-.invoice-box table tr.item td{
-  border-bottom: 1px solid #eee;
-}
-
-.invoice-box table tr.item.last td {
-  border-bottom: none;
-}
-
-.invoice-box table tr.item input {
-  padding-left: 5px;
-}
-
-.invoice-box table tr.item td:first-child input {
-  margin-left: -5px;
-  width: 100%;
-}
-
-.invoice-box table tr.total td:nth-child(2) {
-  border-top: 2px solid #eee;
-  font-weight: bold;
-}
-
-.invoice-box input[type=number] {
-  width: 60px;
-}
-
-@media only screen and (max-width: 600px) {
-  .invoice-box table tr.top table td {
-      width: 100%;
-      display: block;
-      text-align: center;
-  }
-  
-  .invoice-box table tr.information table td {
-      width: 100%;
-      display: block;
-      text-align: center;
-  }
-}
-
-/** RTL **/
-.rtl {
-  direction: rtl;
-  font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-}
-
-.rtl table {
-  text-align: right;
-}
-
-.rtl table tr td:nth-child(2) {
-  text-align: left;
-}
-</style>
-@endsection
-
-@section('content')
-
-
-    <div class="invoice-box">
-      <h3>Sales Invoice</h3>
-        <table cellpadding="0" cellspacing="0">
-          <tr class="top">
-            <td colspan="5">
-              <table>
-                <tr>
-                  <td class="title">
-                   
-                    <img src="https://i.ibb.co/41qtmG2/fvl.jpg" style=" max-width:150px;">
-                  </td>
-      
-                  <td>
-                    Invoice #: {{$invoice->id}}<br> Created: {{$invoice->created_at}}<br> Date: {{$invoice->date}}
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-      
-          
-              <tr class="information">
-                <td colspan="5">
-                  <table>
-                    <tr>
-                      <td>
-                       Fabiric View<br> Uttar Badda, Dhaka<br> Bangladesh
-                      </td>
-                      <td>
-                        Customer Info<br> Name:  {{$invoice->customers->name}}<br> Address: {{$invoice->customers->address}}
-                       </td>
-                      
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            
-           
-          
-          
-      
-          <tr>
-            <td colspan="4">
-              Payment Status: @if ($invoice->status==1)
-              <span class="badge badge-success">Paid</span>
-              @else
-              <span class="badge badge-danger">Due</span>
-              @endif
-            </td>
-          </tr>
-      
-         
-      
-          <tr class="heading">
-            <td>
-              Product Name
-            </td>
-      
-          
-      
-            <td>
-              Quantity
-            </td>
-      
-            <td>
-              Price
-            </td>
-            <td>
-                Total
-            </td>
-          </tr>
-      @foreach ($details as $item)
-      @php
-      $product =\App\Product::where('id', '=',$item->product_id)->first();
-  @endphp
-          <tr class="item">
-            <td>
-              {{$product->code}}-{{$product->name}}
-            </td>
-      
-           
-      
-            <td>
-                {{$item->qty}}/{{$product->unit}}
-            </td>
-      
-            <td>
-                {{$item->price}}
-            </td>
-            <td>
-                {{$item->qty * $item->price}}
-            </td>
-          </tr>
-          @endforeach
-          <tr class="item">
-            <td colspan="4"></td>
-      
-            <td>
-              Discount: {{$invoice->discount}}
-            </td>
-          </tr>
-          <tr class="item">
-            <td colspan="4"></td>
-      
-            <td>
-              Shipping: {{$invoice->shipping}}
-            </td>
-          </tr>
-          <tr class="total">
-            <td colspan="4"></td>
-      
-            <td>
-              Total: {{$invoice->total}}
-            </td>
-          </tr>
-      
-          
-         
-          
-        </table>
-      </div>
-
-@endsection
-
-@section('extra-js')
-<script src="{{asset('admin/assets/js/autocal/jautocalc.js')}}"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="{{asset('admin/assets/js/autocal/script.js')}}"></script>
-
-
-@endsection
+</body>
+<script type="text/javascript">
+    window.print();
+</script>
+</html>

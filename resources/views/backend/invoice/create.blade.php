@@ -61,7 +61,7 @@ function fill_unit_select_box()
                         <thead>
                             <tr class="item-row">
                                 <td><select name="customer_id" class=" customer item @error('customer_id') is-invalid @enderror" >
-                                    <option >Select a Customer</option>
+                                    <option value="">Select a Customer</option>
                                     @foreach ($customers as $customer)
                                     <option value="{{$customer->id}}">{{$customer->name}}</option>  
                                     @endforeach
@@ -74,7 +74,7 @@ function fill_unit_select_box()
                                 </select></td>
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                        +ADD
+                                        +ADD CUSTOMER
                                       </button>
                                 </td>
                                 <td>
@@ -112,15 +112,15 @@ function fill_unit_select_box()
                             <td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>
                             <td></td>
                             <td></td>
-                            <td class="text-right"><strong>Discount</strong></td>
-                            <td><input class="form-control" name="discount" id="discount" value="0" type="text"></td>
+                            <td class="text-right"><strong>Advanced</strong></td>
+                            <td><input class="form-control" name="advanced" id="discount" value="0" type="text"></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="text-right"><strong>Shipping</strong></td>
-                            <td><input class="form-control" name="shipping" id="shipping" value="0" type="text"></td>
+                            <td class="text-right"></td>
+                            <td><input class="form-control" name="shipping" id="shipping" value="0" type="hidden"></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -151,7 +151,7 @@ function fill_unit_select_box()
                                     </span>
                                     @enderror
                                 </td>
-                                <td><input class="form-control qty" name="qty[]" placeholder="Quantity" type="text"></td>
+                                <td><input class="form-control qty"  name="qty[]" placeholder="Quantity" type="text"></td>
                                 <td><span class="total">0.00</span></td>
                             </tr>
                         </tbody>
@@ -238,16 +238,14 @@ function fill_unit_select_box()
                             </div>
                           </div>
                       </div>
-                      <div class="card-footer pt-">
-                        <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Save</button>
+                      <div class="card-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"> <i class="fas fa-check"></i> Save</button>
                       </div>
                     </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+                </div>
+            </div>
+      
       </div>
     </div>
   </div>

@@ -3,26 +3,18 @@
 
 @section('content')
 <div class="card card-primary">
-  @if ($errors->any())
-  <div class="alert alert-danger">
-      <ul>
-          @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-          @endforeach
-      </ul>
-  </div>
-      @endif
+ 
 <form action="{{route('product.store')}}" method="post">
     @csrf
       <div class="card-header">
-        <h4>Product Create</h4>
+        <h4>Product Create<small class="text-danger">[* fields are mendatory]</small></h4>
       </div>
       <div class="card-body pb-0">
         <div class="form-group">
-          <label>Product Code</label>
+          <label>Product Code<small class="text-danger">*</small></label>
           <div class="input-group">
             
-            <input type="text" name="code" class="form-control @error('code') is-invalid @enderror" placeholder="e.g FLV-111-A">
+            <input type="text" name="code" value="{{ old('code') }}" class="form-control @error('code') is-invalid @enderror" placeholder="e.g FLV-111-A">
             @error('code')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -31,10 +23,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Product Name</label>
+          <label>Product Name<small class="text-danger">*</small></label>
           <div class="input-group">
             
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+            <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" >
             @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -46,7 +38,7 @@
           <label>Product Width</label>
           <div class="input-group">
             
-            <input type="text" name="width" class="form-control @error('width') is-invalid @enderror" placeholder="Width">
+            <input type="text" value="{{ old('width') }}" name="width" class="form-control @error('width') is-invalid @enderror" >
             @error('width')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -55,10 +47,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Product Unit</label>
+          <label>Product Unit<small class="text-danger">*</small></label>
           <div class="input-group">
             
-            <input type="text" name="unit" class="form-control @error('unit') is-invalid @enderror" placeholder="e.g yard/meter">
+            <input type="text" name="unit" value="{{ old('unit') }}" class="form-control @error('unit') is-invalid @enderror" placeholder="e.g yard/meter">
             @error('unit')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -70,7 +62,7 @@
           <label>Product Origin</label>
           <div class="input-group">
             
-            <input type="text" name="origin" class="form-control @error('origin') is-invalid @enderror" placeholder="e.g China">
+            <input type="text" name="origin" value="{{ old('origin') }}" class="form-control @error('origin') is-invalid @enderror" placeholder="e.g China">
             @error('origin')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

@@ -20,6 +20,21 @@ class CustomerController extends Controller
         $customers=Customer::all();
         return view('backend.customer.index',compact('customers'));
     }
+    public function payment()
+    {
+        $customers=Customer::all();
+        $invoices=SaleInvoice::latest()->get();
+        return view('backend.customer.payment',compact('customers','invoices'));
+    }
+
+    public function paymentList(Request $request)
+    {
+        //return $request;
+        $invoices=SaleInvoice::where('customer_id',$request->customer_id)->get();
+        $customers=Customer::all();
+        $customer=Customer::find($request->customer_id);
+        return view('backend.customer.payment',compact('invoices','customers','customer'));
+    }
 
     /**
      * Show the form for creating a new resource.

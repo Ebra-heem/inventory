@@ -31,9 +31,16 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
         Route::resource('/stock','StockController');
+        Route::get('/purchase-details/{id}','PurchaseController@details');
         Route::resource('/purchase','PurchaseController');
+        //payment section
+        Route::get('/customer-payment','CustomerController@payment')->name('customer.payment');
+        Route::post('/customer-payment','CustomerController@paymentList')->name('customer.paymentList');
 
         Route::resource('/customer','CustomerController');
+        Route::get('/supplier-payment','SupplierController@payment')->name('supplier.payment');
+        Route::post('/supplier-payment','SupplierController@paymentList')->name('supplier.paymentList');
+
         Route::resource('/supplier','SupplierController');
         Route::post('/supplier-ledger','SupplierController@ledger')->name('supplier.ledger');
         Route::post('/customer-ledger','CustomerController@ledger')->name('customer.ledger');
@@ -51,7 +58,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/invoice-sale','InvoiceController@save')->name('invoice.save');
         Route::get('/invoice-sale','InvoiceController@sale_index')->name('invoice.sale');
         Route::any('/invoice-details/{id}','InvoiceController@details');
-        Route::any('/purchase-details/{id}','PurchaseController@details');
+        Route::any('/invoice-delivery/{id}','InvoiceController@delivery');
+
 
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');

@@ -1,73 +1,56 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<!doctype html>
+<html lang="en">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+<head>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://admission.baiust.edu.bd/frontend/icons/logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/owl.carousel.min.css">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/bootstrap.min.css">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+    <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/style.css">
+    <title>FABRIC | VIEW</title>
+</head>
+
+<body>
+    <div class="d-lg-flex half">
+        <div class="bg order-1 order-md-2" style="background-image: url({{ asset('admin/assets/img/banner/bg_1.jpg') }});"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-7">
+                        <img src="{{ asset('admin/assets/img/logo.png') }}" alt="no-image" style="margin: 0px 0px 10px 30%; width:30%;">
+                        <h3 class="text-center">Login to <strong>Fabric View</strong></h3>
+                        <p class="text-center mb-4">Inventory Management Software Solution</p>
+                        <form action="{{ route('login') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group first">
+                                <label for="email">Email:</label>
+                                <input type="text" class="form-control" placeholder="your-email@something.com" id="username" name="email">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="form-group last mb-3">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" placeholder="Your Password" id="password" name="password">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
+                            <div class="d-flex mb-5 align-items-center">
+                                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                            <input type="submit" value="Log In" class="btn btn-block btn-primary">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+    <script src="https://www.baiustserver.com/login_pages/admin_page/js/jquery-3.3.1.min.js"></script>
+    <script src="https://www.baiustserver.com/login_pages/admin_page/js/popper.min.js"></script>
+    <script src="https://www.baiustserver.com/login_pages/admin_page/js/bootstrap.min.js"></script>
+    <script src="https://www.baiustserver.com/login_pages/admin_page/js/main.js"></script>
+</body>
+
+</html>

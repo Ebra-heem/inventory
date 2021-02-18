@@ -21,6 +21,22 @@ class SupplierController extends Controller
         return view('backend.supplier.index',compact('suppliers'));
     }
 
+    public function payment()
+    {
+        $suppliers=Supplier::all();
+        $invoices=Purchase::latest()->get();
+        return view('backend.supplier.payment',compact('suppliers','invoices'));
+    }
+
+    public function paymentList(Request $request)
+    {
+       // return $request;
+        $invoices=Purchase::where('supplier_id',$request->suplier_id)->get();
+        $suppliers=Supplier::all();
+        $customer=Supplier::find($request->suplier_id);
+        return view('backend.supplier.payment',compact('invoices','suppliers','customer'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +58,6 @@ class SupplierController extends Controller
         $this->validate($request,[
             'name'=>'required',
             'phone'=>'required',
-            'address'=>'required',
             'status'=>'required'
         ]);
         $buyer= new Supplier();

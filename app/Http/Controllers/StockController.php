@@ -19,7 +19,9 @@ class StockController extends Controller
     public function index()
     {
         $stocks=Stock::all();
-        return view('backend.stock.index',compact('stocks'));
+        $products=Product::where('status',1)->get();
+        $wirehouses=Wirehouse::where('status',1)->get();
+        return view('backend.stock.index',compact('stocks','products','wirehouses'));
     }
 
     /**
@@ -44,10 +46,18 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-      // return $request;
-       Stock::create(request()->all());
-        toastr()->success(' Stock IN  Successfully', 'System Says');
+       //return $request;
+       $check=Stock::where('product_id',$request->product_id)->first();
+       if(!empty($check)){
+        $check->update(['wh_qty'=>$check->wh_qty+$request->wh_qty,'avg_price'=>$request->avg_price?$request->avg_price:$check->avg_price]);
+        toastr()->warning(' Stock Qty Updated  Successfully', 'System Says');
         return redirect()->route('stock.index');
+       }else{
+           Stock::create(request()->all());
+        toastr()->success('Product Stock Add  Successfully', 'System Says');
+        return redirect()->route('stock.index');
+       }
+       
     }
 
     public function transfer(Request $request)
@@ -102,7 +112,17 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        //
+        $stock=Stock::find($stock->id)->update([
+            'product_id'=>$request->product_id,
+            'wirehouse_id'=>$request->wirehouse_id,
+            'wh_qty'=>$request->wh_qty,
+            'avg_price'=>$request->avg_price,
+            'sr_qty'=>$request->showroom_qty,
+            'sale_qty'=>$request->sale_qty,
+        ]);
+      
+        toastr()->success('Stock Updated Successfully', 'System Says');
+        return redirect()->route('stock.index');
     }
 
     /**

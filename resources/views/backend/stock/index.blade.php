@@ -12,8 +12,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                        {{-- <a href="{{route('stock.create')}}" class="btn btn-success">+ Stock Create</a> --}}
-                        <p>Stock List</p>
+                      
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            +ADD Stock
+                          </button>
                         </div>
                         @if(count($stocks)>0)
                         <div class="card-body">
@@ -44,8 +46,15 @@
                                         
                                         <td>
                                             <a href="{{route('stock.show',$product->id)}}" class="btn btn-warning">Transfer <i class="fas fa-redo"></i> Showroom</a>
+
+                                            <a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>
+
+                                            {!! Form::open(['method' => 'DELETE','route' => ['stock.destroy', $product->id],'style'=>'display:inline']) !!}
+                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                              {!! Form::close() !!}
                                         </td>
                                         </tr>
+
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -57,6 +66,222 @@
             </div>
         </div>
     </section>
+
+        <!--Create Modal -->
+      <div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Stock Info Add <small>(* fields are required)</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div>
+                      <form action="{{route('stock.store')}}" method="post">
+                          @csrf
+                            <div class="card-header">
+                              <h4>Stock Entry Form</h4>
+                            </div>
+                            <div class="card-body pb-0">
+                              <div class="form-group">
+                                <label>Product(*)</label>
+                                <div class="input-group">
+                                  <select name="product_id" class="form-control select2" style="width: 600px!important;" required>
+                                      @foreach ($products as $item)
+                                          <option value="{{ $item->id }}">{{ $item->code }}</option>
+                                    
+                                      @endforeach
+                                      
+                                  </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label>Wirehouse(*)</label>
+                                  <div class="input-group">
+                                    <select name="wirehouse_id" class="form-control select2" style="width: 600px!important;" required>
+                                        @foreach ($wirehouses as $wh)
+                                            <option value="{{ $wh->id }}">{{ $wh->name }}</option>
+                                      
+                                        @endforeach
+                                        
+                                    </select>
+                                    </div>
+                                </div>
+                              <div class="form-group">
+                                <label>Wirehouse Qty(*)</label>
+                                <div class="input-group">
+                                  
+                                  <input type="text" name="wh_qty" class="form-control @error('wh_qty') is-invalid @enderror" required>
+                                  @error('wh_qty')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                
+                              <div class="form-group">
+                                <label>Price</label>
+                                <div class="input-group">
+                                  <input type="text" name="avg_price" class="form-control @error('avg_price') is-invalid @enderror">
+                                  @error('avg_price')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                  <label>Showroom Qty</label>
+                                  <div class="input-group">
+                                    <input type="text" name="showroom_qty" class="form-control @error('showroom_qty') is-invalid @enderror">
+                                    @error('showroom_qty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                  </div>
+                                </div>
+
+                              <div class="form-group">
+                                  <label>Sales Qty</label>
+                                  <div class="input-group">
+                                    <input type="text" name="sale_qty" class="form-control @error('sale_qty') is-invalid @enderror">
+                                    @error('sale_qty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                  </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer pt-">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Save</button>
+                            </div>
+                          </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @foreach ($stocks as $product)
+                                  <!--Edit Modal -->
+        <div class="modal fade" id="myEditModal{{ $product->id }}"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Stock Info Edit <small>(* fields are required)</small></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div>
+                      <form action="{{route('stock.update',$product->id)}}" method="post">
+                          @csrf
+                          @method('PUT')
+                            <div class="card-header">
+                              <h4>Stock Update Form</h4>
+                            </div>
+                            <div class="card-body pb-0">
+                              <div class="form-group">
+                                <label>Product(*)</label>
+                                <div class="input-group">
+                                  <select name="product_id" class="form-control select2" style="width: 600px!important;" required>
+                                      @foreach ($products as $item)
+                                          <option @if ($item->id==$product->product_id)
+                                              selected
+                                          @endif value="{{ $item->id }}">{{ $item->code }}</option>
+                                     
+                                      @endforeach
+                                      
+                                  </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label>Wirehouse(*)</label>
+                                  <div class="input-group">
+                                    <select name="wirehouse_id" class="form-control select2" style="width: 600px!important;" required>
+                                        @foreach ($wirehouses as $wh)
+                                            <option @if ($wh->id==$product->wirehouse_id)
+                                              selected
+                                          @endif value="{{ $wh->id }}">{{ $wh->name }}</option>
+                                       
+                                        @endforeach
+                                        
+                                    </select>
+                                    </div>
+                                </div>
+                              <div class="form-group">
+                                <label>Wirehouse Qty(*)</label>
+                                <div class="input-group">
+                                  
+                                  <input type="text" name="wh_qty" value="{{ $product->wh_qty }}" class="form-control @error('wh_qty') is-invalid @enderror" required>
+                                  @error('wh_qty')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                
+                              <div class="form-group">
+                                <label>Price</label>
+                                <div class="input-group">
+                                  <input type="text" name="avg_price" value="{{ $product->avg_price }}" class="form-control @error('avg_price') is-invalid @enderror">
+                                  @error('avg_price')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                  <label>Showroom Qty</label>
+                                  <div class="input-group">
+                                    <input type="text" name="showroom_qty" value="{{ $product->sr_qty }}" class="form-control @error('showroom_qty') is-invalid @enderror">
+                                    @error('showroom_qty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                  </div>
+                                </div>
+      
+                              <div class="form-group">
+                                  <label>Sales Qty</label>
+                                  <div class="input-group">
+                                    <input type="text" name="sale_qty" value="{{ $product->sale_qty }}" class="form-control @error('sale_qty') is-invalid @enderror">
+                                    @error('sale_qty')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                  </div>
+                                </div>
+      
+                            </div>
+                            <div class="card-footer pt-">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Save</button>
+                            </div>
+                          </form>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      @endforeach
+
+      </div>
 
 
 @endsection

@@ -30,12 +30,21 @@
                               
                             </ul>
                         </li>
-                        <li class="menu-header">Shoroom and Sales</li>
+                        <li class="menu-header">Payment and Sales</li>
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Sales </span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('invoice.index')}}"><i class="fas fa-cart-plus"></i>Sales Invoice</a></li>
                                 
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Payment </span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="{{route('customer.payment')}}"><i class="fas fa-cart-plus"></i>Customer Payment</a></li>  
+                            </ul>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="{{route('supplier.payment')}}"><i class="fas fa-cart-plus"></i>Supplier Payment</a></li>  
                             </ul>
                         </li>
                      

@@ -6,14 +6,14 @@
       <form action="{{route('customer.store')}}" method="post">
           @csrf
             <div class="card-header">
-              <h4>Customer Create</h4>
+              <h4>Customer Create<small class="text-danger">[* fields are mendatory]</small></h4>
             </div>
             <div class="card-body pb-0">
               <div class="form-group">
-                <label>Customer Name</label>
+                <label>Customer Name<small class="text-danger">*</small></label>
                 <div class="input-group">
                   
-                  <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+                  <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
                   @error('name')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -22,10 +22,10 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Customer Phone</label>
+                <label>Customer Phone<small class="text-danger">*</small></label>
                 <div class="input-group">
                   
-                  <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone">
+                  <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" >
                   @error('phone')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -38,7 +38,7 @@
                 <label>Email</label>
                 <div class="input-group">
                   
-                  <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="E-mail">
+                  <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" >
                   @error('email')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>

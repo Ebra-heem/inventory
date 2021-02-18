@@ -44,10 +44,9 @@ class ProductController extends Controller
         $request->validate([
             'code'=>'required|unique:products',
             'name'=>'required',
-            'width'=>'required',
+           
             'unit'=>'required',
-            'description'=>'required',
-            'status'=>'required'
+           
         ]);
         $product= new Product();
         $product->code=$request->input('code');

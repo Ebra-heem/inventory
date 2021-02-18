@@ -121,7 +121,7 @@
                 <tr>
                   <td class="title">
                    
-                    <img src="https://i.ibb.co/41qtmG2/fvl.jpg" style=" max-width:150px;">
+                    <img src="https://i.ibb.co/CBXMvGX/fabric.jpg" style=" max-width:150px;">
                   </td>
       
                   <td>
@@ -141,7 +141,7 @@
                        Fabiric View<br> Uttar Badda, Dhaka<br> Bangladesh
                       </td>
                       <td>
-                        Customer Info<br> Name:  {{$invoice->suppliers->name}}<br> Address: {{$invoice->suppliers->address}}
+                        Supplier Info<br> Name:  {{$invoice->suppliers->name}}<br> Address: {{$invoice->suppliers->address}}
                        </td>
                       
                     </tr>
@@ -161,6 +161,8 @@
               <span class="badge badge-danger">Due</span>
               @endif
             </td>
+
+            
           </tr>
       
          

@@ -6,14 +6,14 @@
 <form action="{{route('supplier.store')}}" method="post">
     @csrf
       <div class="card-header">
-        <h4>Supplier Create</h4>
+        <h4>Supplier Create <small class="text-danger">[* fields are mendatory]</small></h4>
       </div>
       <div class="card-body pb-0">
         <div class="form-group">
-          <label>Supplier Name</label>
+          <label>Supplier Name<small class="text-danger">*</small></label>
           <div class="input-group">
             
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
+            <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
             @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -22,10 +22,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Supplier Phone</label>
+          <label>Supplier Phone<small class="text-danger">*</small></label>
           <div class="input-group">
             
-            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone">
+            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control @error('phone') is-invalid @enderror">
             @error('phone')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

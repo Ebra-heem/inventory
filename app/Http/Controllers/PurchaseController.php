@@ -111,6 +111,7 @@ class PurchaseController extends Controller
             'particular'=>'Purchase Product',
             'amount'=>$total,
             'account_type'=>'Dr',
+            'section'=>'purchase'
         ]);
       
         foreach($final_data as $data){
@@ -174,6 +175,7 @@ class PurchaseController extends Controller
         $supplier= Supplier::find($purchase->supplier_id);
         $today = Carbon::today();
         $particulars_fee=SupplierDetail::where('supplier_id',$purchase->supplier_id)->where('purchase_id',$purchase->id)->where('account_type','Dr')->where('section','purchase')->get();
+        //return $particulars_fee;
         $particulars_bill=SupplierDetail::where('supplier_id',$purchase->supplier_id)->where('purchase_id',$purchase->id)->where('account_type','Cr')->where('section','bill')->get();
         $details = DB::table('purchases')
             ->join('purchase_details', 'purchases.id', '=', 'purchase_details.purchase_id')
@@ -193,34 +195,7 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pre_due=Purchase::where('supplier_id',$request->input('supplier_id'))->sum('due');
-
-        $dateJunk = Carbon::createFromFormat('d/m/Y', $request->input('date'));
-        $product=  Purchase::find($id);
-        $product->date=$dateJunk;
-        $product->supplier_id=$request->input('supplier_id');
-        $product->product_id=$request->input('product_id');
-        $product->purchase_qty=$request->input('purchase_qty');
-        $product->buy_price=$request->input('buy_price');
-        $product->sell_price=$request->input('sell_price');
-        $product->total=$request->input('purchase_qty')*$request->input('buy_price');
-        $product->wirehouse_id=$request->input('wirehouse_id');
-        $product->rack_id=$request->input('rack_id');
-        $product->wh_stock_qty=$request->input('purchase_qty');
-        $product->sr_stock_qty=$request->input('sr_stock_qty');
-        $product->paid=$request->input('paid');
-        $product->due=$request->input('due');
-        $product->note=$request->input('note');
-        $product->previous_due=$pre_due;
-
-        if($request->input('due')>0){
-            $product->status=0;
-        }else{
-            $product->status=1;
-        }
         
-        //return $product->toArray();
-        $product->save();
             toastr()->success('Payment Save Successfully', 'System Says');
             return redirect()->route('purchase.index');
     }

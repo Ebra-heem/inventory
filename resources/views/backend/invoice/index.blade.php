@@ -26,8 +26,10 @@
 
                                             <th>Total</th>
                                             <th>Paid</th>
+                                            <th>Payment Status</th>
                                             <th>Due</th>
-                                            <th>Status</th>
+                                            
+                                            <th>Delivery Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -40,12 +42,19 @@
                                         <td>{{$invoice->customers->name}}</td>
                                         <td>{{$invoice->total}}</td>
                                         <td>{{$invoice->paid}}</td>
-                                        <td>{{$invoice->due}}</td>
-                                        
                                         @if ($invoice->status==1)
                                         <td class="badge badge-success">Paid</td>
                                         @else
                                         <td class="badge badge-danger">Due</td>
+                                        @endif
+                                        <td>{{$invoice->due}}</td>
+                                        
+                                        
+
+                                        @if ($invoice->delivery_status==1)
+                                        <td class="badge badge-success">Complete</td>
+                                        @else
+                                        <td class="badge badge-danger">Pending</td>
                                         @endif
                                         
                                         <td>

@@ -201,17 +201,19 @@ class InvoiceController extends Controller
 
     public function save(Request $request)
     {
-        //return $request->all();
+        
         $this->validate($request,[
             'customer_id'=>'required',
             'price'=>'required',
             'qty'=>'required'
         ]);
+        
+         
         $product_id=$request->input('product_id');
         $customer_id=$request->input('customer_id');
         $prices=$request->input('price');
         $quantities=$request->input('qty');
-        $discount=$request->input('discount');
+        $advanced=$request->input('advanced');
         $shipping=$request->input('shipping');
         $dateJunk = Carbon::createFromFormat('d/m/Y', $request->input('date'));
 
@@ -255,12 +257,11 @@ class InvoiceController extends Controller
               
           }
 
-        $grandTotal=$total-$discount+$shipping;
+        $grandTotal=$total;
         $invoice=SaleInvoice::create([
             'date'=>$dateJunk,
             'customer_id'=>$customer_id,
-            'shipping'=>$shipping,
-            'discount'=>$discount,
+            'advanced'=>$advanced,
             'total'=>$grandTotal
         ]);
        
@@ -273,6 +274,15 @@ class InvoiceController extends Controller
         'amount'=>$grandTotal,
         'account_type'=>'Dr',
         'section'=>'sale',
+    ]);
+    CustomerDetail::create([
+        'date'=>$dateJunk,
+        'customer_id'=>$customer_id,
+        'invoice_id'=>$invoice->id,
+        'particular'=>'Advanced Payment',
+        'amount'=>$advanced,
+        'account_type'=>'Cr',
+        'section'=>'paid',
     ]);
         foreach($final_data as $data){
             
@@ -309,6 +319,15 @@ class InvoiceController extends Controller
             ->toArray();
         //return $details;
         return view('backend.invoice.invoice_details',compact('invoice','details'));
+    }
+    public function delivery($id)
+    {
+      //dd('workinf');
+      $invoice=SaleInvoice::find($id);
+        
+         $invoice->delivery_status=1;
+         $invoice->save();
+        return redirect()->back();
     }
 
 
