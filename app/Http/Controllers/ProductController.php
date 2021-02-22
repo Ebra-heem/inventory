@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Stock;
 use App\Product;
+use App\Category;
 use App\Purchase;
 use App\PurchaseDetail;
 use Illuminate\Http\Request;
@@ -18,8 +19,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
-        return view('backend.product.index',compact('products'));
+        $categories=Category::all();
+
+        return view('backend.product.index',compact('categories'));
     }
 
     /**
@@ -27,9 +29,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.product.create');
+        $category=Category::find($request->category_id);
+        
+        return view('backend.product.create',compact('category'));
     }
 
     /**
@@ -51,6 +55,7 @@ class ProductController extends Controller
         $product= new Product();
         $product->code=$request->input('code');
         $product->name=$request->input('name');
+        $product->category_id=$request->input('category_id');
         $product->width=$request->input('width');
         $product->origin=$request->input('origin');
         $product->unit=$request->input('unit');
@@ -58,7 +63,7 @@ class ProductController extends Controller
         $product->status=$request->input('status');
         $product->save();
         toastr()->success('Product Save Successfully', 'System Says');
-        return redirect()->route('product.create');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -69,13 +74,25 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-      //  return $product->id;
+        //return $product;
       $product=Product::find($product->id);
         $purchases=  PurchaseDetail::where('product_id',$product->id)->get();
         $total_purchase_qty=  PurchaseDetail::where('product_id',$product->id)->sum('purchase_qty');
         $total_stock_qty=  DB::table('stocks')->where('product_id',$product->id)->sum('wh_qty');
         $total_sale_qty=DB::table('invoice_details')->where('product_id',$product->id)->sum('qty');
         return view('backend.product.show',compact('product','total_purchase_qty','total_stock_qty','total_sale_qty'));
+    }
+
+    public function productList($category_id)
+    {
+        
+      $products=Product::where('category_id',$category_id)->get();
+     // return $products;
+        // $purchases=  PurchaseDetail::where('product_id',$product->id)->get();
+        // $total_purchase_qty=  PurchaseDetail::where('product_id',$product->id)->sum('purchase_qty');
+        // $total_stock_qty=  DB::table('stocks')->where('product_id',$product->id)->sum('wh_qty');
+        // $total_sale_qty=DB::table('invoice_details')->where('product_id',$product->id)->sum('qty');
+        return view('backend.product.product-list',compact('products'));
     }
 
     /**
@@ -103,6 +120,7 @@ class ProductController extends Controller
         $product= Product::find($product->id);
         $product->code=$request->input('code');
         $product->name=$request->input('name');
+        $product->category_id=$request->input('category_id');
         $product->width=$request->input('width');
         $product->origin=$request->input('origin');
         $product->unit=$request->input('unit');

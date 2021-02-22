@@ -9,37 +9,38 @@
     <section class="section">
         <div class="section-body">
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                +ADD Category
-                              </button>
+
                         </div>
-                        @if(count($categories))
+                       
+                        @if(count($products))
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th>Database Id</th>
+                                            <th>Code</th>
                                             <th>Name</th>
+                                            <th>unit</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($categories as $product)
+                                        @foreach($products as $product)
                                         <tr>
-                                        <td>{{$product->id}}</td>
+                                        <td>{{$product->code}}</td>
                                         <td>{{$product->name}}</td>
+                                        <td>{{$product->unit}}</td>
                                         
                                         <td>
-                                            <a href="{{route('product.create',['category_id'=>$product->id])}}" class="btn btn-success">+ Add Product</a>
-                                             <a href="{{route('product.list',$product->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Product List</a>
-                                             {{-- <a href="{{route('product.edit',$product->id)}}" class="btn btn-md btn-success"><i class="fas fa-user-edit"></i>Edit</a> 
+                                           
+                                             <a href="{{route('product.show',$product->id)}}" class="btn btn-md btn-warning"><i class="fas fa-eye"></i>View</a>
+                                             <a href="{{route('product.edit',$product->id)}}" class="btn btn-md btn-success"><i class="fas fa-user-edit"></i>Edit</a> 
                                              {!! Form::open(['method' => 'DELETE','route' => ['product.destroy', $product->id],'style'=>'display:inline']) !!}
                                              {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                              {!! Form::close() !!} --}}
+                                              {!! Form::close() !!}
                                         </td>
                                         </tr>
                                         @endforeach
@@ -47,7 +48,10 @@
                                 </table>
                             </div>
                         </div>
+                        @else
+                        <p>No Product Available Here!</p>
                         @endif
+                       
                     </div>
                 </div>
             </div>
@@ -55,47 +59,6 @@
     </section>
 
 
-     <!-- Modal -->
-<div class="modal fade" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Category Create</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div>
-                <form action="{{route('category.store')}}" method="post">
-                    @csrf
-                    
-                      <div class="card-body pb-0">
-                        <div class="form-group">
-                          <label>Category Name</label>
-                          <div class="input-group">
-                            
-                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Name">
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary"> <i class="fas fa-check"></i> Save</button>
-                      </div>
-                    </form>
-                </div>
-            </div>
-      
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 @section('extra-js')
  

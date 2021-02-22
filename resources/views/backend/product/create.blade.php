@@ -25,8 +25,8 @@
         <div class="form-group">
           <label>Product Name<small class="text-danger">*</small></label>
           <div class="input-group">
-            
-            <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" >
+            <input type="text" name="name" value="{{ $category->name }}" class="form-control @error('name') is-invalid @enderror" >
+            <input type="hidden" name="category_id" value="{{ $category->id }}"  >
             @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -70,7 +70,7 @@
              @enderror
           </div>
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
           <label>Description</label>
           <div class="input-group">
            <textarea name="description" class="form-control @error('description') is-invalid @enderror" cols="30" rows="10"></textarea>
@@ -80,7 +80,7 @@
            </span>
             @enderror  
         </div>
-        </div>
+        </div> --}}
         <div class="form-group">
             <label>Status</label>
             <div class="input-group">

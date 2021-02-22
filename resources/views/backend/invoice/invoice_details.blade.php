@@ -97,13 +97,13 @@
                                         <td colspan="2"></td>
                                         <td>Advance</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{$invoice->advance}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
                                         <td>Due</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{$invoice->total-$invoice->advance}}</td>
                                     </tr>
                                 </tbody>
                             </table>

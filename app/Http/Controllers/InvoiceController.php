@@ -24,7 +24,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices=SaleInvoice::latest()->get();
+        $invoices=SaleInvoice::latest()->orderby('id','desc')->get();
         //return $invoices;
         return view('backend.invoice.index',compact('invoices'));
     }
@@ -208,7 +208,7 @@ class InvoiceController extends Controller
             'qty'=>'required'
         ]);
         
-         
+        // return $request;
         $product_id=$request->input('product_id');
         $customer_id=$request->input('customer_id');
         $prices=$request->input('price');
@@ -261,7 +261,8 @@ class InvoiceController extends Controller
         $invoice=SaleInvoice::create([
             'date'=>$dateJunk,
             'customer_id'=>$customer_id,
-            'advanced'=>$advanced,
+            'advance'=>$advanced,
+            'paid'=>$advanced,
             'total'=>$grandTotal
         ]);
        

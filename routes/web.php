@@ -28,8 +28,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/product-buy-manage','PurchaseController@manage')->name('purchase.manage');
         Route::post('/product-buy-manage','PurchaseController@filter')->name('purchase.filter');
         Route::post('/product-transfer','StockController@transfer')->name('stock.transfer');
+        //category
+        Route::resource('/category','CategoryController');
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
+        Route::get('/product-list/{id}','ProductController@productList')->name('product.list');
         Route::resource('/stock','StockController');
         Route::get('/purchase-details/{id}','PurchaseController@details');
         Route::resource('/purchase','PurchaseController');
