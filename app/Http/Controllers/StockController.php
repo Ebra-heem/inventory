@@ -49,11 +49,23 @@ class StockController extends Controller
        //return $request;
        $check=Stock::where('product_id',$request->product_id)->first();
        if(!empty($check)){
-        $check->update(['wh_qty'=>$check->wh_qty+$request->wh_qty,'avg_price'=>$request->avg_price?$request->avg_price:$check->avg_price]);
+        $check->update([
+            'wh_qty'=>$check->wh_qty+$request->wh_qty,
+            'total_qty'=>$check->wh_qty+$request->wh_qty,
+            'purchase_price'=>$request->avg_price?$request->avg_price:$check->avg_price,
+            'avg_price'=>$request->avg_price?$request->avg_price:$check->avg_price,
+            ]);
         toastr()->warning(' Stock Qty Updated  Successfully', 'System Says');
         return redirect()->route('stock.index');
        }else{
-           Stock::create(request()->all());
+           Stock::create([
+               'product_id'=>$request->product_id,
+               'wirehouse_id'=>$request->wirehouse_id,
+               'wh_qty'=>$request->wh_qty,
+               'avg_price'=>$request->wh_qty*$request->purchase_price,
+               'total_qty'=>$request->wh_qty,
+               'purchase_price'=>$request->purchase_price
+           ]);
         toastr()->success('Product Stock Add  Successfully', 'System Says');
         return redirect()->route('stock.index');
        }
@@ -67,15 +79,15 @@ class StockController extends Controller
         
          $stock_id=$request->input('stock_id');
          $product=Stock::where('id',$stock_id)->first();
-        
+        $old_sr_qty= $product->sr_qty;
          $sr_qty=$request->input('sr_qty');
          $wh_qty= $product->wh_qty-$sr_qty;
 
          Stock::where('id', '=',$stock_id)
-                        ->update(array('sr_qty' => $sr_qty,'wh_qty'=>$wh_qty));
+                        ->update(array('sr_qty' => $sr_qty+$old_sr_qty,'wh_qty'=>$wh_qty));
 
             toastr()->success('Product Transfer Successfully', 'System Says');
-            return redirect()->back();
+            return redirect()->route('stock.index');
     }
 
     /**
@@ -116,7 +128,7 @@ class StockController extends Controller
             'product_id'=>$request->product_id,
             'wirehouse_id'=>$request->wirehouse_id,
             'wh_qty'=>$request->wh_qty,
-            'avg_price'=>$request->avg_price,
+            'purchase_price'=>$request->purchase_price,
             'sr_qty'=>$request->showroom_qty,
             'sale_qty'=>$request->sale_qty,
         ]);

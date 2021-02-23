@@ -130,12 +130,17 @@ class PurchaseController extends Controller
             //return $stock_check;
             if(isset($stock_check)){
                 Stock::where('product_id',$data['product_id'])
-                ->update(array('wh_qty'=>$stock_check->wh_qty+$data['qty']));
+                ->update(array(
+                    'wh_qty'=>$stock_check->wh_qty+$data['qty'],
+                    'total_qty'=>$stock_check->total_qty+$data['qty'],
+                ));
             }else{
                 Stock::create([
                     
                         'product_id' => $data['product_id'],
                         'wh_qty' => $data['qty'],
+                        'total_qty' => $data['qty'],
+                        'purchase_price' => $data['price'],
                         'wirehouse_id'=>1
                     
                 ]);

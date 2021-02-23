@@ -84,23 +84,18 @@
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th># Invoice No</th>
-                                            
+                                            <th># Invoice No</th>   
                                             <th>Customer</th>
-
                                             <th>Total</th>
                                             <th>Paid</th>
                                             <th>Due</th>
-                                            <th>Status</th>
-                                            
+                                            <th>Status</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($sales as $invoice)
                                         <tr>
                                         <td>#00{{$invoice->id}}</td>
-                                      
-                                       
                                         <td>{{$invoice->customers->name}}</td>
                                         <td>{{$invoice->total}}</td>
                                         <td>{{$invoice->paid}}</td>

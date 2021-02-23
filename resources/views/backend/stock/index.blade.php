@@ -26,6 +26,8 @@
                                             
                                             <th>Code</th>
                                             <th>Name</th>
+                                            <th>Total Qty</th>
+                                            <th>Price/Taka</th>
                                             <th>Wirehouse Qty</th>
                                             <th>Showroom Qty</th>
                                             <th>Sale Qty</th>
@@ -38,6 +40,8 @@
 
                                         <td>{{$product->products->code}}</td>
                                         <td>{{$product->products->name}}</td>
+                                        <td>{{$product->total_qty}} ({{$product->products->unit}})</td>
+                                        <td>{{$product->purchase_price}}</td>
                                         
                                         <td>{{$product->wh_qty}} ({{$product->products->unit}})</td>
                                         <td>{{$product->sr_qty}}</td>
@@ -90,7 +94,7 @@
                                 <div class="input-group">
                                   <select name="product_id" class="form-control select2" style="width: 600px!important;" required>
                                       @foreach ($products as $item)
-                                          <option value="{{ $item->id }}">{{ $item->code }}</option>
+                                          <option value="{{ $item->id }}">{{ $item->code }}-{{ $item->name }}</option>
                                     
                                       @endforeach
                                       
@@ -108,12 +112,13 @@
                                         
                                     </select>
                                     </div>
-                                </div>
+                              </div>
                               <div class="form-group">
                                 <label>Wirehouse Qty(*)</label>
                                 <div class="input-group">
                                   
                                   <input type="text" name="wh_qty" class="form-control @error('wh_qty') is-invalid @enderror" required>
+                                  <input type="hidden" name="total_qty" >
                                   @error('wh_qty')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
@@ -123,10 +128,10 @@
                               </div>
                 
                               <div class="form-group">
-                                <label>Price</label>
+                                <label>Purchase Price</label>
                                 <div class="input-group">
-                                  <input type="text" name="avg_price" class="form-control @error('avg_price') is-invalid @enderror">
-                                  @error('avg_price')
+                                  <input type="text" name="purchase_price" class="form-control @error('purchase_price') is-invalid @enderror">
+                                  @error('purchase_price')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
@@ -143,7 +148,7 @@
                                     </span>
                                     @enderror
                                   </div>
-                                </div>
+                              </div>
 
                               <div class="form-group">
                                   <label>Sales Qty</label>
@@ -155,7 +160,7 @@
                                     </span>
                                     @enderror
                                   </div>
-                                </div>
+                              </div>
 
                             </div>
                             <div class="card-footer pt-">
@@ -198,7 +203,7 @@
                                       @foreach ($products as $item)
                                           <option @if ($item->id==$product->product_id)
                                               selected
-                                          @endif value="{{ $item->id }}">{{ $item->code }}</option>
+                                          @endif value="{{ $item->id }}">{{ $item->code }}-{{ $item->name }}</option>
                                      
                                       @endforeach
                                       
@@ -220,6 +225,7 @@
                                     </div>
                                 </div>
                               <div class="form-group">
+                                <small>Total Qty: {{ $product->total_qty }}</small>
                                 <label>Wirehouse Qty(*)</label>
                                 <div class="input-group">
                                   
@@ -235,8 +241,8 @@
                               <div class="form-group">
                                 <label>Price</label>
                                 <div class="input-group">
-                                  <input type="text" name="avg_price" value="{{ $product->avg_price }}" class="form-control @error('avg_price') is-invalid @enderror">
-                                  @error('avg_price')
+                                  <input type="text" name="purchase_price" value="{{ $product->purchase_price }}" class="form-control @error('purchase_price') is-invalid @enderror">
+                                  @error('purchase_price')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
