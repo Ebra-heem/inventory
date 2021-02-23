@@ -10,11 +10,12 @@
 <!-- Main Content -->
 
     <section class="section">
+      <h3>Purchase Report</h3>
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
                     <div id="accordion">
-                        <div class="card">
+                        {{-- <div class="card">
                           <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                               <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -22,10 +23,9 @@
                               </button>
                             </h5>
                           </div>
-                      
                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                            <form action="{{route('productbuy.filter')}}" method="POST">
+                            <form action="{{route('purchase.filter')}}" method="POST">
                                 @csrf
                                     <div class="row">
                                         <div class="col-md-4">
@@ -68,26 +68,41 @@
                                 </form>
                             </div>
                           </div>
-                        </div>
+                        </div> --}}
+
                         <div class="card">
                           <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">
                               <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <i class="fas fa-filter"></i> Fillter by Date and Buyers wise..
+                                <i class="fas fa-filter"></i> Fillter by Date and Category wise..
                               </button>
                             </h5>
                           </div>
                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                             <div class="card-body">
-                                <form action="{{route('productbuy.filter')}}" method="POST">
+                                <form action="{{route('purchase.filter')}}" method="POST">
                                     @csrf
                                     <div class="row">
                                         <div class="col-md-3">
                                           <div class="form-group">
-                                            <label>Date</label>
+                                            <label>From Date</label>
                                             <div class="input-group">
                                               
-                                              <input id="datepicker2"  data-date-format="dd/mm/yyyy" name="date" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
+                                              <input id="datepicker"  data-date-format="dd/mm/yyyy" name="from_date" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
+                                              @error('date')
+                                              <span class="invalid-feedback" role="alert">
+                                                  <strong>{{ $message }}</strong>
+                                              </span>
+                                               @enderror
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <div class="form-group">
+                                            <label>To Date</label>
+                                            <div class="input-group">
+                                              
+                                              <input id="datepicker2"  data-date-format="dd/mm/yyyy" name="to_date" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
                                               @error('date')
                                               <span class="invalid-feedback" role="alert">
                                                   <strong>{{ $message }}</strong>
@@ -101,12 +116,12 @@
                                             <div class="form-group">
                                               <label>Product Name</label>
                                               <div class="input-group">
-                                                <select name="product_id" class="form-control @error('product_id') is-invalid @enderror">
+                                                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
                                                   @foreach($products as $product)
                                                   <option value="{{ $product->id}}">{{ $product->name}}</option>
                                                   @endforeach
                                                 </select>
-                                                @error('product_id')
+                                                @error('category_id')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -114,23 +129,7 @@
                                               </div>
                                             </div>
                                           </div>
-                                        <div class="col-md-3">
-                                          <div class="form-group">
-                                            <label>Buyer Name</label>
-                                            <div class="input-group">
-                                              <select name="buyer_id" class="form-control @error('buyer_id') is-invalid @enderror">
-                                                @foreach($buyers as $buyer)
-                                                <option value="{{ $buyer->id}}">{{ $buyer->name}}</option>
-                                                @endforeach
-                                              </select>
-                                              @error('buyer_id')
-                                              <span class="invalid-feedback" role="alert">
-                                                  <strong>{{ $message }}</strong>
-                                              </span>
-                                               @enderror
-                                            </div>
-                                          </div>
-                                        </div>
+                                        
                                         <div class="col-md-3">
                                             <button type="submit" class="btn btn-info" style="margin-top:28px;"><i class="fas fa-filter"></i>Filter</button>
                                         </div>
@@ -144,7 +143,7 @@
                       </div>
                 </div>
             </div>
-            @if(count($product_buys)>0)
+            @if(count($products)>0)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -162,35 +161,11 @@
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Qty</th>
-                                            <th>Price</th>
-                                            <th>Total</th>
-                                            <th>Paid</th>
-                                            <th>Due</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                          
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($product_buys as $product)
-                                        <tr>
-                                        <td>{{$product->vendor_name}}</td>
-                                        <td>{{$product->qty}}</td>
-                                        <td>{{$product->price}}</td>
-                                        <td>{{$product->total}}</td>
-                                        <td>{{$product->paid}}</td>
-                                        <td>{{$product->due}}</td>
-                                        <td><?php
-                                        if($product->status==1){
-                                            echo "<b class='badge badge-pill badge-success mb-1'>Paid</b>";
-                                        }else{
-                                            echo "<b class='badge badge-pill badge-danger mb-1'>Due</b>";
-                                        }
-                                        ?></td>
-                                        <td> <a href="{{route('productbuy.edit',$product->id)}}" class="text-success">Edit</a>|| <a href="#" class="text-danger">Delete</a></td>
-                                        </tr>
-                                        @endforeach
+                                       
                                     </tbody>
                                 </table>
                             </div>

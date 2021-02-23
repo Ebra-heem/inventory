@@ -27,7 +27,8 @@
                                             <th>Code</th>
                                             <th>Name</th>
                                             <th>Total Qty</th>
-                                            <th>Price/Taka</th>
+                                            <th>Price</th>
+                                            <th>Total Taka</th>
                                             <th>Wirehouse Qty</th>
                                             <th>Showroom Qty</th>
                                             <th>Sale Qty</th>
@@ -42,6 +43,7 @@
                                         <td>{{$product->products->name}}</td>
                                         <td>{{$product->total_qty}} ({{$product->products->unit}})</td>
                                         <td>{{$product->purchase_price}}</td>
+                                        <td>{{$product->total_qty*$product->purchase_price}}</td>
                                         
                                         <td>{{$product->wh_qty}} ({{$product->products->unit}})</td>
                                         <td>{{$product->sr_qty}}</td>

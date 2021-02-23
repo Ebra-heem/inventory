@@ -31,13 +31,17 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/product-transfer','StockController@transfer')->name('stock.transfer');
         //category
         Route::resource('/category','CategoryController');
+        //product
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
         Route::get('/product-list/{id}','ProductController@productList')->name('product.list');
+        //stock
         Route::resource('/stock','StockController');
+        //purchase
+        Route::get('/all-purchase','PurchaseController@allPurchase')->name('purchase.allsales');
         Route::get('/purchase-details/{id}','PurchaseController@details');
         Route::resource('/purchase','PurchaseController');
-        //payment section
+        //customer & supplier payment section
         Route::get('/customer-payment','CustomerController@payment')->name('customer.payment');
         Route::post('/customer-payment','CustomerController@paymentList')->name('customer.paymentList');
 

@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Rack;
 use App\Stock;
 use App\Product;
+use App\Category;
 use App\Customer;
 use App\Purchase;
 use App\Supplier;
 use App\Wirehouse;
 use Carbon\Carbon;
+use App\SupplierDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\SupplierDetail;
 
 class PurchaseController extends Controller
 {
@@ -118,6 +119,7 @@ class PurchaseController extends Controller
             
             DB::table('purchase_details')->insert([
                 [
+                    'date'=>$dateJunk,
                     'product_id' => $data['product_id'],
                     'supplier_id' => $invoice->supplier_id,
                     'purchase_id' => $invoice->id,
@@ -141,8 +143,7 @@ class PurchaseController extends Controller
                         'wh_qty' => $data['qty'],
                         'total_qty' => $data['qty'],
                         'purchase_price' => $data['price'],
-                        'wirehouse_id'=>1
-                    
+                        'wirehouse_id'=>1,
                 ]);
             }
         }
@@ -254,37 +255,34 @@ class PurchaseController extends Controller
 
     public function manage()
     {
-         $products=Product::where('status',1)->get();
+         $products=Category::all();
          $buyers=Customer::where('status',1)->get();
-         $today = Carbon::today();
+         $today = Carbon::today(); 
         $purchases=Purchase::orderBy('id','desc')->get();
         return view('backend.purchase.manage',compact('purchases','products','buyers','today'));
     }
 
     public function filter(Request $request)
     {
-        $date = $request->input('date');
-         $dateJunk = Carbon::createFromFormat('d/m/Y',$date);
-         $product_id = $request->input('product_id');
-         $products=Product::where('status',1)->get();
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+        
+         $from_dateJunk = Carbon::createFromFormat('d/m/Y',$from_date);
+         $to_dateJunk = Carbon::createFromFormat('d/m/Y',$to_date);
+         $categoty_id = $request->input('categoty_id');
+         $products=Category::all();
          $buyers=Customer::where('status',1)->get();
-         $today = Carbon::today();
-        if($request->input('type')==1){
-            
-            $purchases=Purchase::whereDate('date',$dateJunk)->where('product_id',$product_id)->orderBy('id','desc')->get();
-            $total_qty=Purchase::whereDate('date',$dateJunk)->where('product_id',$product_id)->orderBy('id','desc')->sum('qty');
-            $total_price=Purchase::whereDate('date',$dateJunk)->where('product_id',$product_id)->orderBy('id','desc')->sum('total');
-           
-            return view('backend.purchase.filter',compact('purchases','products','buyers','today','total_qty','total_price','date','product_id'));
-        } 
+         $today = Carbon::today(); 
+        
+         $users = DB::table('products')
+            ->join('purchase_details', 'products.id', '=', 'purchase_details.product_id')
+            ->select('products.*', 'purchase_details.date', 'purchase_details.buy_price','purchase_details.purchase_qty')
+            ->whereBetween('purchase_details.date',[$from_dateJunk,$to_dateJunk])
+            ->get();
+            return $users;
+       
         if($request->input('type')==2){
-            $buyer_id = $request->input('buyer_id');
-            $purchases=Purchase::whereDate('date', $dateJunk)->where('buyer_id', $buyer_id)
-            ->where('product_id',$product_id)->get();
-            $total_qty=Purchase::whereDate('date', $dateJunk)->where('buyer_id', $buyer_id)
-            ->where('product_id',$product_id)->sum('qty');
-            $total_price=Purchase::whereDate('date', $dateJunk)->where('buyer_id', $buyer_id)
-            ->where('product_id',$product_id)->sum('total');
+            
             return view('backend.purchase.filter',compact('purchases','products','buyers','today','total_qty','total_price','date','product_id'));
         }
     }   
