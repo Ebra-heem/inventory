@@ -22,9 +22,10 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Purchase</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Purchase Module</span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="{{route('purchase.index')}}">Purchase Manage</a></li>
+                                <li><a class="nav-link" href="{{route('purchase.index')}}">Purchase Invoice</a></li>
+                                <li><a class="nav-link" href="{{route('purchase.manage')}}">All Purchase Report</a></li>
                                 
                                 <li><a class="nav-link" href="{{route('stock.index')}}">Stock  Manage</a></li>
                               
@@ -32,10 +33,10 @@
                         </li>
                         <li class="menu-header">Payment and Sales</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Sales </span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Sales Module</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('invoice.index')}}"><i class="fas fa-cart-plus"></i>Sales Invoice</a></li>
-                                
+                                <li><a class="nav-link" href="{{route('sales.allsales')}}">All Sales Reports</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -50,9 +51,9 @@
                      
                         <li class="menu-header">Report Section</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Reports</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Due Report Module</span></a>
                             <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="{{route('sales.allsales')}}">All Sales Reports</a></li>
+    
                             <li><a class="nav-link" href="{{route('customer.all_dues')}}">Customer Dues List</a></li>
                             <li><a class="nav-link" href="{{route('supplier.all_dues')}}">Supplier Dues List</a></li>
                                 

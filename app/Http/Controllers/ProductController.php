@@ -8,7 +8,9 @@ use App\Category;
 use App\Purchase;
 use App\PurchaseDetail;
 use Illuminate\Http\Request;
+use App\Imports\ProductsImport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -42,6 +44,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function importProduct(Request $request){
+       //return $request->file('file')->store('temp');
+        // $array = Excel::toArray(new ProductsImport, request()->file('file'));
+        // return $array;
+        try{
+            Excel::import(new ProductsImport, request()->file('file')->store('temp'));
+        //return $collection[0];
+        toastr()->success('Product Upload Successfully', 'System Says');
+        return back();
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+
+        
+    }
+
     public function store(Request $request)
     {
         

@@ -61,9 +61,9 @@
                                             <a href="{{url('/purchase-details',$invoice->id)}}" class="btn btn-md btn-warning"><i class="fas fa-print"></i>Print</a>
                                             <a href="{{route('purchase.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Bill Payment</a>
                                             
-                                            {!! Form::open(['method' => 'DELETE','route' => ['purchase.destroy', $invoice->id],'style'=>'display:inline','onclick'=>'return confirm("Are you sure want to delete this?")']) !!}
+                                            {{-- {!! Form::open(['method' => 'DELETE','route' => ['purchase.destroy', $invoice->id],'style'=>'display:inline','onclick'=>'return confirm("Are you sure want to delete this?")']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash ']) !!}
-                                             {!! Form::close() !!}
+                                             {!! Form::close() !!} --}}
                                         </td>
                                         </tr>
                                         @endforeach

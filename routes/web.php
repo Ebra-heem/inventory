@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
         //product
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
+        Route::post('/all-products','ProductController@importProduct')->name('product.import');
         Route::get('/product-list/{id}','ProductController@productList')->name('product.list');
         //stock
         Route::resource('/stock','StockController');

@@ -256,10 +256,14 @@ class PurchaseController extends Controller
     public function manage()
     {
          $products=Category::all();
-         $buyers=Customer::where('status',1)->get();
-         $today = Carbon::today(); 
-        $purchases=Purchase::orderBy('id','desc')->get();
-        return view('backend.purchase.manage',compact('purchases','products','buyers','today'));
+        
+         $today = Carbon::today();
+         $purchase_lists = DB::table('products')
+            ->join('purchase_details', 'products.id', '=', 'purchase_details.product_id')
+            ->select('products.*', 'purchase_details.date', 'purchase_details.buy_price','purchase_details.purchase_qty')
+            ->get(); 
+       
+        return view('backend.purchase.manage',compact('products','today','purchase_lists'));
     }
 
     public function filter(Request $request)
@@ -271,19 +275,13 @@ class PurchaseController extends Controller
          $to_dateJunk = Carbon::createFromFormat('d/m/Y',$to_date);
          $categoty_id = $request->input('categoty_id');
          $products=Category::all();
-         $buyers=Customer::where('status',1)->get();
          $today = Carbon::today(); 
-        
-         $users = DB::table('products')
+         $purchase_lists = DB::table('products')
             ->join('purchase_details', 'products.id', '=', 'purchase_details.product_id')
             ->select('products.*', 'purchase_details.date', 'purchase_details.buy_price','purchase_details.purchase_qty')
             ->whereBetween('purchase_details.date',[$from_dateJunk,$to_dateJunk])
             ->get();
-            return $users;
-       
-        if($request->input('type')==2){
-            
-            return view('backend.purchase.filter',compact('purchases','products','buyers','today','total_qty','total_price','date','product_id'));
-        }
+            return view('backend.purchase.manage',compact('products','today','purchase_lists','from_dateJunk','to_dateJunk'));
+
     }   
 }

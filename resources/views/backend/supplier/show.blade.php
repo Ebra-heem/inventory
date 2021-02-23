@@ -32,7 +32,7 @@
                </div>
                <div class="col-md-8">
                 <div class="card border-light mb-3">
-                    <div class="card-header">Purchase Information</div>
+                    <div class="card-header">Supplier Ledger</div>
                 @if(count($purchases)>0)
                 <div class="card-body">
                     <div class="table-responsive">
@@ -40,27 +40,23 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Product</th>
+                                    <th>Particulars</th>
                                     
-                                    <th>Purchase Qty</th>
-                                    <th>Cost Price</th>
-                                    <th>Total Amount</th>
-                                    <th>Paid</th>
-                                    <th>Due</th>
-                                    
+                                    <th>Debit(Dr)</th>
+                                    <th>Credit(Cr)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($purchases as $product)
                                 <tr>
                                 <td>{{$product->date}}</td>
-                                <td>{{$product->products->code}}-[{{$product->products->name}}]</td>
-                                
-                                <td>{{$product->purchase_qty}}</td>
-                                <td>{{$product->buy_price}}</td>
-                                <td>{{$product->total}}</td>
-                                <td>{{$product->paid}}</td>
-                                <td>{{$product->due}}</td>
+                                <td>{{$product->particular}}</td>
+                                @if ($product->account_type=='Dr')
+                                    <td> {{$product->amount}} </td>
+                                @else
+                                <td></td>
+                                <td>{{$product->amount}}</td> 
+                                @endif
                                 </tr>
                                 @endforeach
                             </tbody>

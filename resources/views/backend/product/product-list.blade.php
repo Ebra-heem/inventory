@@ -21,6 +21,7 @@
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                         <tr>
+                                            <th>Database ID</th>
                                             <th>Code</th>
                                             <th>Name</th>
                                             <th>unit</th>
@@ -30,6 +31,7 @@
                                     <tbody>
                                         @foreach($products as $product)
                                         <tr>
+                                        <td>{{$product->id}}</td>
                                         <td>{{$product->code}}</td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->unit}}</td>

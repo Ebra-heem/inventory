@@ -78,7 +78,8 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        $purchases = Purchase::where('supplier_id',$supplier->id)->get();
+        $purchases = SupplierDetail::where('supplier_id',$supplier->id)->get();
+        //return $purchases;
         $total = Purchase::where('supplier_id',$supplier->id)->sum('total');
         $paid = Purchase::where('supplier_id',$supplier->id)->sum('paid');
         $due = Purchase::where('supplier_id',$supplier->id)->sum('due'); 

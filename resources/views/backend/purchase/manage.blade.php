@@ -143,29 +143,46 @@
                       </div>
                 </div>
             </div>
-            @if(count($products)>0)
+            @if(count($purchase_lists)>0)
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            Date:  || Product Name:
-                            {{-- @php
-                                $product=App\Product::where('id',$product_id)->first();
-                                
-                            @endphp
-                            {{$product->name}} --}}
+                          @if (isset($from_dateJunk))
+                          <h4 class="text-center">Purchase Products List from:{{ $from_dateJunk }} to {{ $to_dateJunk }}</h4>
+                          @else
+                             <h4 class="text-center"> All Purchase Products List:</h4>
+                          @endif
+                            
+                            
                         </div>
                         
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
-                                        <tr>
-                                          
-                                        </tr>
+                                      <tr>
+                                        <td>SI.No</td>
+                                        <td>Date</td>
+                                        <td>Code</td>
+                                        <td>Name</td>
+                                        <td>Qty</td>
+                                        <td>Price</td>
+                                        <td>Amount</td>
+                                      </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                      @foreach ($purchase_lists as $item)
+                                      <tr>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->code }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->purchase_qty }} ({{ $item->unit }})</td>
+                                        <td>{{ $item->buy_price }}</td>
+                                        <td>{{ $item->purchase_qty*$item->buy_price }}</td>
+                                      </tr>
+                                      @endforeach
                                     </tbody>
                                 </table>
                             </div>
