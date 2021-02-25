@@ -36,7 +36,7 @@
                                         <td>{{$supplier->status==1?'Active':'INactive'}}</td>
                                         <td>
                                             
-                                            <a href="{{route('supplier.show',$supplier->id)}}" class="btn btn-md btn-warning"><i class="fas fa-eye"></i> View</a>
+                                            <a href="{{route('supplier.show',$supplier->id)}}" title="Details View" class="btn btn-md btn-warning"><i class="fas fa-eye"></i> View</a>
                                             <a href="{{route('supplier.edit',$supplier->id)}}" class="btn btn-md btn-success"><i class="fas fa-user-edit"></i></a>
                                             {!! Form::open(['method' => 'DELETE','route' => ['supplier.destroy', $supplier->id],'style'=>'display:inline']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}

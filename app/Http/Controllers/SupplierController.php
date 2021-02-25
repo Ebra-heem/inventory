@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ledger;
 use App\Purchase;
 use App\Supplier;
 use App\SupplierDetail;
@@ -84,7 +85,7 @@ class SupplierController extends Controller
         $paid = Purchase::where('supplier_id',$supplier->id)->sum('paid');
         $due = Purchase::where('supplier_id',$supplier->id)->sum('due'); 
         
-        return view('backend.supplier.show',compact('supplier','purchases','total','paid','due'));
+        return view('backend.supplier.show',compact('supplier','purchases','total','paid','due')); 
     }
 
     /**
@@ -160,6 +161,30 @@ class SupplierController extends Controller
             'section'=>'bill',
             'purchase_id'=>$request->purchase_id,
            ]);
+
+                       //Bs Cash on Hand Cr
+                    Ledger::create([
+                        'date'=>$request->date,
+                        'chart_account_id'=>'16',
+                        'supplier_id'=>$request->supplier_id,
+                        'particular'=>$request->particular.'(Cash Payment to Supplier)',
+                        'amount'=>$request->amount,
+                        'account_type'=>'Cr',
+                        'sale_invoice_id'=>$request->invoice_id,
+                        
+                    ]);
+            
+                      //Bs Account Payable Dr 
+                      Ledger::create([
+                        'date'=>$request->date,
+                        'chart_account_id'=>'8',
+                        'supplier_id'=>$request->supplier_id,
+                        'particular'=>$request->particular.'(Account Payable to Supplier cr)',
+                        'amount'=>$request->amount,
+                        'account_type'=>'Dr',
+                        'sale_invoice_id'=>$request->invoice_id,
+                        
+                    ]);
 
            $fee_total=0;
            $paid_total=0;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Rack;
 use App\Stock;
 use App\Product;
+use App\Category;
 use App\Purchase;
 use App\Wirehouse;
 use Illuminate\Http\Request;
@@ -21,7 +22,11 @@ class StockController extends Controller
         $stocks=Stock::all();
         $products=Product::where('status',1)->get();
         $wirehouses=Wirehouse::where('status',1)->get();
-        return view('backend.stock.index',compact('stocks','products','wirehouses'));
+
+        $categories=Category::all();
+
+        // return view('backend.stock.index',compact('categories'));
+        return view('backend.stock.index',compact('stocks','products','wirehouses','categories'));
     }
 
     /**
@@ -32,7 +37,6 @@ class StockController extends Controller
     public function create()
     {
         $products=Product::where('status',1)->get();
-
         $wirehouses=Wirehouse::where('status',1)->get();
         $racks=Rack::all();
         return view('backend.stock.create',compact('products','wirehouses','racks'));
@@ -52,8 +56,9 @@ class StockController extends Controller
         $check->update([
             'wh_qty'=>$check->wh_qty+$request->wh_qty,
             'total_qty'=>$check->wh_qty+$request->wh_qty,
-            'purchase_price'=>$request->avg_price?$request->avg_price:$check->avg_price,
+            'purchase_price'=>$request->purchase_price,
             'avg_price'=>$request->avg_price?$request->avg_price:$check->avg_price,
+            'avg'=>$request->purchase_price,
             ]);
         toastr()->warning(' Stock Qty Updated  Successfully', 'System Says');
         return redirect()->route('stock.index');
@@ -64,10 +69,12 @@ class StockController extends Controller
                'wh_qty'=>$request->wh_qty,
                'avg_price'=>$request->wh_qty*$request->purchase_price,
                'total_qty'=>$request->wh_qty,
-               'purchase_price'=>$request->purchase_price
+               'purchase_price'=>$request->purchase_price,
+               'avg'=>$request->purchase_price,
+               
            ]);
         toastr()->success('Product Stock Add  Successfully', 'System Says');
-        return redirect()->route('stock.index');
+        return redirect()->back();
        }
        
     }
@@ -129,12 +136,13 @@ class StockController extends Controller
             'wirehouse_id'=>$request->wirehouse_id,
             'wh_qty'=>$request->wh_qty,
             'purchase_price'=>$request->purchase_price,
+            'avg'=>$request->avg,
             'sr_qty'=>$request->showroom_qty,
             'sale_qty'=>$request->sale_qty,
         ]);
       
         toastr()->success('Stock Updated Successfully', 'System Says');
-        return redirect()->route('stock.index');
+        return redirect()->back();
     }
 
     /**

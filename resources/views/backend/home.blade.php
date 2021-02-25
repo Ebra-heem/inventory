@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="card">
                                 <div class="card-statistic-4">
                                     <div class="align-items-center justify-content-between">
@@ -69,16 +69,16 @@
                                                     <p class="mb-0"><span class="col-green">42%</span> Increase</p>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                                                 <div class="banner-img">
                                                     <img src="{{asset('admin/')}}/assets/img/banner/4.png" alt="">
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="row ">
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -135,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        {{-- <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="card">
                                 <div class="card-statistic-4">
                                     <div class="align-items-center justify-content-between">
@@ -147,16 +147,16 @@
                                                     <p class="mb-0"><span class="col-green">42%</span> Increase</p>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                                                 <div class="banner-img">
                                                     <img src="{{asset('admin/')}}/assets/img/banner/4.png" alt="">
                                                 </div>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="row ">
@@ -169,7 +169,7 @@
                                             <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 pr-0 pt-3">
                                                 <div class="card-content">
                                                     <h5 class="font-15">Customer</h5>
-                                                    <h2 class="mb-3 font-18">{{ '3' }}</h2>
+                                                    <h2 class="mb-3 font-18">{{ $customers }}</h2>
                                                     
                                                 </div>
                                             </div>
@@ -187,7 +187,7 @@
                                             <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 pr-0 pt-3">
                                                 <div class="card-content text-success">
                                                     <h5 class="font-15">Supplier</h5>
-                                                    <h2 class="mb-3 font-18">{{ '2' }}</h2>
+                                                    <h2 class="mb-3 font-18">{{ $suppliers }}</h2>
                                                     
                                                 </div>
                                             </div>
@@ -205,7 +205,7 @@
                                             <div class="col-lg-12 col-md-12 col-sm-6 col-xs-6 pr-0 pt-3">
                                                 <div class="card-content text-danger">
                                                     <h5 class="font-15">Purchase Invoice</h5>
-                                                    <h2 class="mb-3 font-18">{{ '5' }}</h2>
+                                                    <h2 class="mb-3 font-18">{{ $purchases }}</h2>
                                                     
                                                 </div>
                                             </div>
@@ -222,7 +222,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
                                                 <div class="card-content">
                                                     <h5 class="font-15">Sale Invoice</h5>
-                                                    <h2 class="mb-3 font-18">8</h2>
+                                                    <h2 class="mb-3 font-18">{{ $sale_invoices }}</h2>
                                                     {{-- <p class="mb-0"><span class="col-green">42%</span> Increase</p> --}}
                                                 </div>
                                             </div>

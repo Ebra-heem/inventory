@@ -34,7 +34,7 @@
                </div>
                <div class="col-md-8">
                 <div class="card border-light mb-3">
-                    <div class="card-header">Sales Information</div>
+                    <div class="card-header">Supplier Ledger</div>
                 @if(count($sales)>0)
                 <div class="card-body">
                     <div class="table-responsive">
@@ -42,21 +42,22 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
- 
-                                    <th>Total Amount</th>
-                                    <th>Paid</th>
-                                    <th>Due</th>
-                                    
+                                    <th>Particulars</th>
+                                    <th>Debit(Dr)</th>
+                                    <th>Credit(Cr)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($sales as $product)
                                 <tr>
                                 <td>{{$product->date}}</td>
-  
-                                <td>{{$product->total}}</td>
-                                <td>{{$product->paid}}</td>
-                                <td>{{$product->due}}</td>
+                                <td>{{$product->particular}}</td>
+                                @if ($product->account_type=='Dr')
+                                    <td> {{$product->amount}} </td>
+                                @else
+                                <td></td>
+                                <td>{{$product->amount}}</td> 
+                                @endif
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -8,7 +8,8 @@ class Stock extends Model
 {
     protected $table='stocks';
 
-    protected $fillable = ['product_id','wirehouse_id','wh_qty','sr_qty','sale_qty','type','avg_price','total_qty','purchase_price'];
+    protected $fillable = ['product_id','wirehouse_id','wh_qty','sr_qty','sale_qty','type',
+    'avg_price','total_qty','purchase_price','avg'];
 
     public function products()
     {

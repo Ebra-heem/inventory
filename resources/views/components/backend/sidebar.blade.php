@@ -51,7 +51,7 @@
                      
                         <li class="menu-header">Report Section</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Due Report Module</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Report Module</span></a>
                             <ul class="dropdown-menu">
     
                             <li><a class="nav-link" href="{{route('customer.all_dues')}}">Customer Dues List</a></li>
@@ -67,6 +67,15 @@
                             <li><a class="nav-link" href="{{route('employee.index')}}">Employee Manage</a></li>
                             <li><a class="nav-link" href="{{route('customer.all_dues')}}">Customer Dues List</a></li>
                             <li><a class="nav-link" href="{{route('invoice.sale')}}">Manage Comapny Invoice</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li class="menu-header">Accounts Module</li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Accounts</span></a>
+                            <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="{{route('chart_account.index')}}">Chart of Account</a></li>
+                            {{-- <li><a class="nav-link" href="{{route('chart_account.create')}}">Summary Report</a></li> --}}
                                 
                             </ul>
                         </li>

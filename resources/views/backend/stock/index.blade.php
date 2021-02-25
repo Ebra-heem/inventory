@@ -17,7 +17,34 @@
                             +ADD Stock
                           </button>
                         </div>
-                        @if(count($stocks)>0)
+                        @if (Request::routeIs('stock.index'))
+                            
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>SI.NO</th>
+                              <th>Name</th>
+                              <th>Manage</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($categories as $item)
+                            <tr>
+                              <td scope="row">{{ $item->id }}</td>
+                              <td>{{ $item->name }}</td>
+                              <td><a class="btn btn-info" href="{{ route('category.show',$item->id) }}">Manage</a></td>
+                            </tr> 
+                            @endforeach
+                            
+                            
+                          </tbody>
+                        </table>
+                            
+                        @endif
+                        
+
+                        @if(Request::routeIs('category.show'))
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
@@ -28,6 +55,7 @@
                                             <th>Name</th>
                                             <th>Total Qty</th>
                                             <th>Price</th>
+                                            <th>Avg Price</th>
                                             <th>Total Taka</th>
                                             <th>Wirehouse Qty</th>
                                             <th>Showroom Qty</th>
@@ -39,19 +67,20 @@
                                         @foreach($stocks as $product)
                                         <tr>
 
-                                        <td>{{$product->products->code}}</td>
-                                        <td>{{$product->products->name}}</td>
-                                        <td>{{$product->total_qty}} ({{$product->products->unit}})</td>
+                                        <td>{{$product->code}}</td>
+                                        <td>{{$product->name}}</td>
+                                        <td>{{$product->total_qty}} </td>
                                         <td>{{$product->purchase_price}}</td>
+                                        <td>{{$product->avg}}</td>
                                         <td>{{$product->total_qty*$product->purchase_price}}</td>
                                         
-                                        <td>{{$product->wh_qty}} ({{$product->products->unit}})</td>
+                                        <td>{{$product->wh_qty}} </td>
                                         <td>{{$product->sr_qty}}</td>
                                         <td>{{$product->sale_qty}}</td>
                                        
                                         
                                         <td>
-                                            <a href="{{route('stock.show',$product->id)}}" class="btn btn-warning">Transfer <i class="fas fa-redo"></i> Showroom</a>
+                                            <a href="{{route('stock.show',$product->id)}}" title="Transfer warehouse to Showroom" class="btn btn-warning"> <i class="fas fa-redo"></i></a>
 
                                             <a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>
 
@@ -130,7 +159,7 @@
                               </div>
                 
                               <div class="form-group">
-                                <label>Purchase Price</label>
+                                <label>Purchase Price(*)</label>
                                 <div class="input-group">
                                   <input type="text" name="purchase_price" class="form-control @error('purchase_price') is-invalid @enderror">
                                   @error('purchase_price')
@@ -140,6 +169,7 @@
                                   @enderror
                                 </div>
                               </div>
+                              
                               <div class="form-group">
                                   <label>Showroom Qty</label>
                                   <div class="input-group">
@@ -177,7 +207,7 @@
           </div>
         </div>
       </div>
-
+      @if(Request::routeIs('category.show'))
       @foreach ($stocks as $product)
                                   <!--Edit Modal -->
         <div class="modal fade" id="myEditModal{{ $product->id }}"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -252,6 +282,17 @@
                                 </div>
                               </div>
                               <div class="form-group">
+                                <label>Average Price(*)</label>
+                                <div class="input-group">
+                                  <input type="text" name="avg" value="{{ $product->avg }}" class="form-control @error('avg') is-invalid @enderror">
+                                  @error('avg')
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $message }}</strong>
+                                  </span>
+                                  @enderror
+                                </div>
+                              </div>
+                              <div class="form-group">
                                   <label>Showroom Qty</label>
                                   <div class="input-group">
                                     <input type="text" name="showroom_qty" value="{{ $product->sr_qty }}" class="form-control @error('showroom_qty') is-invalid @enderror">
@@ -278,7 +319,7 @@
                             </div>
                             <div class="card-footer pt-">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success"> <i class="fas fa-check"></i> Save</button>
+                              <button type="submit" class="btn btn-info"> <i class="fas fa-check"></i> Update</button>
                             </div>
                           </form>
                 </div>
@@ -290,7 +331,7 @@
       @endforeach
 
       </div>
-
+      @endif
 
 @endsection
 @section('extra-js')

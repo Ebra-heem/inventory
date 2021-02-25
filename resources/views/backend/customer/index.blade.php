@@ -36,8 +36,9 @@
                                         <td>{{$customer->address}}</td>
                                         <td>{{$customer->status==1?'Active':'INactive'}}</td>
                                         <td>
+                                            <a href="{{route('customer.show',$customer->id)}}" title="Details View" class="btn btn-md btn-warning"><i class="fas fa-eye"></i></a>
                                             <a href="{{route('customer.edit',$customer->id)}}" class="btn btn-md btn-success"><i class="fas fa-user-edit"></i></a> 
-                                             <a href="{{route('customer.show',$customer->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i></a>
+                                             
                                              {!! Form::open(['method' => 'DELETE','route' => ['customer.destroy', $customer->id],'style'=>'display:inline']) !!}
                                              {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}
                                               {!! Form::close() !!}

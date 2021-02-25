@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/product-transfer','StockController@transfer')->name('stock.transfer');
         //category
         Route::resource('/category','CategoryController');
+        
         //product
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
@@ -63,14 +64,15 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/all-suppliers-dues','SupplierController@allDues')->name('supplier.all_dues');
 
         Route::resource('/invoice','InvoiceController');
-
         Route::post('/invoice-sale','InvoiceController@save')->name('invoice.save');
         Route::get('/invoice-sale','InvoiceController@sale_index')->name('invoice.sale');
         Route::any('/invoice-details/{id}','InvoiceController@details');
         Route::any('/invoice-delivery/{id}','InvoiceController@delivery');
-
-
-    Route::resource('roles','RoleController');
-    Route::resource('users','UserController');
+        //Accounts Module
+        Route::resource('/chart_account','ChartAccountController');
+        
+        //user module
+        Route::resource('roles','RoleController');
+        Route::resource('users','UserController');
 
     });

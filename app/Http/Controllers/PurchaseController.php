@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Rack;
 use App\Stock;
+use App\Ledger;
 use App\Product;
 use App\Category;
 use App\Customer;
@@ -114,6 +115,8 @@ class PurchaseController extends Controller
             'account_type'=>'Dr',
             'section'=>'purchase'
         ]);
+
+
       
         foreach($final_data as $data){
             
@@ -131,22 +134,58 @@ class PurchaseController extends Controller
             $stock_check=Stock::where('product_id',$data['product_id'])->first();
             //return $stock_check;
             if(isset($stock_check)){
-                Stock::where('product_id',$data['product_id'])
+
+                $old_qty=$stock_check->wh_qty+$stock_check->sr_qty;
+                $old_value=$old_qty*$stock_check->purchase_price;
+                $new_qty=$data['qty'];
+                $new_value=$data['price']*$data['qty'];
+                
+                $total_value=$old_value+$new_value;
+                $total_qty=$old_qty+$new_qty;
+
+                $avg_price = $total_value/$total_qty;
+                
+                $stock=Stock::where('product_id',$data['product_id'])
                 ->update(array(
                     'wh_qty'=>$stock_check->wh_qty+$data['qty'],
+                    'avg'=>$avg_price,
                     'total_qty'=>$stock_check->total_qty+$data['qty'],
                 ));
             }else{
-                Stock::create([
+                $stock=Stock::create([
                     
                         'product_id' => $data['product_id'],
                         'wh_qty' => $data['qty'],
                         'total_qty' => $data['qty'],
                         'purchase_price' => $data['price'],
+                        'avg' => $data['price'],
                         'wirehouse_id'=>1,
                 ]);
             }
         }
+        
+
+        Ledger::create([
+            'date'=>$dateJunk,
+            'chart_account_id'=>'3',
+            'supplier_id'=>$supplier_id,
+            'particular'=>'Purchase Invoice',
+            'amount'=>$total,
+            'account_type'=>'Dr',
+            'purchase_id'=>$invoice->id,
+            
+        ]);
+
+        Ledger::create([
+            'date'=>$dateJunk,
+            'chart_account_id'=>'8',
+            'supplier_id'=>$supplier_id,
+            'particular'=>'Purchase Invoice',
+            'amount'=>$total,
+            'account_type'=>'Cr',
+            'purchase_id'=>$invoice->id,
+            
+        ]);
 
         toastr()->success('Purchase Invoice Save Successfully', 'System Says');
         return redirect()->route('purchase.index');

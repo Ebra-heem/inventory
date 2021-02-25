@@ -663,6 +663,7 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
 
     public static $classMap = array (
         'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
+        'App\\ChartAccount' => __DIR__ . '/../..' . '/app/ChartAccount.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Customer' => __DIR__ . '/../..' . '/app/Customer.php',
         'App\\CustomerDetail' => __DIR__ . '/../..' . '/app/CustomerDetail.php',
@@ -675,6 +676,7 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoryController.php',
+        'App\\Http\\Controllers\\ChartAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/ChartAccountController.php',
         'App\\Http\\Controllers\\CollectionController' => __DIR__ . '/../..' . '/app/Http/Controllers/CollectionController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\CustomerController' => __DIR__ . '/../..' . '/app/Http/Controllers/CustomerController.php',
@@ -699,7 +701,9 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Imports\\ProductsImport' => __DIR__ . '/../..' . '/app/Imports/ProductsImport.php',
         'App\\Invoice' => __DIR__ . '/../..' . '/app/Invoice.php',
+        'App\\Ledger' => __DIR__ . '/../..' . '/app/Ledger.php',
         'App\\Permission' => __DIR__ . '/../..' . '/app/Permission.php',
         'App\\Product' => __DIR__ . '/../..' . '/app/Product.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

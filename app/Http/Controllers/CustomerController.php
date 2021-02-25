@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ledger;
 use App\Customer;
 use App\SaleInvoice;
 use App\CustomerDetail;
@@ -80,7 +81,7 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         
-        $sales = SaleInvoice::where('customer_id',$customer->id)->get();
+        $sales = CustomerDetail::where('customer_id',$customer->id)->get(); 
         $total = SaleInvoice::where('customer_id',$customer->id)->sum('total');
         $paid = SaleInvoice::where('customer_id',$customer->id)->sum('paid');
         $due = SaleInvoice::where('customer_id',$customer->id)->sum('due'); 
@@ -160,6 +161,30 @@ class CustomerController extends Controller
             'section'=>'paid',
             'invoice_id'=>$request->invoice_id,
            ]);
+
+            //Bs Cash on Hand Dr
+           Ledger::create([
+            'date'=>$request->date,
+            'chart_account_id'=>'16',
+            'customer_id'=>$request->customer_id,
+            'particular'=>$request->particular.'(Cash received from customer)',
+            'amount'=>$request->amount,
+            'account_type'=>'Dr',
+            'sale_invoice_id'=>$request->invoice_id,
+            
+        ]);
+
+          //Bs Account receivable Cr 
+          Ledger::create([
+            'date'=>$request->date,
+            'chart_account_id'=>'9',
+            'customer_id'=>$request->customer_id,
+            'particular'=>$request->particular.'(Account receivable customer cr)',
+            'amount'=>$request->amount,
+            'account_type'=>'Cr',
+            'sale_invoice_id'=>$request->invoice_id,
+            
+        ]);
 
            $fee_total=0;
            $paid_total=0;
