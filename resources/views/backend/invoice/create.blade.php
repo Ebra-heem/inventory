@@ -112,15 +112,18 @@ function fill_unit_select_box()
                             <td><strong>Total Quantity: </strong><span id="totalQty" style="color: red; font-weight: bold">0</span> Units</td>
                             <td></td>
                             <td></td>
-                            <td class="text-right"><strong>Advanced</strong></td>
-                            <td><input class="form-control" name="advanced" id="discount" value="0" type="text"></td>
+                            <td class="text-right"><strong>Discount</strong></td>
+                            <td><input class="form-control" name="discount" id="discount" value="0" type="text"></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="text-right"></td>
-                            <td><input class="form-control" name="shipping" id="shipping" value="0" type="hidden"></td>
+                            <td class="text-right"><strong>Advanced</strong></td>
+                            <td>
+                                <input class="form-control" name="advanced" id="discount" value="0" type="text">
+                                <input class="form-control" name="shipping" id="shipping" value="0" type="hidden">
+                            </td>
                         </tr>
                         <tr>
                             <td></td>

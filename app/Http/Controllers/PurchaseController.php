@@ -294,7 +294,7 @@ class PurchaseController extends Controller
 
     public function manage()
     {
-         $products=Category::all();
+         $categories=Category::all();
         
          $today = Carbon::today();
          $purchase_lists = DB::table('products')
@@ -302,25 +302,36 @@ class PurchaseController extends Controller
             ->select('products.*', 'purchase_details.date', 'purchase_details.buy_price','purchase_details.purchase_qty')
             ->get(); 
        
-        return view('backend.purchase.manage',compact('products','today','purchase_lists'));
+        return view('backend.purchase.manage',compact('categories','today','purchase_lists'));
     }
 
     public function filter(Request $request)
     {
+        //return $request->category_id;
         $from_date = $request->input('from_date');
         $to_date = $request->input('to_date');
+
         
-         $from_dateJunk = Carbon::createFromFormat('d/m/Y',$from_date);
-         $to_dateJunk = Carbon::createFromFormat('d/m/Y',$to_date);
+        $date = str_replace('/','-', $from_date); 
+        $from_dateJunk=$date;
+        $date2 = str_replace('/','-', $to_date); 
+        $to_dateJunk=$date2;
+        $newDate = date("Y-m-d", strtotime($date));
+        $newDate2 = date("Y-m-d", strtotime($date2));
+        //return $newDate; 
+        $categories=Category::all();
+       
          $categoty_id = $request->input('categoty_id');
          $products=Category::all();
          $today = Carbon::today(); 
          $purchase_lists = DB::table('products')
             ->join('purchase_details', 'products.id', '=', 'purchase_details.product_id')
             ->select('products.*', 'purchase_details.date', 'purchase_details.buy_price','purchase_details.purchase_qty')
-            ->whereBetween('purchase_details.date',[$from_dateJunk,$to_dateJunk])
+            ->whereBetween('purchase_details.date',[$newDate,$newDate2])
+            ->whereIn('products.category_id',$request->category_id)
             ->get();
-            return view('backend.purchase.manage',compact('products','today','purchase_lists','from_dateJunk','to_dateJunk'));
+        
+            return view('backend.purchase.manage',compact('products','today','purchase_lists','from_dateJunk','to_dateJunk','categories'));
 
     }   
 }

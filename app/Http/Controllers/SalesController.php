@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sale;
 use App\Product;
+use App\Category;
 use App\Customer;
 use App\Wirehouse;
 use Carbon\Carbon;
@@ -22,23 +23,31 @@ class SalesController extends Controller
     {
         
         $today = Carbon::today();
-        $sales=SaleInvoice::whereDate('date',$today)->get();
+       // $sales=SaleInvoice::whereDate('date',$today)->get();
+        $sales_lists = DB::table('products')
+                ->join('invoice_details', 'products.id', '=', 'invoice_details.product_id')
+                ->join('sale_invoices', 'invoice_details.invoice_id', '=', 'sale_invoices.id')
+                ->select('products.*', 'sale_invoices.date', 'invoice_details.price','invoice_details.qty')
+                ->whereDate('sale_invoices.date',$today)
+                
+                ->get();
         $all_sales= DB::table('sale_invoices')->where('date',$today)->sum('total');
         $all_paid= DB::table('sale_invoices')->where('date',$today)->sum('paid');
         $all_due= DB::table('sale_invoices')->where('date',$today)->sum('due');
         
-        return view('backend.sales.index',compact('today','sales','all_sales','all_paid','all_due'));
+        return view('backend.sales.index',compact('today','sales_lists','all_sales','all_paid','all_due'));
     }
 
     public function allSales()
     {
         $sales=SaleInvoice::orderby('id','desc')->get();
+        $categories=Category::all();
         $today = Carbon::today();
         $all_sales= DB::table('sale_invoices')->sum('total');
         $all_paid= DB::table('sale_invoices')->sum('paid');
         $all_due= DB::table('sale_invoices')->sum('due');
         
-        return view('backend.sales.index',compact('today','sales','all_sales','all_paid','all_due'));
+        return view('backend.sales.index',compact('today','sales','all_sales','all_paid','all_due','categories'));
     }
 
     /**
@@ -80,8 +89,33 @@ class SalesController extends Controller
             $all_sales= DB::table('sale_invoices')->whereBetween('date', [$from, $to])->sum('total');
             $all_paid= DB::table('sale_invoices')->whereBetween('date', [$from, $to])->sum('paid');
             $all_due= DB::table('sale_invoices')->whereBetween('date', [$from, $to])->sum('due');
+
+            $from_date = $request->input('from');
+            $to_date = $request->input('to');
+    
             
-            return view('backend.sales.index',compact('today','sales','all_sales','all_paid','all_due','from','to'));
+            $date = str_replace('/','-', $from_date); 
+            $from=$date;
+            $date2 = str_replace('/','-', $to_date); 
+            $to=$date2;
+            $newDate = date("Y-m-d", strtotime($date));
+            $newDate2 = date("Y-m-d", strtotime($date2));
+            //return $newDate; 
+            $categories=Category::all();
+           
+             $categoty_id = $request->input('categoty_id');
+             $products=Category::all();
+             $today = Carbon::today(); 
+             $sales_lists = DB::table('products')
+                ->join('invoice_details', 'products.id', '=', 'invoice_details.product_id')
+                ->join('sale_invoices', 'invoice_details.invoice_id', '=', 'sale_invoices.id')
+                ->select('products.*', 'sale_invoices.date', 'invoice_details.price','invoice_details.qty')
+                ->whereBetween('sale_invoices.date',[$newDate,$newDate2])
+                ->whereIn('products.category_id',$request->category_id)
+                ->get();
+            //return $sales_lists;
+            
+            return view('backend.sales.index',compact('today','sales_lists','all_sales','all_paid','all_due','from','to'));
         
     }
 

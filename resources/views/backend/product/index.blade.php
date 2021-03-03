@@ -10,25 +10,25 @@
         <div class="section-body">
         
             <div class="row">
-              <div class="col-md-3 card">
-                <form action="{{ route('product.import') }}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <br>
-                  <br>
-                    <div class="form-group">
-                      <div class="text-left">
-                        <label  for="customFile">Excel  file Upload</label>
-                        <input type="file" name="file" class="form-control" id="customFile">
+              <!--<div class="col-md-3 card">-->
+              <!--  <form action="{{ route('product.import') }}" method="POST" enctype="multipart/form-data">-->
+              <!--    @csrf-->
+              <!--    <br>-->
+              <!--    <br>-->
+              <!--      <div class="form-group">-->
+              <!--        <div class="text-left">-->
+              <!--          <label  for="customFile">Excel  file Upload</label>-->
+              <!--          <input type="file" name="file" class="form-control" id="customFile">-->
                         
-                    </div>
-                    </div>
+              <!--      </div>-->
+              <!--      </div>-->
                 
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-primary">Upload</button>
-                    </div>
-                </form>
-              </div>
-                <div class="col-md-9">
+              <!--      <div class="form-group">-->
+              <!--        <button type="submit" class="btn btn-primary">Upload</button>-->
+              <!--      </div>-->
+              <!--  </form>-->
+              <!--</div>-->
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

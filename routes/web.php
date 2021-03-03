@@ -38,6 +38,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/all-products','ProductController@importProduct')->name('product.import');
         Route::get('/product-list/{id}','ProductController@productList')->name('product.list');
         //stock
+        Route::get('/stock-warehouse','StockController@warehouse')->name('stock.warehouse');
+        Route::post('/stock-warehouse','StockController@filter')->name('stock.filter');
+        Route::get('/stock-showroom','StockController@showroom')->name('stock.showroom');
+        Route::post('/stock-showroom','StockController@filter_sr')->name('stock.filter_sr');
+        Route::get('/stock-wh_sr','StockController@wh_sr')->name('stock.wh_sr');
+        Route::post('/stock-wh_sr','StockController@filter_wh_sr')->name('stock.filter_wh_sr');
         Route::resource('/stock','StockController');
         //purchase
         Route::get('/all-purchase','PurchaseController@allPurchase')->name('purchase.allsales');

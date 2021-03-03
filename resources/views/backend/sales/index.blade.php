@@ -12,111 +12,154 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                        <a href="{{route('sales.index')}}" class="btn btn-success ">Today Sales</a>
-
-                            <div class="ml-5">
-                                <form class="form-inline" action="{{ route('sales.store') }}" method="post">
+                    @if(Request::routeIs('sales.allsales'))
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fas fa-filter"></i>Sales Report  Fillter by Date and Category wise.
+                                
+                                </button>
+                            </h5>
+                            </div>
+                            <div>
+                                <a href="{{route('sales.index')}}" class="btn btn-success ml-3">Today Sales</a>
+                            <div class="card-body">
+                                <form action="{{ route('sales.store') }}" method="POST">
                                     @csrf
-                                    <div class="form-group mb-2 ml-2">
-                                        <label>From Date</label>
-                                        <div class="input-group">
-                                          
-                                          <input id="datepicker"  data-date-format="dd/mm/yyyy" name="from" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
-                                          @error('date')
-                                          <span class="invalid-feedback" role="alert">
-                                              <strong>{{ $message }}</strong>
-                                          </span>
-                                           @enderror
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                            <label>From Date</label>
+                                            <div class="input-group">
+                                                
+                                                <input id="datepicker"  data-date-format="dd/mm/yyyy" name="from" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
+                                                @error('date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror 
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                            <label>To Date</label>
+                                            <div class="input-group">
+                                                
+                                                <input id="datepicker2"  data-date-format="dd/mm/yyyy" name="to" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
+                                                @error('date')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-info" style="margin-top:28px;"><i class="fas fa-filter"></i>Filter</button>
                                         </div>
                                     </div>
-                                    <div class="form-group mb-2 ml-2">
-                                        <label>To Date</label>
-                                        <div class="input-group">
-                                          
-                                          <input id="datepicker"  data-date-format="dd/mm/yyyy" name="to" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
-                                          @error('date')
-                                          <span class="invalid-feedback" role="alert">
-                                              <strong>{{ $message }}</strong>
-                                          </span>
-                                           @enderror
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mb-2">Search</button>
-                                </form>
-                            </div>
-                        </div>
-                        
-                        <hr>
-                        @isset($from)
-                        <div class="card-body">
-                            <center>From {{ $from->format('d/m/Y') }} to {{ $to->format('d/m/Y') }}</center>
-                        </div>
-                        @endisset
-                        <div class="card-body">
-                            <div class="row">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>SI.NO</th>
+                                            <th>Name</th>
+                                            <th> <input type="checkbox" class="check_all"/> All Select </th>
+                                        
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($categories as $item)
+                                        <tr>
+                                            <td scope="row">{{ $item->id }}</td>
+                                            <td>{{ $item->name }}</td>
                             
-                                <div class="col-4">
-                                    @if (isset($all_sales))
-                                <h4 class="text-info">Total Sales: {{ $all_sales }}</h4>
-                                @endif
-                                </div>
-                                <div class="col-4">
-                                    @if (isset($all_sales))
-                                    <h4 class="text-success" >Total Paid: {{ $all_paid }}</h4>
-                                    @endif
-                                </div>
-                                
-                                <div class="col-4">
-                                    @if (isset($all_due))
-                                    <h4 class="text-danger">Total Due: {{ $all_sales-$all_paid }}</h4>
-                                    @endif
-                                </div>
-                                
-                            </div>
-                        </div>
-                        
-                        <hr>
-                        @if(count($sales)>0)
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
-                                    <thead>
-                                        <tr>
-                                            <th># Invoice No</th>   
-                                            <th>Customer</th>
-                                            <th>Total</th>
-                                            <th>Paid</th>
-                                            <th>Due</th>
-                                            <th>Status</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($sales as $invoice)
-                                        <tr>
-                                        <td>#00{{$invoice->id}}</td>
-                                        <td>{{$invoice->customers->name}}</td>
-                                        <td>{{$invoice->total}}</td>
-                                        <td>{{$invoice->paid}}</td>
-                                        <td>{{$invoice->due}}</td>
-                                        
-                                        @if ($invoice->status==1)
-                                        <td class="badge badge-success">Paid</td>
-                                        @else
-                                        <td class="badge badge-danger">Due</td>
-                                        @endif
-                                        
-                                        
-                                        </tr>
+                                            <td><input type="checkbox" class="custom_name" name="category_id[]" value="{{ $item->id }}"/></td>
+                                            
+                                            <td></td>
+                                        </tr> 
                                         @endforeach
-                                    </tbody>
-                                </table>
+                                        
+                                        
+                                        </tbody>
+                                    </table>
+                                        
+                                </form>
+                                </div>
+                                </div>
                             </div>
                         </div>
-                        @endif
+                    @endif
+
+                    @if(Request::routeIs('sales.store'))
+                    @if(count($sales_lists)>0)
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                  @if (isset($from))
+                                  <h4 class="text-center">Sales Products List from:{{ $from }} to {{ $to }}</h4>
+                                  @else
+                                     <h4 class="text-center"> All Sales Products List:</h4>
+                                  @endif
+                                    
+                                    
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
+                                            <thead>
+                                              <tr>
+                                                <td>SI.No</td>
+                                                <td>Date</td>
+                                                <td>Code</td>
+                                                <td>Name</td>
+                                                <td>Qty</td>
+                                                <td>Price</td>
+                                                <td>Amount</td>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              @php
+                                                  $total=0;
+                                                  $qty=0;
+                                                  $price=0;
+                                              @endphp
+                                              @foreach ($sales_lists as $item)
+                                              <tr>
+                                                <td>{{ $loop->index+1 }}</td>
+                                                <td>{{ $item->date }}</td>
+                                                <td>{{ $item->code }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $qty+=$item->qty }} ({{ $item->unit }})</td>
+                                                <td>{{ $price+=$item->price }}</td>
+                                                <td>{{ $total+=$item->qty*$item->price }}</td>
+                                              </tr>
+                                              @endforeach
+                                              <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td><b>Total </b></td>
+                                                <td><b>{{ $qty }}</b></td>
+                                                <td><b>{{ $price }}</b></td>
+                                                <td><b>{{ $total }}</b></td>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    @endif
+                    @endif
             </div>
         </div>
     </section>
@@ -135,8 +178,27 @@
   <script src="{{asset('admin/')}}/assets/bundles/datatables/export-tables/buttons.print.min.js"></script>
   <script src="{{asset('admin/')}}/assets/js/page/datatables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+  <script>
+    $(function () {
+     $("#datepicker").datepicker({ 
+           autoclose: true, 
+           todayHighlight: true
+     }).datepicker('update', new Date());
+     $("#datepicker2").datepicker({ 
+           autoclose: true, 
+           todayHighlight: true
+     }).datepicker('update', new Date());
+   });
+   </script>
 
-
- 
+  <script>
+    $(".check_all").on("click", function(){
+      
+        $(".custom_name").each(function(){
+            $(this).attr("checked", true);
+           
+        });
+    });
+  </script>
 @endsection
 

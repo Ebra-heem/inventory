@@ -22,12 +22,14 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Purchase Module</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="command"></i><span>Purchase & Stock Module</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('purchase.index')}}">Purchase Invoice</a></li>
                                 <li><a class="nav-link" href="{{route('purchase.manage')}}">All Purchase Report</a></li>
-                                
-                                <li><a class="nav-link" href="{{route('stock.index')}}">Stock  Manage</a></li>
+                                <li><a class="nav-link" href="{{route('stock.index')}}">Stock  Management</a></li>
+                                <li><a class="nav-link" href="{{route('stock.warehouse')}}">  Warehouse Report</a></li>
+                                <li><a class="nav-link" href="{{route('stock.showroom')}}">  Showroom Report</a></li>
+                                <li><a class="nav-link" href="{{route('stock.wh_sr')}}">  Warehouse + Showroom </a></li>
                               
                             </ul>
                         </li>

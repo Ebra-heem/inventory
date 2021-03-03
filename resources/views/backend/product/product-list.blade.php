@@ -24,7 +24,9 @@
                                             <th>Database ID</th>
                                             <th>Code</th>
                                             <th>Name</th>
-                                            <th>unit</th>
+                                            <th>Unit</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -35,6 +37,8 @@
                                         <td>{{$product->code}}</td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->unit}}</td>
+                                        <td>{{$product->width}}</td>
+                                        <td>{{$product->origin}}</td>
                                         
                                         <td>
                                            

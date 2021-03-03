@@ -214,6 +214,7 @@ class InvoiceController extends Controller
         $customer_id=$request->input('customer_id');
         $prices=$request->input('price');
         $quantities=$request->input('qty');
+        $discount=$request->input('discount');
         $advanced=$request->input('advanced');
         $shipping=$request->input('shipping');
         $dateJunk = Carbon::createFromFormat('d/m/Y', $request->input('date'));
@@ -262,10 +263,11 @@ class InvoiceController extends Controller
              }   
           }
 
-        $grandTotal=$total;
+        $grandTotal=$total-$discount;
         $invoice=SaleInvoice::create([
             'date'=>$dateJunk,
             'customer_id'=>$customer_id,
+            'discount'=>$discount,
             'advance'=>$advanced,
             'paid'=>$advanced,
             'total'=>$grandTotal
@@ -311,7 +313,7 @@ class InvoiceController extends Controller
             'chart_account_id'=>'9',
             'customer_id'=>$customer_id,
             'particular'=>'Sale Invoice Account Receivable',
-            'amount'=>$total,
+            'amount'=>$grandTotal,
             'account_type'=>'Dr',
             'sale_invoice_id'=>$invoice->id,
         ]);
@@ -322,7 +324,7 @@ class InvoiceController extends Controller
             'chart_account_id'=>'4',
             'customer_id'=>$customer_id,
             'particular'=>'Sale Invoice Inventory Sale',
-            'amount'=>$total,
+            'amount'=>$grandTotal,
             'account_type'=>'Cr',
             'sale_invoice_id'=>$invoice->id,
         ]);

@@ -93,7 +93,7 @@
                                               <span class="invalid-feedback" role="alert">
                                                   <strong>{{ $message }}</strong>
                                               </span>
-                                               @enderror
+                                               @enderror 
                                             </div>
                                           </div>
                                         </div>
@@ -111,30 +111,34 @@
                                             </div>
                                           </div>
                                         </div>
-                                        <input type="hidden" name="type" value="2">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                              <label>Product Name</label>
-                                              <div class="input-group">
-                                                <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
-                                                  @foreach($products as $product)
-                                                  <option value="{{ $product->id}}">{{ $product->name}}</option>
-                                                  @endforeach
-                                                </select>
-                                                @error('category_id')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                 @enderror
-                                              </div>
-                                            </div>
-                                          </div>
-                                        
                                         <div class="col-md-3">
                                             <button type="submit" class="btn btn-info" style="margin-top:28px;"><i class="fas fa-filter"></i>Filter</button>
                                         </div>
-
                                     </div>
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th>SI.NO</th>
+                                          <th>Name</th>
+                                          <th> <input type="checkbox" class="check_all"/> All Select </th>
+                                         
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        @foreach ($categories as $item)
+                                        <tr>
+                                          <td scope="row">{{ $item->id }}</td>
+                                          <td>{{ $item->name }}</td>
+                          
+                                          <td><input type="checkbox" class="custom_name" name="category_id[]" value="{{ $item->id }}"/></td>
+                                          
+                                          <td></td>
+                                        </tr> 
+                                        @endforeach
+                                        
+                                        
+                                      </tbody>
+                                    </table>
                                       
                                 </form>
                             </div>
@@ -172,17 +176,31 @@
                                       </tr>
                                     </thead>
                                     <tbody>
+                                      @php
+                                          $total=0;
+                                          $qty=0;
+                                          $price=0;
+                                      @endphp
                                       @foreach ($purchase_lists as $item)
                                       <tr>
                                         <td>{{ $loop->index+1 }}</td>
                                         <td>{{ $item->date }}</td>
                                         <td>{{ $item->code }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->purchase_qty }} ({{ $item->unit }})</td>
-                                        <td>{{ $item->buy_price }}</td>
-                                        <td>{{ $item->purchase_qty*$item->buy_price }}</td>
+                                        <td>{{ $qty+=$item->purchase_qty }} ({{ $item->unit }})</td>
+                                        <td>{{ $price+=$item->buy_price }}</td>
+                                        <td>{{ $total+=$item->purchase_qty*$item->buy_price }}</td>
                                       </tr>
                                       @endforeach
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><b>Total </b></td>
+                                        <td><b>{{ $qty }}</b></td>
+                                        <td><b>{{ $price }}</b></td>
+                                        <td><b>{{ $total }}</b></td>
+                                      </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -224,6 +242,17 @@
      }).datepicker('update', new Date());
    });
    </script>
+
+<script>
+     
+  $(".check_all").on("click", function(){
+    
+      $(".custom_name").each(function(){
+          $(this).attr("checked", true);
+         
+      });
+  });
+</script>
  
 @endsection
 

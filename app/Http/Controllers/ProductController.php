@@ -66,22 +66,61 @@ class ProductController extends Controller
         $request->validate([
             'code'=>'required|unique:products',
             'name'=>'required',
-           
+            'wh_qty'=>'required',
+            'purchase_price'=>'required',
             'unit'=>'required',
            
         ]);
-        $product= new Product();
-        $product->code=$request->input('code');
-        $product->name=$request->input('name');
-        $product->category_id=$request->input('category_id');
-        $product->width=$request->input('width');
-        $product->origin=$request->input('origin');
-        $product->unit=$request->input('unit');
-        $product->description=$request->input('description');
-        $product->status=$request->input('status');
-        $product->save();
-        toastr()->success('Product Save Successfully', 'System Says');
-        return redirect()->route('product.index');
+        // $product= new Product();
+        // $product->code=$request->input('code');
+        // $product->name=$request->input('name');
+        // $product->category_id=$request->input('category_id');
+        // $product->width=$request->input('width');
+        // $product->origin=$request->input('origin');
+        // $product->unit=$request->input('unit');
+        // $product->description=$request->input('description');
+        // $product->status=$request->input('status');
+        // $product->save();
+        
+        $product=  Product::create([
+               'code'=>$request->input('code'),
+               'name'=>$request->input('name'),
+               'category_id'=>$request->input('category_id'),
+               'unit'=>$request->input('unit'),
+               'status'=>$request->input('status'),
+               'width'=>$request->input('wh_qty'),
+               'origin'=>$request->input('purchase_price'),
+             
+           ]);
+        
+         //return $request;
+       $check=Stock::where('product_id',$product->product_id)->first();
+       if(!empty($check)){
+        $check->update([
+            'wh_qty'=>$check->wh_qty+$request->wh_qty,
+            'total_qty'=>$check->wh_qty+$request->wh_qty,
+            'purchase_price'=>$request->purchase_price,
+            'avg_price'=>$request->avg_price?$request->avg_price:$check->avg_price,
+            'avg'=>$request->purchase_price,
+            ]);
+        toastr()->warning(' Stock Qty Updated  Successfully', 'System Says');
+        return redirect()->back();
+       }else{
+           Stock::create([
+               'product_id'=>$product->id,
+               'wirehouse_id'=>$request->wirehouse_id,
+               'wh_qty'=>$request->wh_qty,
+               'avg_price'=>$request->wh_qty*$request->purchase_price,
+               'total_qty'=>$request->wh_qty,
+               'purchase_price'=>$request->purchase_price,
+               'avg'=>$request->purchase_price,
+               
+           ]);
+        toastr()->success('Product Stock Add  Successfully', 'System Says');
+        return redirect()->back();
+       }
+        // toastr()->success('Product Save Successfully', 'System Says');
+        // return redirect()->route('product.index');
     }
 
     /**
@@ -94,6 +133,7 @@ class ProductController extends Controller
     {
         //return $product;
       $product=Product::find($product->id);
+      
         $purchases=  PurchaseDetail::where('product_id',$product->id)->get();
         $total_purchase_qty=  PurchaseDetail::where('product_id',$product->id)->sum('purchase_qty');
         $total_stock_qty=  DB::table('stocks')->where('product_id',$product->id)->sum('wh_qty');
@@ -136,18 +176,52 @@ class ProductController extends Controller
     {
         
         $product= Product::find($product->id);
-        $product->code=$request->input('code');
-        $product->name=$request->input('name');
-        $product->category_id=$request->input('category_id');
-        $product->width=$request->input('width');
-        $product->origin=$request->input('origin');
-        $product->unit=$request->input('unit');
-        $product->description=$request->input('description');
-        $product->status=$request->input('status');
-        $product->save();
-        $product->save();
-        toastr()->success('Supplier Updated Successfully', 'System Says');
-        return redirect()->route('product.index');
+        $product->update([
+            'code'=>$request->input('code'),
+            'name'=>$request->input('name'),
+            'category_id'=>$request->input('category_id'),
+            'unit'=>$request->input('unit'),
+            'status'=>$request->input('status'),
+            'width'=>$request->input('wh_qty'),
+            'origin'=>$request->input('purchase_price'),
+            ]);
+         $check=Stock::where('product_id',$product->id)->first();
+       if(!empty($check)){
+        $check->update([
+            'wh_qty'=>$check->wh_qty+$request->wh_qty,
+            'total_qty'=>$check->wh_qty+$request->wh_qty,
+            'purchase_price'=>$request->purchase_price,
+            'avg_price'=>$check->wh_qty+$request->wh_qty*$request->purchase_price,
+            'avg'=>$request->purchase_price,
+            ]);
+        toastr()->warning(' Stock Qty Updated  Successfully', 'System Says');
+        return redirect()->back();
+       }else{
+           Stock::create([
+               'product_id'=>$product->id,
+               'wirehouse_id'=>$request->wirehouse_id,
+               'wh_qty'=>$request->wh_qty,
+               'avg_price'=>$request->wh_qty*$request->purchase_price,
+               'total_qty'=>$request->wh_qty,
+               'purchase_price'=>$request->purchase_price,
+               'avg'=>$request->purchase_price,
+               
+           ]);
+        toastr()->success('Product Stock Updated  Successfully', 'System Says');
+        return redirect()->back();
+       }
+        // $product->code=$request->input('code');
+        // $product->name=$request->input('name');
+        // $product->category_id=$request->input('category_id');
+        // $product->width=$request->input('width');
+        // $product->origin=$request->input('origin');
+        // $product->unit=$request->input('unit');
+        // $product->description=$request->input('description');
+        // $product->status=$request->input('status');
+        // $product->save();
+        // $product->save();
+        // toastr()->success('Product and Stock Updated Successfully', 'System Says');
+        // return redirect()->route('product.index');
     }
 
     /**

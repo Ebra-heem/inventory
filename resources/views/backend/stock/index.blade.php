@@ -13,9 +13,9 @@
                     <div class="card">
                         <div class="card-header">
                       
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            +ADD Stock
-                          </button>
+                        <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">-->
+                        <!--    +ADD Stock-->
+                        <!--  </button>-->
                         </div>
                         @if (Request::routeIs('stock.index'))
                             
@@ -82,11 +82,11 @@
                                         <td>
                                             <a href="{{route('stock.show',$product->id)}}" title="Transfer warehouse to Showroom" class="btn btn-warning"> <i class="fas fa-redo"></i></a>
 
-                                            <a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>
+                                            <!--<a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>-->
 
-                                            {!! Form::open(['method' => 'DELETE','route' => ['stock.destroy', $product->id],'style'=>'display:inline']) !!}
-                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                              {!! Form::close() !!}
+                                            <!--{!! Form::open(['method' => 'DELETE','route' => ['stock.destroy', $product->id],'style'=>'display:inline']) !!}-->
+                                            <!-- {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}-->
+                                            <!--  {!! Form::close() !!}-->
                                         </td>
                                         </tr>
 
