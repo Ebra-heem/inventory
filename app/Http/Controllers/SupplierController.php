@@ -88,6 +88,18 @@ class SupplierController extends Controller
         return view('backend.supplier.show',compact('supplier','purchases','total','paid','due')); 
     }
 
+    public function print($id)
+    {
+        $purchases = SupplierDetail::where('supplier_id',$id)->get();
+        $supplier=Supplier::find($id);
+        //return $purchases;
+        $total = Purchase::where('supplier_id',$id)->sum('total');
+        $paid = Purchase::where('supplier_id',$id)->sum('paid');
+        $due = Purchase::where('supplier_id',$id)->sum('due'); 
+        
+        return view('backend.supplier.print',compact('supplier','purchases','total','paid','due')); 
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

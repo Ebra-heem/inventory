@@ -15,7 +15,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions=Permission::all();
-        return view('permission.index',compact('permissions'));
+        return view('backend.permission.index',compact('permissions'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('permission.create');
+        return view('backend.permission.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class PermissionController extends Controller
     {
         $permission=Permission::find($id);
         
-         return view('permission.edit',compact('permission'));
+         return view('backend.permission.edit',compact('permission'));
     }
 
     /**
@@ -80,7 +80,7 @@ class PermissionController extends Controller
         $permission->display_name=$request->display_name;
         $permission->description=$request->description;
         $permission->save();
-        $notification= array('title' => 'Data Store', 'body' => 'Permission Updated');
+        toastr()->warning(' Permission Updated  Successfully', 'System Says');
         return redirect()->route('permission.index')->with("success",$notification);
     }
 
@@ -94,7 +94,7 @@ class PermissionController extends Controller
     {
         $permission=Permission::find($id);
          $permission->delete();
-        $notification= array('title' => 'Data Store', 'body' => 'Permission Updated');
-        return redirect()->route('permission.index')->with("success",$notification);
+         toastr()->danger(' Permission Deleted  Successfully', 'System Says');
+        return redirect()->route('permission.index');
     }
 }

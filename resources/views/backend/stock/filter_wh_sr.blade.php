@@ -11,6 +11,12 @@
 
     <section class="section">
         <div class="section-body">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Warehose+Showroom report</a></li>
+            </ol>
+        </nav>
             <div class="row">
                 <div class="col-12">
                     <div id="accordion">
@@ -29,35 +35,8 @@
                             <form action="{{ route('stock.filter_wh_sr') }}" method="POST">
                                 @csrf
                                     <div class="row">
-                                        {{-- <div class="col-md-4">
-                                          <div class="form-group">
-                                            <label>From Date</label>
-                                            <div class="input-group">
-                                              <input id="datepicker"  data-date-format="dd/mm/yyyy" name="date" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
-                                              @error('date')
-                                              <span class="invalid-feedback" role="alert">
-                                                  <strong>{{ $message }}</strong>
-                                              </span>
-                                               @enderror
-                                            </div>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                            <label>To Date</label>
-                                            <div class="input-group">
-                                              <input id="datepicker2"  data-date-format="dd/mm/yyyy" name="date" value="{{$today->format('d/m/Y')}}"  class="form-control @error('date') is-invalid @enderror">
-                                              @error('date')
-                                              <span class="invalid-feedback" role="alert">
-                                                  <strong>{{ $message }}</strong>
-                                              </span>
-                                               @enderror
-                                            </div>
-                                          </div>
-                                        </div> --}}
                                         
-                                        {{-- @if (Request::routeIs('stock.index')) --}}
-                            
+                          
                                         <table class="table">
                                           <thead>
                                             <tr>
@@ -85,8 +64,7 @@
                                             
                                           </tbody>
                                         </table>
-                                            
-                                        {{-- @endif --}}
+                                      
                                     </div>   
                                 </form>
                                 @endif
@@ -114,6 +92,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              @php
+                                                  $stock_total_wh=0;
+                                                  $stock_total_sr=0;
+                                              @endphp
                                                 @foreach($stocks as $product)
                                                 <tr>
         
@@ -127,20 +109,10 @@
 
                                                
                                                 <td>{{$product->wh_qty+$product->sr_qty}}</td>
-                                                
-                                                {{-- 
-                                                <td>{{$product->sale_qty}}</td> --}}
-                                               
-                                                
-                                                {{-- <td>
-                                                    <a href="{{route('stock.show',$product->id)}}" title="Transfer warehouse to Showroom" class="btn btn-warning"> <i class="fas fa-redo"></i></a>
-        
-                                                    <a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>
-        
-                                                    {!! Form::open(['method' => 'DELETE','route' => ['stock.destroy', $product->id],'style'=>'display:inline']) !!}
-                                                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                                      {!! Form::close() !!}
-                                                </td> --}}
+                                                @php
+                                                $stock_total_wh+=$product->wh_qty;
+                                                $stock_total_sr+=$product->sr_qty;
+                                            @endphp
                                                 </tr>
 
                                                 @endforeach

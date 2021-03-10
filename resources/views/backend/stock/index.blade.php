@@ -8,11 +8,17 @@
 
     <section class="section">
         <div class="section-body">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('stock.index') }}">Stocks</a></li>
+            </ol>
+        </nav>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                      
+                          <h3>Stock products list</h3>
                         <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">-->
                         <!--    +ADD Stock-->
                         <!--  </button>-->

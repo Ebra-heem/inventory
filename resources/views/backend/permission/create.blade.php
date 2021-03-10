@@ -27,34 +27,13 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="name">Name </label>
-        <input type="text" class="form-control" name="name" id="" placeholder="Ex: permission-read">
+        <input type="text" class="form-control" name="name" placeholder="Ex:permission-read">
+        <input type="hidden" class="form-control" name="guard_name" value="web">
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-        <label for="display_name">Display name</label>
-        <input type="text" class="form-control" name="display_name" id="" placeholder="Display name">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" class="form-control" name="description" id="" placeholder="Description">
-      </div>
-     </div>
-  </div>
 
-    {{--<select name="id" id="" multiple>--}}
-      {{--<option value="1">men</option>--}}
-      {{--<option value="2">men2</option>--}}
-    {{--</select>--}}
-
-        
 
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

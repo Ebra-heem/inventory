@@ -11,17 +11,44 @@
   <h3 class="text-center">Supplier Bill Payment</h3>
 </div>
   <div class="card card-primary">
-    <div class="row">
-      <div class="col-md-5">
-          @if ($errors->any())
-          <div class="alert alert-danger">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
-              </ul>
-         </div>
-      @endif
+    <div class="row card-body">
+      
+      <br>
+      <br>
+      <div class="col-md-12 ">
+        <form class="form-inline" action="{{ route('supplier.ledger') }}" method="post">
+            @csrf
+        <table>
+                <tr>
+                    <td>
+                        <input type="date" class="form-control" id="date" name="date" value="{{$today->format('Y-m-d')}}"  required="required" />
+                    </td>
+
+                    <td>
+                        
+                      <input type="text" class="form-control" name="particular" placeholder="Particulars">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="amount" placeholder="Amount">
+
+                        <input type="hidden"  value="{{ $purchase->supplier_id }}" name="supplier_id">
+                        <input type="hidden" value="{{ $purchase->id }}"  name="purchase_id"> 
+                    </td>
+                    <td>
+                                                        
+                      <select class="form-control" name="account_type" >
+                          <option value="Cr">Cr</option>
+                        </select>
+                  </td>
+                    
+                    
+                    <td><button class="btn btn-success" type="submit">+Add</button></td>
+                </tr>
+        </table>
+        </form>
+    </div>
+    <div class="col-md-12 card-footer">
+         
       <table  class="table table-striped table-bordered">
           <thead>
               <tr>
@@ -84,7 +111,9 @@
                           @endphp
                           <td>{{ $paid->amount }}</td>
                           <td>
-                              <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');"> <i class="fas fa-trash"></i> Delete</a>
+                              {{-- <a href="#" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this item?');"> 
+                               <i class="fas fa-trash"></i> Delete</a> --}}
                           </td>
                       </tr>
                       
@@ -106,40 +135,7 @@
           
       </table>
       </div>
-      <br>
-      <br>
-      <div class="col-md-5 ">
-        <form class="form-inline" action="{{ route('supplier.ledger') }}" method="post">
-            @csrf
-        <table>
-                <tr>
-                    <td>
-                        <input type="date" class="form-control" id="date" name="date" value="{{$today->format('Y-m-d')}}"  required="required" />
-                    </td>
 
-                    <td>
-                        
-                      <input type="text" class="form-control" name="particular" placeholder="Particulars">
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" name="amount" placeholder="Amount">
-
-                        <input type="hidden"  value="{{ $purchase->supplier_id }}" name="supplier_id">
-                        <input type="hidden" value="{{ $purchase->id }}"  name="purchase_id"> 
-                    </td>
-                    <td>
-                                                        
-                      <select class="form-control" name="account_type" >
-                          <option value="Cr">Cr</option>
-                        </select>
-                  </td>
-                    
-                    
-                    <td><button class="btn btn-success" type="submit">+Add</button></td>
-                </tr>
-        </table>
-        </form>
-    </div>
   </div>
 
    <!-- Modal -->

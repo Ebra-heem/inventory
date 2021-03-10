@@ -12,7 +12,6 @@
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                   <li class="breadcrumb-item"><a href="{{ route('purchase.index') }}">Purchase</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Data</li>
                 </ol>
             </nav>
             <div class="row">

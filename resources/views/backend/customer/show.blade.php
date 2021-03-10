@@ -34,7 +34,7 @@
                </div>
                <div class="col-md-8">
                 <div class="card border-light mb-3">
-                    <div class="card-header">Supplier Ledger</div>
+                    <div class="card-header">Customer Ledger <a href="{{ route('customer.print',$customer->id) }}">Print</a></div>
                 @if(count($sales)>0)
                 <div class="card-body">
                     <div class="table-responsive">

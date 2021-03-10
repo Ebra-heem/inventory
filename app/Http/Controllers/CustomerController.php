@@ -88,6 +88,18 @@ class CustomerController extends Controller
         return view('backend.customer.show',compact('customer','total','paid','due','sales'));
     }
 
+    public function print($id)
+    {
+        $sales = CustomerDetail::where('customer_id',$id)->get();
+        $customer=Customer::find($id);
+        //return $purchases;
+        $total = SaleInvoice::where('customer_id',$id)->sum('total');
+        $paid = SaleInvoice::where('customer_id',$id)->sum('paid');
+        $due = SaleInvoice::where('customer_id',$id)->sum('due'); 
+        
+        return view('backend.customer.print',compact('customer','sales','total','paid','due')); 
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

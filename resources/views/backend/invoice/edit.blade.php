@@ -11,104 +11,11 @@
   <h3 class="text-center">Customer Bill Received</h3>
 </div>
   <div class="card card-primary">
-    <div class="row">
-      <div class="col-md-5">
-          @if ($errors->any())
-          <div class="alert alert-danger">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
-              </ul>
-         </div>
-      @endif
-      <table  class="table table-striped table-bordered">
-          <thead>
-              <tr>
-              
-              <th>Date</th>
-              <th>Particulars</th>
-              <th>Amount</th>
-              <th>Taka</th>
-              </tr>
-          </thead>
+    <div class="row ">
 
-          
-          <tbody>
-              @php
-                  $fee_total=0;
-                  $less_total=0;
-                  $paid_total=0;
-              @endphp
-              <tr>
-                  <td><b>Sales:</b></td>
-              </tr>
-              @foreach ($particulars_fee as $fee)
-                  
-                      <tr>
-                          
-                          <td>{{ $fee->date }}</td>
-                          <td>{{ $fee->particular }}</td>
-                      
-                          <td>{{ $fee->amount }}</td>
-                          @php
-                              $fee_total+=$fee->amount;
-                          @endphp
-                         
-                          <td>
-                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
-                                  Sales Detail
-                              </button>
-                          </td>
-                          
-                      </tr>
-                      
-              @endforeach
-                  <tr>
-                      <td></td>
-                      <td colspan="2">a. Total</td>
-                      <td >{{ $fee_total }}</td>
-                  </tr>
-                  <tr>
-                      <td><b>Paid:</b></td>
-                  </tr>
-                  <tr>
-              
-          @foreach ($particulars_bill as $paid)  
-                      <tr>
-                      
-                          <td>{{ $paid->date }}</td>
-                          <td>{{ $paid->particular }}</td>
-                          @php
-                          $paid_total+=$paid->amount;
-                          @endphp
-                          <td>{{ $paid->amount }}</td>
-                          <td>
-                              <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');"> <i class="fas fa-trash"></i> Delete</a>
-                          </td>
-                      </tr>
-                      
-                     
-              @endforeach
-              <tr>
-                  <td></td>
-                  <td colspan="2">d.Total</td>
-                  <td>{{ $paid_total }}</td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td colspan="2">e.Total Dues</td>
-                  <td>{{ $fee_total-$paid_total }}</td>
-              </tr>
-                      
-              
-          </tbody>
-          
-      </table>
-      </div>
       <br>
       <br>
-      <div class="col-md-5 ">
+      <div class="col-md-12 card-body">
         <form class="form-inline" action="{{ route('customer.ledger') }}" method="post">
             @csrf
         <table>
@@ -140,6 +47,104 @@
         </table>
         </form>
     </div>
+    <br>
+    <br>
+    <div class="col-md-12 card-footer">
+      @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+     </div>
+  @endif
+  <table  class="table table-striped table-bordered">
+      <thead>
+          <tr>
+          
+          <th>Date</th>
+          <th>Particulars</th>
+          <th>Amount</th>
+          <th>Taka</th>
+          </tr>
+      </thead>
+
+      
+      <tbody>
+          @php
+              $fee_total=0;
+              $less_total=0;
+              $paid_total=0;
+          @endphp
+          <tr>
+              <td><b>Sales:</b></td>
+          </tr>
+          @foreach ($particulars_fee as $fee)
+              
+                  <tr>
+                      
+                      <td>{{ $fee->date }}</td>
+                      <td>{{ $fee->particular }}</td>
+                  
+                      <td>{{ $fee->amount }}</td>
+                      @php
+                          $fee_total+=$fee->amount;
+                      @endphp
+                     
+                      <td>
+                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                              Sales Detail
+                          </button>
+                      </td>
+                      
+                  </tr>
+                  
+          @endforeach
+              <tr>
+                  <td></td>
+                  <td colspan="2">a. Total</td>
+                  <td >{{ $fee_total }}</td>
+              </tr>
+              <tr>
+                  <td><b>Paid:</b></td>
+              </tr>
+              <tr>
+          
+      @foreach ($particulars_bill as $paid)  
+                  <tr>
+                  
+                      <td>{{ $paid->date }}</td>
+                      <td>{{ $paid->particular }}</td>
+                      @php
+                      $paid_total+=$paid->amount;
+                      @endphp
+                      <td>{{ $paid->amount }}</td>
+                      <td>
+                          {{-- <a href="#" class="btn btn-danger btn-sm" 
+                          onclick="return confirm('Are you sure you want to delete this item?');"> 
+                          <i class="fas fa-trash"></i> Delete</a> --}}
+                      </td>
+                  </tr>
+                  
+                 
+          @endforeach
+          <tr>
+              <td></td>
+              <td colspan="2">d.Total</td>
+              <td>{{ $paid_total }}</td>
+          </tr>
+          <tr>
+              <td></td>
+              <td colspan="2">e.Total Dues</td>
+              <td>{{ $fee_total-$paid_total }}</td>
+          </tr>
+                  
+          
+      </tbody>
+      
+  </table>
+  </div>
   </div>
 
    <!-- Modal -->

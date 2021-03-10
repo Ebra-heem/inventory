@@ -17,7 +17,9 @@
                                 <li><a class="nav-link" href="{{route('supplier.index')}}"><i class="fas fa-users"></i>Supplier Manage</a></li>
                                 <li><a class="nav-link" href="{{route('customer.index')}}"><i class="fas fa-users"></i>Customer Manage</a></li>
                                 <li><a class="nav-link" href="{{route('rack.index')}}"><i class="fas fa-cubes"></i>Rack Manage</a></li>
+                                @can('product-list')
                                 <li><a class="nav-link" href="{{route('product.index')}}"><i class="fas fa-cart-plus"></i>Product Manage</a></li>
+                                @endcan
                                 <li><a class="nav-link" href="{{route('wirehouse.index')}}"><i class="fas fa-cubes"></i>Wirehouse Manage</a></li>
                             </ul>
                         </li>
@@ -26,7 +28,9 @@
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('purchase.index')}}">Purchase Invoice</a></li>
                                 <li><a class="nav-link" href="{{route('purchase.manage')}}">All Purchase Report</a></li>
+                
                                 <li><a class="nav-link" href="{{route('stock.index')}}">Stock  Management</a></li>
+                                <li><a class="nav-link" href="{{route('transfer.list')}}">All Transfer Report</a></li>
                                 <li><a class="nav-link" href="{{route('stock.warehouse')}}">  Warehouse Report</a></li>
                                 <li><a class="nav-link" href="{{route('stock.showroom')}}">  Showroom Report</a></li>
                                 <li><a class="nav-link" href="{{route('stock.wh_sr')}}">  Warehouse + Showroom </a></li>
@@ -35,14 +39,14 @@
                         </li>
                         <li class="menu-header">Payment and Sales</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Sales Module</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="package"></i><span>Sales Module</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('invoice.index')}}"><i class="fas fa-cart-plus"></i>Sales Invoice</a></li>
                                 <li><a class="nav-link" href="{{route('sales.allsales')}}">All Sales Reports</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Payment </span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="dollar-sign"></i><span>Payment </span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{route('customer.payment')}}"><i class="fas fa-cart-plus"></i>Customer Payment</a></li>  
                             </ul>
@@ -53,7 +57,7 @@
                      
                         <li class="menu-header">Report Section</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Report Module</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="file-text"></i><span>Report Module</span></a>
                             <ul class="dropdown-menu">
     
                             <li><a class="nav-link" href="{{route('customer.all_dues')}}">Customer Dues List</a></li>
@@ -62,7 +66,7 @@
                             </ul>
                         </li>
 
-                        <li class="menu-header">Employee & Attendance</li>
+                        {{-- <li class="menu-header">Employee & Attendance</li>
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Employee</span></a>
                             <ul class="dropdown-menu">
@@ -71,10 +75,10 @@
                             <li><a class="nav-link" href="{{route('invoice.sale')}}">Manage Comapny Invoice</a></li>
                                 
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="menu-header">Accounts Module</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Accounts</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="activity"></i><span>Accounts</span></a>
                             <ul class="dropdown-menu">
                             <li><a class="nav-link" href="{{route('chart_account.index')}}">Chart of Account</a></li>
                             {{-- <li><a class="nav-link" href="{{route('chart_account.create')}}">Summary Report</a></li> --}}
@@ -84,11 +88,11 @@
 
                         <li class="menu-header">Adminastration Section</li>
                         <li class="dropdown">
-                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Users</span></a>
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Users</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
-                                <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
-                                
+                                <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>  
+                                <li><a class="nav-link" href="{{ route('permission.index') }}">Manage Permission</a></li>  
                             </ul>
                         </li>         
             </ul>

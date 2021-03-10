@@ -1,9 +1,9 @@
 <?php 
 namespace App;
 
-use Zizaco\Entrust\EntrustPermission;
+use Illuminate\Database\Eloquent\Model;
 
-class Permission extends EntrustPermission
+class Permission extends Model
 {
-	 protected $fillable=['name','description','display_name'];
+	 protected $fillable=['name','guard_name'];
 }

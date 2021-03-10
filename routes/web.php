@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/product-buy-manage','PurchaseController@manage')->name('purchase.manage');
         Route::post('/product-buy-manage','PurchaseController@filter')->name('purchase.filter');
+        Route::get('/product-transfer','StockController@transfer_list')->name('transfer.list');
+        Route::post('/filter-transfer','StockController@transfer_filter')->name('transfer.filter');
         Route::post('/product-transfer','StockController@transfer')->name('stock.transfer');
         //category
         Route::resource('/category','CategoryController');
@@ -59,6 +61,8 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::resource('/supplier','SupplierController');
         Route::post('/supplier-ledger','SupplierController@ledger')->name('supplier.ledger');
+        Route::get('/supplier-print/{id}','SupplierController@print')->name('supplier.print');
+        Route::get('/customer-print/{id}','CustomerController@print')->name('customer.print');
         Route::post('/customer-ledger','CustomerController@ledger')->name('customer.ledger');
         Route::resource('/rack','RackController');
         Route::resource('/wirehouse','WirehouseController');
@@ -80,5 +84,6 @@ Route::group(['middleware' => ['auth']], function() {
         //user module
         Route::resource('roles','RoleController');
         Route::resource('users','UserController');
+        Route::resource('permission','PermissionController');
 
     });

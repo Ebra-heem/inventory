@@ -32,7 +32,7 @@
                </div>
                <div class="col-md-8">
                 <div class="card border-light mb-3">
-                    <div class="card-header">Supplier Ledger</div>
+                    <div class="card-header">Supplier Ledger <a href="{{ route('supplier.print',$supplier->id) }}">Print</a></div>
                 @if(count($purchases)>0)
                 <div class="card-body">
                     <div class="table-responsive">
