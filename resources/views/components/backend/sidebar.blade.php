@@ -20,6 +20,10 @@
                                 @can('product-list')
                                 <li><a class="nav-link" href="{{route('product.index')}}"><i class="fas fa-cart-plus"></i>Product Manage</a></li>
                                 @endcan
+
+                                @can('product-list')
+                                <li><a class="nav-link" href="{{route('import.list')}}"><i class="fas fa-cart-plus"></i>Product Import</a></li>
+                                @endcan
                                 <li><a class="nav-link" href="{{route('wirehouse.index')}}"><i class="fas fa-cubes"></i>Wirehouse Manage</a></li>
                             </ul>
                         </li>

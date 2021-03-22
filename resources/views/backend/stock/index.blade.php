@@ -39,7 +39,7 @@
                             <tr>
                               <td scope="row">{{ $item->id }}</td>
                               <td>{{ $item->name }}</td>
-                              <td><a class="btn btn-info" href="{{ route('category.show',$item->id) }}">Manage</a></td>
+                              <td><a class="btn btn-info" href="{{ route('category.show',$item->id) }}">Products list</a></td>
                             </tr> 
                             @endforeach
                             

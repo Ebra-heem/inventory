@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2021 at 04:51 PM
+-- Generation Time: Mar 22, 2021 at 08:13 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -40,13 +40,53 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Curtain Fabrics', '2021-02-23 05:33:26', '2021-02-23 05:33:26'),
-(2, 'Sofa Fabrics', '2021-02-23 06:04:05', '2021-02-23 06:04:05'),
-(3, 'KUSHON', '2021-02-23 09:46:50', '2021-02-23 09:46:50'),
+(1, 'কার্টেন ফেব্রিক্স', '2021-02-23 05:33:26', '2021-02-23 05:33:26'),
+(2, 'সোফার ফেব্রিক্স', '2021-02-23 06:04:05', '2021-02-23 06:04:05'),
+(3, 'কুশন', '2021-02-23 09:46:50', '2021-02-23 09:46:50'),
 (4, 'Sweet Leeder', '2021-02-23 11:36:33', '2021-02-23 11:36:33'),
-(5, 'Black Out', '2021-02-23 11:37:28', '2021-02-23 11:37:28'),
-(6, 'Rexin Fabrics', '2021-02-23 11:38:17', '2021-02-23 11:38:17'),
-(7, 'Seyars Fabrics', '2021-02-23 11:39:32', '2021-02-23 11:39:32');
+(5, 'ব্লাক আউট', '2021-02-23 11:37:28', '2021-02-23 11:37:28'),
+(6, 'রেক্সিন ফেব্রিক্স', '2021-02-23 11:38:17', '2021-02-23 11:38:17'),
+(7, 'সিয়ারস ফেব্রিক্স', '2021-02-23 11:39:32', '2021-02-23 11:39:32'),
+(8, 'Test Category', '2021-03-02 14:38:22', '2021-03-02 14:38:22'),
+(9, 'টার্সেল হাতিল', '2021-03-22 15:40:06', '2021-03-22 15:40:06'),
+(10, 'আইলেট', '2021-03-22 18:42:03', '2021-03-22 18:42:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chart_accounts`
+--
+
+CREATE TABLE `chart_accounts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `account` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_master` int(4) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chart_accounts`
+--
+
+INSERT INTO `chart_accounts` (`id`, `account`, `name`, `parent_id`, `is_master`, `created_at`, `updated_at`) VALUES
+(1, 'BS', 'Assets', '0', 1, NULL, NULL),
+(2, 'IS', 'Income', '0', 1, NULL, NULL),
+(3, 'BS', 'Inventory on Hand', '1', 0, NULL, NULL),
+(4, 'IS', 'Inventory Sale', '2', 0, NULL, NULL),
+(5, 'BS', 'Liabilities', '0', 1, '2021-02-24 10:40:33', '2021-02-24 10:40:33'),
+(6, 'IS', 'Expense', '0', 1, '2021-02-24 10:43:51', '2021-02-24 10:43:51'),
+(7, 'BS', 'Equity', '0', 1, '2021-02-24 10:49:41', '2021-02-24 10:49:41'),
+(8, 'BS', 'Accounts Payable', '5', 0, '2021-02-24 11:06:38', '2021-02-24 11:06:38'),
+(9, 'BS', 'Accounts Receivable', '1', 0, '2021-02-24 11:11:37', '2021-02-24 11:11:37'),
+(10, 'BS', 'Fixed Assets', '1', 0, '2021-02-24 11:13:19', '2021-02-24 11:13:19'),
+(12, 'BS', 'Furniture', '10', 0, '2021-02-24 11:17:38', '2021-02-24 11:17:38'),
+(13, 'BS', 'Retained earnings', '7', 0, '2021-02-24 16:29:18', '2021-02-24 16:29:18'),
+(14, 'IS', 'Rent', '6', 0, '2021-02-24 16:30:21', '2021-02-24 16:30:21'),
+(15, 'IS', 'Inventory Cost', '6', 0, '2021-02-25 17:23:39', '2021-02-25 17:23:39'),
+(16, 'BS', 'Cash on Hand', '1', 0, '2021-02-25 18:55:59', '2021-02-25 18:55:59');
 
 -- --------------------------------------------------------
 
@@ -98,21 +138,15 @@ CREATE TABLE `customer_details` (
 --
 
 INSERT INTO `customer_details` (`id`, `date`, `customer_id`, `invoice_id`, `particular`, `amount`, `account_type`, `section`, `created_at`, `updated_at`) VALUES
-(6, '2021-01-26', 8, 17, 'Sale Products', '3000', 'Dr', 'sale', '2021-01-26 07:18:56', '2021-01-26 07:18:56'),
-(7, '2021-01-26', 8, 17, 'Cash payment', '2000', 'Cr', 'paid', '2021-01-26 07:22:03', '2021-01-26 07:22:03'),
-(8, '2021-02-16', 8, 17, 'Cash payment', '1000', 'Cr', 'paid', '2021-02-16 07:57:15', '2021-02-16 07:57:15'),
-(9, '2021-02-18', 8, 18, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:49:41', '2021-02-18 06:49:41'),
-(10, '2021-02-18', 8, 19, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:52:07', '2021-02-18 06:52:07'),
-(11, '2021-02-18', 8, 20, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:52:22', '2021-02-18 06:52:22'),
-(12, '2021-02-18', 8, 21, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:53:12', '2021-02-18 06:53:12'),
-(13, '2021-02-18', 8, 22, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 06:53:53', '2021-02-18 06:53:53'),
-(14, '2021-02-18', 9, 23, 'Sale Products', '3000', 'Dr', 'sale', '2021-02-18 07:04:10', '2021-02-18 07:04:10'),
-(15, '2021-02-18', 9, 24, 'Sale Products', '0', 'Dr', 'sale', '2021-02-18 07:04:22', '2021-02-18 07:04:22'),
-(16, '2021-02-18', 10, 25, 'Sale Products', '20000', 'Dr', 'sale', '2021-02-18 07:34:42', '2021-02-18 07:34:42'),
-(17, '2021-02-18', 10, 25, 'Advanced Payment', '10000', 'Cr', 'paid', '2021-02-18 07:34:42', '2021-02-18 07:34:42'),
-(18, '2021-02-18', 10, 25, 'Cash payment', '10000', 'Cr', 'paid', '2021-02-18 07:35:19', '2021-02-18 07:35:19'),
-(19, '2021-02-23', 10, 26, 'Sale Products', '52010', 'Dr', 'sale', '2021-02-23 06:17:32', '2021-02-23 06:17:32'),
-(20, '2021-02-23', 10, 26, 'Advanced Payment', '0', 'Cr', 'paid', '2021-02-23 06:17:32', '2021-02-23 06:17:32');
+(21, '2021-02-25', 10, 27, 'Sale Products', '1000', 'Dr', 'sale', '2021-02-25 17:29:03', '2021-02-25 17:29:03'),
+(22, '2021-02-25', 10, 27, 'Advanced Payment', '0', 'Cr', 'paid', '2021-02-25 17:29:03', '2021-02-25 17:29:03'),
+(23, '2021-02-25', 10, 28, 'Sale Products', '1000', 'Dr', 'sale', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(24, '2021-02-25', 10, 28, 'Advanced Payment', '0', 'Cr', 'paid', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(25, '2021-02-26', 10, 27, 'Bill payment', '500', 'Cr', 'paid', '2021-02-25 19:08:02', '2021-02-25 19:08:02'),
+(26, '2021-03-03', 8, 29, 'Sale Products', '2000', 'Dr', 'sale', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(27, '2021-03-03', 9, 30, 'Sale Products', '2000', 'Dr', 'sale', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(28, '2021-03-03', 9, 30, 'Advanced Payment', '1000', 'Cr', 'paid', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(29, '2021-03-03', 8, 29, 'Cash payment', '2000', 'Cr', 'paid', '2021-03-02 18:31:56', '2021-03-02 18:31:56');
 
 -- --------------------------------------------------------
 
@@ -202,6 +236,74 @@ CREATE TABLE `invoice_details` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `invoice_details`
+--
+
+INSERT INTO `invoice_details` (`id`, `product_id`, `invoice_id`, `price`, `qty`, `created_at`, `updated_at`) VALUES
+(23, 245, 27, '500', '1', NULL, NULL),
+(24, 850, 27, '500', '1', NULL, NULL),
+(25, 245, 28, '500', '1', NULL, NULL),
+(26, 850, 28, '500', '1', NULL, NULL),
+(27, 850, 29, '500', '5', NULL, NULL),
+(28, 245, 30, '500', '5', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ledgers`
+--
+
+CREATE TABLE `ledgers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `particular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `chart_account_id` int(10) UNSIGNED NOT NULL,
+  `supplier_id` int(10) UNSIGNED DEFAULT NULL,
+  `customer_id` int(10) UNSIGNED DEFAULT NULL,
+  `purchase_id` int(10) UNSIGNED DEFAULT NULL,
+  `sale_invoice_id` int(10) UNSIGNED DEFAULT NULL,
+  `stock_id` int(10) UNSIGNED DEFAULT NULL,
+  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ledgers`
+--
+
+INSERT INTO `ledgers` (`id`, `date`, `particular`, `description`, `chart_account_id`, `supplier_id`, `customer_id`, `purchase_id`, `sale_invoice_id`, `stock_id`, `amount`, `account_type`, `created_at`, `updated_at`) VALUES
+(1, '2021-02-25', 'Purchase Invoice', NULL, 3, 3, NULL, 26, NULL, 23, '9000', 'Dr', '2021-02-25 11:55:29', '2021-02-25 11:55:29'),
+(2, '2021-02-25', 'Purchase Invoice', NULL, 8, 3, NULL, 26, NULL, 23, '9000', 'Cr', '2021-02-25 11:55:29', '2021-02-25 11:55:29'),
+(3, '2021-02-25', 'Purchase Invoice', NULL, 3, 3, NULL, 27, NULL, 24, '12000', 'Dr', '2021-02-25 15:43:14', '2021-02-25 15:43:14'),
+(4, '2021-02-25', 'Purchase Invoice', NULL, 8, 3, NULL, 27, NULL, 24, '12000', 'Cr', '2021-02-25 15:43:14', '2021-02-25 15:43:14'),
+(6, '2021-02-25', 'Sale Invoice Account Receivable', NULL, 9, NULL, 10, NULL, 28, NULL, '1000', 'Dr', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(7, '2021-02-25', 'Sale Invoice Inventory Sale', NULL, 4, NULL, 10, NULL, 28, NULL, '1000', 'Cr', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(8, '2021-02-25', 'Sale Invoice Inventory on Hand Cr', NULL, 3, NULL, 10, NULL, 28, NULL, '870', 'Cr', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(9, '2021-02-25', 'Sale Invoice-Inventory Cost', NULL, 15, NULL, 10, NULL, 28, NULL, '870', 'Dr', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(10, '2021-02-25', 'Sale Invoice-Retained Earning', NULL, 13, NULL, 10, NULL, 28, NULL, '130', 'Cr', '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(11, '2021-02-26', 'Bill payment(Cash received from customer)', NULL, 16, NULL, 10, NULL, 27, NULL, '500', 'Dr', '2021-02-25 19:08:02', '2021-02-25 19:08:02'),
+(12, '2021-02-26', 'Bill payment(Account receivable customer cr)', NULL, 9, NULL, 10, NULL, 27, NULL, '500', 'Cr', '2021-02-25 19:08:02', '2021-02-25 19:08:02'),
+(13, '2021-02-26', 'Bill payment to Supplier(Cash Payment to Supplier)', NULL, 16, 3, NULL, NULL, NULL, NULL, '250', 'Cr', '2021-02-25 19:18:50', '2021-02-25 19:18:50'),
+(14, '2021-02-26', 'Bill payment to Supplier(Account Payable to Supplier cr)', NULL, 8, 3, NULL, NULL, NULL, NULL, '250', 'Dr', '2021-02-25 19:18:50', '2021-02-25 19:18:50'),
+(15, '2021-03-02', 'Purchase Invoice', NULL, 3, 3, NULL, 29, NULL, NULL, '5000', 'Dr', '2021-03-02 15:34:26', '2021-03-02 15:34:26'),
+(16, '2021-03-02', 'Purchase Invoice', NULL, 8, 3, NULL, 29, NULL, NULL, '5000', 'Cr', '2021-03-02 15:34:26', '2021-03-02 15:34:26'),
+(17, '2021-03-03', 'Sale Invoice Account Receivable', NULL, 9, NULL, 8, NULL, 29, NULL, '2000', 'Dr', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(18, '2021-03-03', 'Sale Invoice Inventory Sale', NULL, 4, NULL, 8, NULL, 29, NULL, '2000', 'Cr', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(19, '2021-03-03', 'Sale Invoice Inventory on Hand Cr', NULL, 3, NULL, 8, NULL, 29, NULL, '2250', 'Cr', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(20, '2021-03-03', 'Sale Invoice-Inventory Cost', NULL, 15, NULL, 8, NULL, 29, NULL, '2250', 'Dr', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(21, '2021-03-03', 'Sale Invoice-Retained Earning', NULL, 13, NULL, 8, NULL, 29, NULL, '250', 'Cr', '2021-03-02 18:27:54', '2021-03-02 18:27:54'),
+(22, '2021-03-03', 'Sale Invoice Account Receivable', NULL, 9, NULL, 9, NULL, 30, NULL, '2000', 'Dr', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(23, '2021-03-03', 'Sale Invoice Inventory Sale', NULL, 4, NULL, 9, NULL, 30, NULL, '2000', 'Cr', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(24, '2021-03-03', 'Sale Invoice Inventory on Hand Cr', NULL, 3, NULL, 9, NULL, 30, NULL, '2100', 'Cr', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(25, '2021-03-03', 'Sale Invoice-Inventory Cost', NULL, 15, NULL, 9, NULL, 30, NULL, '2100', 'Dr', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(26, '2021-03-03', 'Sale Invoice-Retained Earning', NULL, 13, NULL, 9, NULL, 30, NULL, '400', 'Cr', '2021-03-02 18:30:13', '2021-03-02 18:30:13'),
+(27, '2021-03-03', 'Cash payment(Cash received from customer)', NULL, 16, NULL, 8, NULL, 29, NULL, '2000', 'Dr', '2021-03-02 18:31:56', '2021-03-02 18:31:56'),
+(28, '2021-03-03', 'Cash payment(Account receivable customer cr)', NULL, 9, NULL, 8, NULL, 29, NULL, '2000', 'Cr', '2021-03-02 18:31:56', '2021-03-02 18:31:56');
+
 -- --------------------------------------------------------
 
 --
@@ -246,7 +348,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2021_01_26_120812_create_customer_details_table', 12),
 (29, '2021_02_22_230600_create_categories_table', 13),
 (30, '2021_02_22_233422_add_category_id_to_products', 13),
-(32, '2021_02_23_105110_add_total_qty_to_stocks', 14);
+(32, '2021_02_23_105110_add_total_qty_to_stocks', 14),
+(33, '2021_02_24_153402_create_chart_accounts_table', 15),
+(36, '2021_02_25_172042_create_ledgers_table', 16),
+(37, '2021_03_08_073343_create_transfers_table', 17);
 
 -- --------------------------------------------------------
 
@@ -314,7 +419,8 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (1, 'role-list', 'web', '2020-10-21 07:19:41', '2020-10-21 07:19:41'),
 (2, 'role-create', 'web', '2020-10-21 07:19:41', '2020-10-21 07:19:41'),
 (3, 'role-edit', 'web', '2020-10-21 07:19:41', '2020-10-21 07:19:41'),
-(4, 'role-delete', 'web', '2020-10-21 07:19:41', '2020-10-21 07:19:41');
+(4, 'role-delete', 'web', '2020-10-21 07:19:41', '2020-10-21 07:19:41'),
+(5, 'product-list', 'web', '2021-03-08 16:45:44', '2021-03-08 16:45:44');
 
 -- --------------------------------------------------------
 
@@ -327,9 +433,9 @@ CREATE TABLE `products` (
   `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) NOT NULL,
-  `width` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `unit` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `origin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -340,7 +446,7 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `width`, `unit`, `origin`, `description`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `qty`, `unit`, `price`, `description`, `status`, `created_at`, `updated_at`) VALUES
 (37, 'FVL-619-A', 'KUSHON', 3, NULL, 'meter', NULL, NULL, 1, '2021-02-23 11:13:26', '2021-02-23 11:13:26'),
 (38, 'FVL-619-B', 'KUSHON', 3, NULL, 'meter', NULL, NULL, 1, '2021-02-23 11:13:26', '2021-02-23 11:13:26'),
 (39, 'FVL-619-C', 'KUSHON', 3, NULL, 'meter', NULL, NULL, 1, '2021-02-23 11:13:26', '2021-02-23 11:13:26'),
@@ -781,7 +887,7 @@ INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `width`, `unit`, `o
 (894, 'FVL-281-G', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50'),
 (895, 'FVL-281-M', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50'),
 (896, 'FVL-282-B', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50');
-INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `width`, `unit`, `origin`, `description`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `qty`, `unit`, `price`, `description`, `status`, `created_at`, `updated_at`) VALUES
 (897, 'FVL-282-C', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50'),
 (898, 'FVL-282-D', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50'),
 (899, 'FVL-282-E', 'SEYARS FABRICS', 7, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:13:50', '2021-02-23 13:13:50'),
@@ -848,7 +954,15 @@ INSERT INTO `products` (`id`, `code`, `name`, `category_id`, `width`, `unit`, `o
 (982, 'V-3', 'REXIN FABRICS', 6, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:16:20', '2021-02-23 13:16:20'),
 (995, 'FVL-622-A', 'SWEET LEDAR', 4, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:22:12', '2021-02-23 13:22:12'),
 (996, 'FVL-622-B', 'SWEET LEDAR', 4, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:22:12', '2021-02-23 13:22:12'),
-(997, 'FVL-622-C', 'SWEET LEDAR', 4, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:22:12', '2021-02-23 13:22:12');
+(997, 'FVL-622-C', 'SWEET LEDAR', 4, NULL, 'meter', NULL, NULL, 1, '2021-02-23 13:22:12', '2021-02-23 13:22:12'),
+(1008, 'FVL-663-A', 'টার্সেল হাতিল', 9, '123', 'meter', '200', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1009, 'FVL-666-C', 'টার্সেল হাতিল', 9, '66', 'meter', '175', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1010, 'FVL-665-A', 'টার্সেল হাতিল', 9, '48', 'meter', '350', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1011, 'FVL-666-B', 'টার্সেল হাতিল', 9, '103', 'meter', '350', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1012, 'FVL-664-B', 'টার্সেল হাতিল', 9, '8', 'meter', '300', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1013, 'FVL-664-C', 'টার্সেল হাতিল', 9, '2', 'meter', '350', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1014, 'FVL-664-A', 'টার্সেল হাতিল', 9, '9', 'meter', '350', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(1015, 'FVL-666-A', 'টার্সেল হাতিল', 9, '5', 'meter', '250', NULL, 1, '2021-03-22 18:51:13', '2021-03-22 18:51:13');
 
 -- --------------------------------------------------------
 
@@ -875,7 +989,11 @@ CREATE TABLE `purchases` (
 --
 
 INSERT INTO `purchases` (`id`, `date`, `supplier_id`, `total`, `paid`, `previous_due`, `due`, `note`, `status`, `created_at`, `updated_at`) VALUES
-(25, '2021-02-23', 3, '73440', '3440', NULL, '70000', NULL, 0, '2021-02-23 14:51:35', '2021-02-23 15:44:59');
+(25, '2021-02-23', 3, '73440', '3440', NULL, '70000', NULL, 0, '2021-02-23 14:51:35', '2021-02-23 15:44:59'),
+(26, '2021-02-25', 3, '9000', '0', NULL, '9000', NULL, 0, '2021-02-25 11:55:29', '2021-02-25 11:55:29'),
+(27, '2021-02-25', 3, '12000', '0', NULL, '12000', NULL, 0, '2021-02-25 15:43:14', '2021-02-25 15:43:14'),
+(28, '2021-02-25', 3, '12000', '250', NULL, '11750', NULL, 0, '2021-02-25 15:47:00', '2021-02-25 19:18:50'),
+(29, '2021-03-02', 3, '5000', '0', NULL, '5000', NULL, 0, '2021-03-02 15:34:26', '2021-03-02 15:34:26');
 
 -- --------------------------------------------------------
 
@@ -902,7 +1020,11 @@ CREATE TABLE `purchase_details` (
 
 INSERT INTO `purchase_details` (`id`, `date`, `purchase_id`, `supplier_id`, `product_id`, `purchase_qty`, `buy_price`, `sell_price`, `created_at`, `updated_at`) VALUES
 (25, '2021-02-23', 25, 3, 853, '27.43', '450', NULL, NULL, NULL),
-(26, '2021-02-23', 25, 3, 855, '135.77', '450', NULL, NULL, NULL);
+(26, '2021-02-23', 25, 3, 855, '135.77', '450', NULL, NULL, NULL),
+(27, '2021-02-25', 26, 3, 245, '20', '450', NULL, NULL, NULL),
+(28, '2021-02-25', 27, 3, 977, '30', '400', NULL, NULL, NULL),
+(29, '2021-02-25', 28, 3, 245, '30', '400', NULL, NULL, NULL),
+(30, '2021-03-02', 29, 3, 998, '10', '500', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -966,7 +1088,8 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
 (2, 1),
 (3, 1),
-(4, 1);
+(4, 1),
+(5, 1);
 
 -- --------------------------------------------------------
 
@@ -1001,6 +1124,7 @@ CREATE TABLE `sale_invoices` (
   `advance` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `discount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paid` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `due` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0,
@@ -1008,6 +1132,16 @@ CREATE TABLE `sale_invoices` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sale_invoices`
+--
+
+INSERT INTO `sale_invoices` (`id`, `date`, `customer_id`, `advance`, `delivery_date`, `total`, `discount`, `paid`, `due`, `status`, `delivery_status`, `created_at`, `updated_at`) VALUES
+(27, '2021-02-25', 10, '0', NULL, '1000', NULL, '500', '500', 0, 0, '2021-02-25 17:29:03', '2021-02-25 19:08:02'),
+(28, '2021-02-25', 10, '0', NULL, '1000', NULL, '0', NULL, 0, 0, '2021-02-25 17:30:06', '2021-02-25 17:30:06'),
+(29, '2021-03-03', 8, '0', NULL, '2000', '500', '2000', '0', 1, 0, '2021-03-02 18:27:54', '2021-03-02 18:31:56'),
+(30, '2021-03-03', 9, '1000', NULL, '2000', '500', '1000', NULL, 0, 0, '2021-03-02 18:30:13', '2021-03-02 18:30:13');
 
 -- --------------------------------------------------------
 
@@ -1024,6 +1158,7 @@ CREATE TABLE `stocks` (
   `sr_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avg_price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `purchase_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avg` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` tinyint(191) DEFAULT 0,
   `sale_qty` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1034,14 +1169,35 @@ CREATE TABLE `stocks` (
 -- Dumping data for table `stocks`
 --
 
-INSERT INTO `stocks` (`id`, `product_id`, `wirehouse_id`, `total_qty`, `wh_qty`, `sr_qty`, `avg_price`, `purchase_price`, `type`, `sale_qty`, `created_at`, `updated_at`) VALUES
-(16, 961, 1, '148.60', '148.60', NULL, '52010', '350', 0, NULL, '2021-02-23 14:37:11', '2021-02-23 14:37:11'),
-(17, 962, 1, '164.33', '164.33', NULL, '57515.5', '350', 0, NULL, '2021-02-23 14:38:08', '2021-02-23 14:38:08'),
-(18, 963, 1, '47.60', '47.60', NULL, '16660', '350', 0, NULL, '2021-02-23 14:39:09', '2021-02-23 14:39:09'),
-(19, 850, 1, '18.28', '18.28', NULL, '8226', '450', 0, NULL, '2021-02-23 14:41:01', '2021-02-23 14:41:01'),
-(20, 851, 1, '146.20', '146.20', NULL, '65790', '450', 0, NULL, '2021-02-23 14:43:58', '2021-02-23 14:43:58'),
-(21, 853, 1, '27.43', '27.43', NULL, NULL, '450', 0, NULL, '2021-02-23 14:51:35', '2021-02-23 14:51:35'),
-(22, 855, 1, '135.77', '135.77', NULL, NULL, '450', 0, NULL, '2021-02-23 14:51:35', '2021-02-23 14:51:35');
+INSERT INTO `stocks` (`id`, `product_id`, `wirehouse_id`, `total_qty`, `wh_qty`, `sr_qty`, `avg_price`, `purchase_price`, `avg`, `type`, `sale_qty`, `created_at`, `updated_at`) VALUES
+(16, 961, 1, '148.60', '148.60', NULL, '52010', '350', NULL, 0, NULL, '2021-02-23 14:37:11', '2021-02-23 14:37:11'),
+(17, 962, 1, '164.33', '164.33', NULL, '57515.5', '350', NULL, 0, NULL, '2021-02-23 14:38:08', '2021-02-23 14:38:08'),
+(18, 963, 1, '47.60', '47.60', NULL, '16660', '350', NULL, 0, NULL, '2021-02-23 14:39:09', '2021-02-23 14:39:09'),
+(19, 850, 1, '18.28', '10.28', '1', '8226', '450', '450', 0, '7', '2021-02-23 14:41:01', '2021-03-02 18:27:54'),
+(20, 851, 1, '146.20', '146.20', NULL, '65790', '450', NULL, 0, NULL, '2021-02-23 14:43:58', '2021-02-23 14:43:58'),
+(21, 853, 1, '27.43', '27.43', NULL, NULL, '450', NULL, 0, NULL, '2021-02-23 14:51:35', '2021-02-23 14:51:35'),
+(22, 855, 1, '135.77', '135.77', NULL, NULL, '450', NULL, 0, NULL, '2021-02-23 14:51:35', '2021-02-23 14:51:35'),
+(23, 245, 1, '50', '30', '13', NULL, '450', '420', 0, '7', '2021-02-25 11:55:29', '2021-03-02 18:30:13'),
+(24, 977, 1, '30', '30', NULL, NULL, '400', NULL, 0, NULL, '2021-02-25 15:43:14', '2021-02-25 15:43:14'),
+(25, 239, 1, '20', '20', NULL, '9000', '450', '450', 0, NULL, '2021-02-25 18:44:47', '2021-02-25 18:46:31'),
+(26, 998, 1, '5', '5', '15', '1250', '250', '250', 0, NULL, '2021-03-02 14:38:57', '2021-03-22 17:53:46'),
+(27, 999, 1, '10', '10', NULL, '2000', '200', '200', 0, NULL, '2021-03-22 15:18:27', '2021-03-22 17:53:46'),
+(28, 1000, 1, '123', '123', NULL, '24600', '200', '200', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(29, 1001, 1, '66', '66', NULL, '11550', '175', '175', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(30, 1002, 1, '48', '48', NULL, '16800', '350', '350', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(31, 1003, 1, '103', '103', NULL, '36050', '350', '350', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(32, 1004, 1, '8', '8', NULL, '2400', '300', '300', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(33, 1005, 1, '2', '2', NULL, '700', '350', '350', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(34, 1006, 1, '9', '9', NULL, '3150', '350', '350', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(35, 1007, 1, '5', '5', NULL, '1250', '250', '250', 0, NULL, '2021-03-22 17:53:46', '2021-03-22 18:11:40'),
+(36, 1008, 1, NULL, '123', NULL, '24600', '200', '200', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(37, 1009, 1, NULL, '66', NULL, '11550', '175', '175', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(38, 1010, 1, NULL, '48', NULL, '16800', '350', '350', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(39, 1011, 1, NULL, '103', NULL, '36050', '350', '350', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(40, 1012, 1, NULL, '8', NULL, '2400', '300', '300', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(41, 1013, 1, NULL, '2', NULL, '700', '350', '350', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(42, 1014, 1, NULL, '9', NULL, '3150', '350', '350', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13'),
+(43, 1015, 1, NULL, '5', NULL, '1250', '250', '250', 0, NULL, '2021-03-22 18:51:13', '2021-03-22 18:51:13');
 
 -- --------------------------------------------------------
 
@@ -1091,7 +1247,35 @@ CREATE TABLE `supplier_details` (
 
 INSERT INTO `supplier_details` (`id`, `date`, `supplier_id`, `purchase_id`, `particular`, `amount`, `account_type`, `section`, `created_at`, `updated_at`) VALUES
 (12, '2021-02-23', 3, 25, 'Purchase Product', '73440', 'Dr', 'purchase', '2021-02-23 14:51:35', '2021-02-23 14:51:35'),
-(13, '2021-02-23', 3, 25, 'Advance Payment', '3440', 'Cr', 'bill', '2021-02-23 15:44:59', '2021-02-23 15:44:59');
+(13, '2021-02-23', 3, 25, 'Advance Payment', '3440', 'Cr', 'bill', '2021-02-23 15:44:59', '2021-02-23 15:44:59'),
+(14, '2021-02-25', 3, 26, 'Purchase Product', '9000', 'Dr', 'purchase', '2021-02-25 11:55:29', '2021-02-25 11:55:29'),
+(15, '2021-02-25', 3, 27, 'Purchase Product', '12000', 'Dr', 'purchase', '2021-02-25 15:43:14', '2021-02-25 15:43:14'),
+(16, '2021-02-25', 3, 28, 'Purchase Product', '12000', 'Dr', 'purchase', '2021-02-25 15:47:00', '2021-02-25 15:47:00'),
+(17, '2021-02-26', 3, 28, 'Bill payment to Supplier', '250', 'Cr', 'bill', '2021-02-25 19:18:50', '2021-02-25 19:18:50'),
+(18, '2021-03-02', 3, 29, 'Purchase Product', '5000', 'Dr', 'purchase', '2021-03-02 15:34:26', '2021-03-02 15:34:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transfers`
+--
+
+CREATE TABLE `transfers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `stock_id` int(10) UNSIGNED NOT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `qty` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `transfers`
+--
+
+INSERT INTO `transfers` (`id`, `date`, `stock_id`, `product_id`, `qty`, `created_at`, `updated_at`) VALUES
+(1, '2021-03-08', 26, 998, '5', '2021-03-08 02:19:22', '2021-03-08 02:19:22');
 
 -- --------------------------------------------------------
 
@@ -1152,6 +1336,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `chart_accounts`
+--
+ALTER TABLE `chart_accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
@@ -1188,6 +1378,12 @@ ALTER TABLE `invoices`
 -- Indexes for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ledgers`
+--
+ALTER TABLE `ledgers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1292,6 +1488,12 @@ ALTER TABLE `supplier_details`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transfers`
+--
+ALTER TABLE `transfers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -1312,7 +1514,13 @@ ALTER TABLE `wirehouses`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `chart_accounts`
+--
+ALTER TABLE `chart_accounts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1324,7 +1532,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_details`
 --
 ALTER TABLE `customer_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -1348,37 +1556,43 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT for table `invoice_details`
 --
 ALTER TABLE `invoice_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `ledgers`
+--
+ALTER TABLE `ledgers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=998;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1016;
 
 --
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `purchase_details`
 --
 ALTER TABLE `purchase_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `racks`
@@ -1402,13 +1616,13 @@ ALTER TABLE `sales`
 -- AUTO_INCREMENT for table `sale_invoices`
 --
 ALTER TABLE `sale_invoices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -1420,7 +1634,13 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT for table `supplier_details`
 --
 ALTER TABLE `supplier_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `transfers`
+--
+ALTER TABLE `transfers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

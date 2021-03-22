@@ -8,6 +8,12 @@
 
     <section class="section">
         <div class="section-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Product List</a></li>
+                </ol>
+            </nav>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -27,9 +33,15 @@
                                             <th>Unit</th>
                                             <th>Qty</th>
                                             <th>Price</th>
+                                            <th>Taka</th>
+                                            <th>Total Taka</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
+                                    @php
+                                        $t_taka=0;
+                                        
+                                    @endphp
                                     <tbody>
                                         @foreach($products as $product)
                                         <tr>
@@ -37,8 +49,10 @@
                                         <td>{{$product->code}}</td>
                                         <td>{{$product->name}}</td>
                                         <td>{{$product->unit}}</td>
-                                        <td>{{$product->width}}</td>
-                                        <td>{{$product->origin}}</td>
+                                        <td>{{$product->qty}}</td>
+                                        <td>{{$product->price}}</td>
+                                        <td>{{$product->qty*$product->price}}</td>
+                                        <td>{{$t_taka+=$product->qty*$product->price}}</td>
                                         
                                         <td>
                                            

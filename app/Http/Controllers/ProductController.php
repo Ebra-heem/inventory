@@ -44,13 +44,80 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function importList()
+    {
+        return view('backend.product.import');
+    }
     public function importProduct(Request $request){
        //return $request->file('file')->store('temp');
-        // $array = Excel::toArray(new ProductsImport, request()->file('file'));
-        // return $array;
+
+        
         try{
-            Excel::import(new ProductsImport, request()->file('file')->store('temp'));
-        //return $collection[0];
+            //Excel::import(new ProductsImport, request()->file('file')->store('temp'));
+            $products = Excel::toArray(new ProductsImport, request()->file('file'));
+            foreach ($products[0] as $product){
+               $p=Product::where('code',$product['code'])->first();
+               //return $product['qty'];
+              // return $check->id;
+               if(isset($p)){
+   
+                   $stock_check=Stock::where('product_id',$p->id)->first();
+                       if(!empty($stock_check)){
+                           //return 'if section';
+                           $stock_check->update([
+                               'wh_qty'=>$product['qty'],
+                               'total_qty'=>$product['qty'],
+                               'purchase_price'=>$product['price'],
+                               'avg_price'=>$product['qty']*$product['price'],
+                               'avg'=>$product['price'],
+                               ]);
+                       }else{
+                           //return 'else section';
+                           $pro=  Product::create([
+                               'code'=>$product['code'],
+                               'name'=>$product['name'],
+                               'category_id'=>$product['category_id'],
+                               'unit'=>$product['unit'],
+                               'status'=>1,
+                               'qty'=>$product['qty'],
+                               'price'=>$product['price'],
+                             
+                           ]);
+                           Stock::create([
+                               'product_id'=>$pro->id,
+                               'wirehouse_id'=>1,
+                               'wh_qty'=>$pro->qty,
+                               'avg_price'=>$pro->qty*$pro->price,
+                               'total_qty'=>$pro->wh_qty,
+                               'purchase_price'=>$pro->price,
+                               'avg'=>$pro->price,
+                               
+                           ]);
+                       }
+               }else{
+                   //$newProduct[]=$product;
+                   $pro=  Product::create([
+                       'code'=>$product['code'],
+                       'name'=>$product['name'],
+                       'category_id'=>$product['category_id'],
+                       'unit'=>$product['unit'],
+                       'status'=>1,
+                       'qty'=>$product['qty'],
+                       'price'=>$product['price'],
+                     
+                   ]);
+                   Stock::create([
+                       'product_id'=>$pro->id,
+                       'wirehouse_id'=>1,
+                       'wh_qty'=>$pro->qty,
+                       'avg_price'=>$pro->qty*$pro->price,
+                       'total_qty'=>$pro->wh_qty,
+                       'purchase_price'=>$pro->price,
+                       'avg'=>$pro->price,
+                       
+                   ]);
+               }
+           }
         toastr()->success('Product Upload Successfully', 'System Says');
         return back();
         }catch(\Exception $e){
@@ -66,21 +133,10 @@ class ProductController extends Controller
         $request->validate([
             'code'=>'required|unique:products',
             'name'=>'required',
-            'wh_qty'=>'required',
-            'purchase_price'=>'required',
             'unit'=>'required',
            
         ]);
-        // $product= new Product();
-        // $product->code=$request->input('code');
-        // $product->name=$request->input('name');
-        // $product->category_id=$request->input('category_id');
-        // $product->width=$request->input('width');
-        // $product->origin=$request->input('origin');
-        // $product->unit=$request->input('unit');
-        // $product->description=$request->input('description');
-        // $product->status=$request->input('status');
-        // $product->save();
+
         
         $product=  Product::create([
                'code'=>$request->input('code'),
@@ -88,8 +144,8 @@ class ProductController extends Controller
                'category_id'=>$request->input('category_id'),
                'unit'=>$request->input('unit'),
                'status'=>$request->input('status'),
-               'width'=>$request->input('wh_qty'),
-               'origin'=>$request->input('purchase_price'),
+               'qty'=>$request->input('wh_qty'),
+               'price'=>$request->input('purchase_price'),
              
            ]);
         
@@ -145,11 +201,7 @@ class ProductController extends Controller
     {
         
       $products=Product::where('category_id',$category_id)->get();
-     // return $products;
-        // $purchases=  PurchaseDetail::where('product_id',$product->id)->get();
-        // $total_purchase_qty=  PurchaseDetail::where('product_id',$product->id)->sum('purchase_qty');
-        // $total_stock_qty=  DB::table('stocks')->where('product_id',$product->id)->sum('wh_qty');
-        // $total_sale_qty=DB::table('invoice_details')->where('product_id',$product->id)->sum('qty');
+
         return view('backend.product.product-list',compact('products'));
     }
 
@@ -182,8 +234,8 @@ class ProductController extends Controller
             'category_id'=>$request->input('category_id'),
             'unit'=>$request->input('unit'),
             'status'=>$request->input('status'),
-            'width'=>$request->input('wh_qty'),
-            'origin'=>$request->input('purchase_price'),
+            'qty'=>$request->input('wh_qty'),
+            'price'=>$request->input('purchase_price'),
             ]);
          $check=Stock::where('product_id',$product->id)->first();
        if(!empty($check)){
@@ -210,18 +262,7 @@ class ProductController extends Controller
         toastr()->success('Product Stock Updated  Successfully', 'System Says');
         return redirect()->back();
        }
-        // $product->code=$request->input('code');
-        // $product->name=$request->input('name');
-        // $product->category_id=$request->input('category_id');
-        // $product->width=$request->input('width');
-        // $product->origin=$request->input('origin');
-        // $product->unit=$request->input('unit');
-        // $product->description=$request->input('description');
-        // $product->status=$request->input('status');
-        // $product->save();
-        // $product->save();
-        // toastr()->success('Product and Stock Updated Successfully', 'System Says');
-        // return redirect()->route('product.index');
+   
     }
 
     /**
