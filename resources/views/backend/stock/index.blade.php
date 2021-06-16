@@ -59,10 +59,6 @@
                                             
                                             <th>Code</th>
                                             <th>Name</th>
-                                            <th>Total Qty</th>
-                                            <th>Price</th>
-                                            <th>Avg Price</th>
-                                            <th>Total Taka</th>
                                             <th>Wirehouse Qty</th>
                                             <th>Showroom Qty</th>
                                             <th>Sale Qty</th>
@@ -75,10 +71,6 @@
 
                                         <td>{{$product->code}}</td>
                                         <td>{{$product->name}}</td>
-                                        <td>{{$product->total_qty}} </td>
-                                        <td>{{$product->purchase_price}}</td>
-                                        <td>{{$product->avg}}</td>
-                                        <td>{{$product->total_qty*$product->purchase_price}}</td>
                                         
                                         <td>{{$product->wh_qty}} </td>
                                         <td>{{$product->sr_qty}}</td>
@@ -86,13 +78,23 @@
                                        
                                         
                                         <td>
-                                            <a href="{{route('stock.show',$product->id)}}" title="Transfer warehouse to Showroom" class="btn btn-warning"> <i class="fas fa-redo"></i></a>
+                                          <!-- Example single danger button -->
+                                          <div class="btn-group">
+                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" 
+                                            aria-haspopup="true" aria-expanded="false">
+                                              Transfer
+                                            </button>
+                                            <div class="dropdown-menu">
+                                              <a href="{{route('stock.show',$product->id)}}"
+                                                title="Transfer warehouse to Showroom" class="dropdown-item s">
+                                                 <i class="fas fa-redo"></i>warehouse to Showroom</a>
 
-                                            <!--<a href="{{ route('stock.edit',$product->id) }}" title="Update Stock" data-toggle="modal" data-target="#myEditModal{{ $product->id }}" class="text-info"><em class="fa fa-2x fa-edit mr-1"></em></a>-->
-
-                                            <!--{!! Form::open(['method' => 'DELETE','route' => ['stock.destroy', $product->id],'style'=>'display:inline']) !!}-->
-                                            <!-- {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}-->
-                                            <!--  {!! Form::close() !!}-->
+                                                 <a href="{{route('stock.wh_transfer',$product->id)}}"
+                                                  title="Transfer Showroom  to warehouse" class=" dropdown-item ">
+                                                   Showroom to warehouse <i class="fas fa-undo"></i></a>
+                                            </div>
+                                          </div>
+                                           
                                         </td>
                                         </tr>
 

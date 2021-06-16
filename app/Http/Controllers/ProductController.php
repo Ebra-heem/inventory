@@ -48,6 +48,11 @@ class ProductController extends Controller
     {
         return view('backend.product.import');
     }
+
+    public function sr_importList()
+    {
+        return view('backend.product.sr_import');
+    }
     public function importProduct(Request $request){
        //return $request->file('file')->store('temp');
 
@@ -55,15 +60,16 @@ class ProductController extends Controller
         try{
             //Excel::import(new ProductsImport, request()->file('file')->store('temp'));
             $products = Excel::toArray(new ProductsImport, request()->file('file'));
+            //return $products;
             foreach ($products[0] as $product){
                $p=Product::where('code',$product['code'])->first();
-               //return $product['qty'];
+               //return $p;
               // return $check->id;
                if(isset($p)){
    
                    $stock_check=Stock::where('product_id',$p->id)->first();
                        if(!empty($stock_check)){
-                           //return 'if section';
+                           //return 'if product already been  stock';
                            $stock_check->update([
                                'wh_qty'=>$product['qty'],
                                'total_qty'=>$product['qty'],
@@ -72,8 +78,8 @@ class ProductController extends Controller
                                'avg'=>$product['price'],
                                ]);
                        }else{
-                           //return 'else section';
-                           $pro=  Product::create([
+                           //return 'if product not in stocks table but product table exist';
+                           $p->update([
                                'code'=>$product['code'],
                                'name'=>$product['name'],
                                'category_id'=>$product['category_id'],
@@ -125,6 +131,81 @@ class ProductController extends Controller
         }
 
         
+    }
+
+    public function sr_importProduct(Request $request)
+    {
+        try{
+        //return $request->file('file')->store('temp');
+        $products = Excel::toArray(new ProductsImport, request()->file('file'));
+        //return $products;
+        foreach ($products[0] as $product){
+            $p=Product::where('code',$product['code'])->first();
+            //return $p;
+           // return $check->id;
+            if(isset($p)){
+
+                $stock_check=Stock::where('product_id',$p->id)->first();
+                    if(!empty($stock_check)){
+                        //return 'if product already been  stock';
+                        $stock_check->update([
+                            'sr_qty'=>$product['qty'],
+                            'purchase_price'=>$product['price'],
+                            'avg_price'=>$product['qty']*$product['price'],
+                            'avg'=>$product['price'],
+                            ]);
+                    }else{
+                        //return 'if product code not exist in stocks table but exist on products table then product will be updated and stock will created';
+                        $p->update([
+                            'code'=>$product['code'],
+                            'name'=>$product['name'],
+                            'category_id'=>$product['category_id'],
+                            'unit'=>$product['unit'],
+                            'status'=>1,
+                            'qty'=>$product['qty'],
+                            'price'=>$product['price'],
+                          
+                        ]);
+                        Stock::create([
+                            'product_id'=>$p->id,
+                            'wirehouse_id'=>1,
+                            'sr_qty'=>$p->qty,
+                            'avg_price'=>$p->qty*$p->price,
+
+                            'purchase_price'=>$p->price,
+                            'avg'=>$p->price,
+                            
+                        ]);
+                    }
+            }else{
+                //$newProduct[]=$product;
+                $pro=  Product::create([
+                    'code'=>$product['code'],
+                    'name'=>$product['name'],
+                    'category_id'=>$product['category_id'],
+                    'unit'=>$product['unit'],
+                    'status'=>1,
+                    'qty'=>$product['qty'],
+                    'price'=>$product['price'],
+                  
+                ]);
+                Stock::create([
+                    'product_id'=>$pro->id,
+                    'wirehouse_id'=>1,
+                    'sr_qty'=>$pro->qty,
+                    'avg_price'=>$pro->qty*$pro->price,
+                    'purchase_price'=>$pro->price,
+                    'avg'=>$pro->price,
+                    
+                ]);
+            }
+        }
+     toastr()->success('Showroom Product Upload Successfully', 'System Says');
+     return back();
+     }catch(\Exception $e){
+         return $e->getMessage();
+     }
+
     }
 
     public function store(Request $request)

@@ -165,27 +165,27 @@ class PurchaseController extends Controller
         }
         
 
-        Ledger::create([
-            'date'=>$dateJunk,
-            'chart_account_id'=>'3',
-            'supplier_id'=>$supplier_id,
-            'particular'=>'Purchase Invoice',
-            'amount'=>$total,
-            'account_type'=>'Dr',
-            'purchase_id'=>$invoice->id,
+        // Ledger::create([
+        //     'date'=>$dateJunk,
+        //     'chart_account_id'=>'3',
+        //     'supplier_id'=>$supplier_id,
+        //     'particular'=>'Purchase Invoice',
+        //     'amount'=>$total,
+        //     'account_type'=>'Dr',
+        //     'purchase_id'=>$invoice->id,
             
-        ]);
+        // ]);
 
-        Ledger::create([
-            'date'=>$dateJunk,
-            'chart_account_id'=>'8',
-            'supplier_id'=>$supplier_id,
-            'particular'=>'Purchase Invoice',
-            'amount'=>$total,
-            'account_type'=>'Cr',
-            'purchase_id'=>$invoice->id,
+        // Ledger::create([
+        //     'date'=>$dateJunk,
+        //     'chart_account_id'=>'8',
+        //     'supplier_id'=>$supplier_id,
+        //     'particular'=>'Purchase Invoice',
+        //     'amount'=>$total,
+        //     'account_type'=>'Cr',
+        //     'purchase_id'=>$invoice->id,
             
-        ]);
+        // ]);
 
         toastr()->success('Purchase Invoice Save Successfully', 'System Says');
         return redirect()->route('purchase.index');

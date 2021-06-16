@@ -32,9 +32,22 @@ class HomeController extends Controller
        // return $today->format('d/m/Y');
         $dateJunk = $today->format('Y-m-d');
         //return $dateJunk;
-        $today_total=DB::table('purchases')->whereDate('date',$dateJunk)->sum('total');
-        $today_paid=DB::table('purchases')->whereDate('date',$dateJunk)->sum('paid');
-        $today_due=DB::table('purchases')->whereDate('date',$dateJunk)->sum('due');
+        $today_purchase=DB::table('purchases')->whereDate('date',$dateJunk)->sum('total');
+        $today_purchase_paid=DB::table('purchases')->whereDate('date',$dateJunk)->sum('paid');
+        $today_purchase_due=DB::table('purchases')->whereDate('date',$dateJunk)->sum('due');
+
+        $today_sale=DB::table('sale_invoices')->whereDate('date',$dateJunk)->sum('total');
+        $today_sale_paid=DB::table('sale_invoices')->whereDate('date',$dateJunk)->sum('paid');
+        $today_sale_due=DB::table('sale_invoices')->whereDate('date',$dateJunk)->sum('due');
+
+        $today_data=[
+            'today_purchase'=>$today_purchase,
+            'today_purchase_paid'=>$today_purchase_paid,
+            'today_purchase_due'=>$today_purchase_due,
+            'today_sale'=>$today_sale,
+            'today_sale_paid'=>$today_sale_paid,
+            'today_sale_due'=>$today_sale_due,
+        ];
 
         //total purchase
         $total=DB::table('purchases')->sum('total');
@@ -48,7 +61,7 @@ class HomeController extends Controller
         //return $suppliers;
    
         //toastr()->success('Have fun storming the castle!', 'Miracle Max Says');
-        return view('backend.home',compact('today_total','today_paid',
-        'today_due','total','paid','due','customers','purchases','sale_invoices','suppliers'));
+        return view('backend.home',compact(
+        'today_data','total','paid','due','customers','purchases','sale_invoices','suppliers'));
     }
 }

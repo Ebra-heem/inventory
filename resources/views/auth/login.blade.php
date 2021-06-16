@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="https://admission.baiust.edu.bd/frontend/icons/logo.png" type="image/x-icon">
+    <link rel='shortcut icon' type='image/x-icon' href='{{asset('admin/')}}/assets/img/favicon.ico' />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/fonts/icomoon/style.css">
     <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/owl.carousel.min.css">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="https://www.baiustserver.com/login_pages/admin_page/css/style.css">
-    <title>FABRIC | VIEW</title>
+    <title>FABRIC | VIEW</title> 
 </head>
 
 <body>

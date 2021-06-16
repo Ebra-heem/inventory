@@ -10,9 +10,18 @@
 
     <section class="section">
         <div class="section-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('customer.index') }}">Customers</a></li>
+                </ol>
+            </nav>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h4>All Customer Due List</h4>
+                        </div>
                         @if(count($sales)>0)
                         <div class="card-body">
                             <div class="table-responsive">
@@ -27,9 +36,12 @@
                                             <th>Paid</th>
                                             <th>Due</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                   
                                         </tr>
                                     </thead>
+                                    @php
+                                        $due_total=0;
+                                    @endphp
                                     <tbody>
                                         @foreach($sales as $invoice)
                                         <tr>
@@ -39,25 +51,25 @@
                                         <td>{{$invoice->customers->name}}</td>
                                         <td>{{$invoice->total}}</td>
                                         <td>{{$invoice->paid}}</td>
-                                        <td>{{$invoice->due}}</td>
+                                        <td>{{$due_total+=$invoice->total-$invoice->paid}}</td>
                                         
                                         @if ($invoice->status==1)
                                         <td class="badge badge-success">Paid</td>
                                         @else
                                         <td class="badge badge-danger">Due</td>
                                         @endif
-                                        
-                                        <td>
-                                            <a href="{{url('/invoice-details',$invoice->id)}}" class="btn btn-md btn-warning"><i class="fas fa-print"></i>Print</a>
-                                            <a href="{{route('invoice.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Edit</a>
-                                            
-                                            {!! Form::open(['method' => 'DELETE','route' => ['invoice.destroy', $invoice->id],'style'=>'display:inline']) !!}
-                                            {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}
-                                             {!! Form::close() !!}
-                                        </td>
+
                                         </tr>
                                         @endforeach
                                     </tbody>
+                                    <tr>
+                                        <td>Total:</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{ $due_total }}</td>
+                                        <td></td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>

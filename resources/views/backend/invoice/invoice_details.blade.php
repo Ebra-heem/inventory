@@ -86,25 +86,41 @@
                                           </td>
                                         </tr>
                                         @endforeach
-                                  
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td>Total</td>
-                                        <td></td>
-                                        <td>{{$invoice->total}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td>Advance</td>
-                                        <td></td>
-                                        <td>{{$invoice->advance}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td>Due</td>
-                                        <td></td>
-                                        <td>{{$invoice->total-$invoice->advance-$invoice->paid}}</td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Discount</td>
+                                            <td></td>
+                                            <td>{{$discount=$invoice->discount}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td>{{$total=$invoice->total}}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Advance</td>
+                                            <td></td>
+                                            <td>{{$advance=$invoice->advance}}</td>
+                                        </tr>
+                                        @php
+                                        //advance =paid amount
+                                        // if($advance>0){
+                                        //     $due=$total-$advance;
+                                        // }else{
+                                           
+                                        // }
+                                        $due=$total-$invoice->paid;  
+                                            
+                                        @endphp
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td>Due</td>
+                                            <td></td>
+                                            <td>{{$due}}</td>
+                                        </tr>
                                 </tbody>
                             </table>
                             <p><b>N.B Advance 75%, Goods Once sold are not Returnable.</b></p>

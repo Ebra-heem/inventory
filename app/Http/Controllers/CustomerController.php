@@ -149,9 +149,18 @@ class CustomerController extends Controller
     {
         
         $sales=SaleInvoice::where('status',0)->orderby('id','desc')->get();
-        $all_due= DB::table('sale_invoices')->sum('due');
+      
 
-        return view('backend.customer.all_dues',compact('sales','all_due'));
+        return view('backend.customer.all_dues',compact('sales'));
+    }
+
+    public function allPaid()
+    {
+        
+        $sales=SaleInvoice::where('status',1)->orderby('id','desc')->get();
+        $all_paid= DB::table('sale_invoices')->sum('paid');
+
+        return view('backend.customer.all_paid',compact('sales','all_paid'));
     }
 
     public function ledger(Request $request)
@@ -214,7 +223,7 @@ class CustomerController extends Controller
         SaleInvoice::where('id',$request->invoice_id)
         ->update(['total'=>$fee_total,'paid'=>$paid_total,'due'=>$fee_total-$paid_total,'status'=>($fee_total==$paid_total)?1:0]);
 
-        toastr()->success('Supplier Bill Save Successfully', 'System Says');
+        toastr()->success('Customer Bill Save Successfully', 'System Says');
         return redirect()->back();
     }
 }

@@ -21,14 +21,11 @@
                                     <thead>
                                         <tr>
                                             <th># Invoice No</th>
-                                            
                                             <th>Customer</th>
-
                                             <th>Total</th>
                                             <th>Paid</th>
                                             <th>Payment Status</th>
                                             <th>Due</th>
-                                            
                                             <th>Delivery Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -47,7 +44,7 @@
                                         @else
                                         <td class="badge badge-danger">Due</td>
                                         @endif
-                                        <td>{{$invoice->due}}</td>
+                                        <td>{{$invoice->total-$invoice->paid}}</td>
                                         
                                         
 
@@ -59,7 +56,7 @@
                                         
                                         <td>
                                             <a href="{{url('/invoice-details',$invoice->id)}}" class="btn btn-md btn-warning"><i class="fas fa-print"></i>Print</a>
-                                            <a href="{{route('invoice.edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i>Bill Received</a>
+                                            <a href="{{route('invoice.invoice_edit',$invoice->id)}}" class="btn btn-md btn-info"><i class="fas fa-edit"></i>Invoice Edit</a>
                                             
                                             {!! Form::open(['method' => 'DELETE','route' => ['invoice.destroy', $invoice->id],'style'=>'display:inline']) !!}
                                             {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}

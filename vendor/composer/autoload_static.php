@@ -24,8 +24,8 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
@@ -164,6 +164,7 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         ),
         'R' => 
         array (
+            'RenatoMarinho\\LaravelPageSpeed\\' => 31,
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
@@ -183,6 +184,7 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         ),
         'O' => 
         array (
+            'OwenIt\\Auditing\\' => 16,
             'Opis\\Closure\\' => 13,
         ),
         'N' => 
@@ -414,6 +416,10 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-permission/src',
         ),
+        'RenatoMarinho\\LaravelPageSpeed\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -466,6 +472,10 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
+        'OwenIt\\Auditing\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/owen-it/laravel-auditing/src',
         ),
         'Opis\\Closure\\' => 
         array (
@@ -3763,6 +3773,38 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'Opis\\Closure\\SecurityProvider' => __DIR__ . '/..' . '/opis/closure/src/SecurityProvider.php',
         'Opis\\Closure\\SelfReference' => __DIR__ . '/..' . '/opis/closure/src/SelfReference.php',
         'Opis\\Closure\\SerializableClosure' => __DIR__ . '/..' . '/opis/closure/src/SerializableClosure.php',
+        'OwenIt\\Auditing\\Audit' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Audit.php',
+        'OwenIt\\Auditing\\Auditable' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Auditable.php',
+        'OwenIt\\Auditing\\AuditableObserver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/AuditableObserver.php',
+        'OwenIt\\Auditing\\AuditingServiceProvider' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/AuditingServiceProvider.php',
+        'OwenIt\\Auditing\\Auditor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Auditor.php',
+        'OwenIt\\Auditing\\Console\\AuditDriverCommand' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Console/AuditDriverCommand.php',
+        'OwenIt\\Auditing\\Console\\InstallCommand' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Console/InstallCommand.php',
+        'OwenIt\\Auditing\\Contracts\\AttributeEncoder' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/AttributeEncoder.php',
+        'OwenIt\\Auditing\\Contracts\\AttributeModifier' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/AttributeModifier.php',
+        'OwenIt\\Auditing\\Contracts\\AttributeRedactor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/AttributeRedactor.php',
+        'OwenIt\\Auditing\\Contracts\\Audit' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/Audit.php',
+        'OwenIt\\Auditing\\Contracts\\AuditDriver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/AuditDriver.php',
+        'OwenIt\\Auditing\\Contracts\\Auditable' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/Auditable.php',
+        'OwenIt\\Auditing\\Contracts\\Auditor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/Auditor.php',
+        'OwenIt\\Auditing\\Contracts\\IpAddressResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/IpAddressResolver.php',
+        'OwenIt\\Auditing\\Contracts\\UrlResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/UrlResolver.php',
+        'OwenIt\\Auditing\\Contracts\\UserAgentResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/UserAgentResolver.php',
+        'OwenIt\\Auditing\\Contracts\\UserResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Contracts/UserResolver.php',
+        'OwenIt\\Auditing\\Drivers\\Database' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Drivers/Database.php',
+        'OwenIt\\Auditing\\Encoders\\Base64Encoder' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Encoders/Base64Encoder.php',
+        'OwenIt\\Auditing\\Events\\Audited' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Events/Audited.php',
+        'OwenIt\\Auditing\\Events\\Auditing' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Events/Auditing.php',
+        'OwenIt\\Auditing\\Exceptions\\AuditableTransitionException' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Exceptions/AuditableTransitionException.php',
+        'OwenIt\\Auditing\\Exceptions\\AuditingException' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Exceptions/AuditingException.php',
+        'OwenIt\\Auditing\\Facades\\Auditor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Facades/Auditor.php',
+        'OwenIt\\Auditing\\Models\\Audit' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Models/Audit.php',
+        'OwenIt\\Auditing\\Redactors\\LeftRedactor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Redactors/LeftRedactor.php',
+        'OwenIt\\Auditing\\Redactors\\RightRedactor' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Redactors/RightRedactor.php',
+        'OwenIt\\Auditing\\Resolvers\\IpAddressResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Resolvers/IpAddressResolver.php',
+        'OwenIt\\Auditing\\Resolvers\\UrlResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Resolvers/UrlResolver.php',
+        'OwenIt\\Auditing\\Resolvers\\UserAgentResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Resolvers/UserAgentResolver.php',
+        'OwenIt\\Auditing\\Resolvers\\UserResolver' => __DIR__ . '/..' . '/owen-it/laravel-auditing/src/Resolvers/UserResolver.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/AssertionFailedError.php',
@@ -5096,6 +5138,16 @@ class ComposerStaticInit62d434cf90710ef9213ca4757a12628d
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\CollapseWhitespace' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/CollapseWhitespace.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\DeferJavascript' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/DeferJavascript.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\ElideAttributes' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/ElideAttributes.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\InlineCss' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/InlineCss.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\InsertDNSPrefetch' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/InsertDNSPrefetch.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\PageSpeed' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/PageSpeed.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\RemoveComments' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/RemoveComments.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\RemoveQuotes' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/RemoveQuotes.php',
+        'RenatoMarinho\\LaravelPageSpeed\\Middleware\\TrimUrls' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/Middleware/TrimUrls.php',
+        'RenatoMarinho\\LaravelPageSpeed\\ServiceProvider' => __DIR__ . '/..' . '/renatomarinho/laravel-page-speed/src/ServiceProvider.php',
         'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/AtRuleBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSBlockList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSBlockList.php',
         'Sabberworm\\CSS\\CSSList\\CSSList' => __DIR__ . '/..' . '/sabberworm/php-css-parser/lib/Sabberworm/CSS/CSSList/CSSList.php',

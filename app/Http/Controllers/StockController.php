@@ -144,6 +144,7 @@ class StockController extends Controller
         
          $stock_id=$request->input('stock_id');
          $product=Stock::where('id',$stock_id)->first();
+         $pro=Product::where('id',$product->product_id)->first();
         $old_sr_qty= $product->sr_qty;
          $sr_qty=$request->input('sr_qty');
          $wh_qty= $product->wh_qty-$sr_qty;
@@ -157,8 +158,36 @@ class StockController extends Controller
                'qty'=>$sr_qty,
            ]);
 
-            toastr()->success('Product Transfer Successfully', 'System Says');
-            return redirect()->route('stock.index');
+           toastr()->success('Transferred from Warehouse  to Showroom ', 'System Says');
+           return redirect()->route('category.show',$pro->category_id);
+    }
+
+    public function wh_transfer_update(Request $request)
+    {
+        
+        //return $request->all();
+        
+         $stock_id=$request->input('stock_id');
+         $product=Stock::where('id',$stock_id)->first();
+          $pro=Product::where('id',$product->product_id)->first();
+         
+        $old_sr_qty= $product->sr_qty;
+        $old_wh_qty= $product->wh_qty;
+         $sr_qty=$request->input('sr_qty');
+         $wh_qty= $product->wh_qty+$sr_qty;
+        //return $old_sr_qty-$sr_qty;
+         Stock::where('id', '=',$stock_id)
+                        ->update(array('sr_qty' =>$old_sr_qty-$sr_qty,'wh_qty'=>$wh_qty));
+        Transfer::create([
+               'date'=>Carbon::today(),
+               'product_id'=>$product->product_id,
+               'stock_id'=>$stock_id,
+               'qty'=>$sr_qty,
+               'type'=>0
+           ]);
+
+            toastr()->success('Transferred from Showroom to Warehouse ', 'System Says');
+            return redirect()->route('category.show',$pro->category_id);
     }
 
     public function transfer_list(){
@@ -207,10 +236,16 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-       
         $product= Product::where('id',$stock->product_id)->first();
        //return $stock;
         return view('backend.stock.showroom',compact('stock','product'));
+    }
+    public function wh_transfer($id)
+    {
+        
+       $stock=Stock::find($id);
+       $product= Product::where('id',$stock->product_id)->first();
+        return view('backend.stock.wh_transfer',compact('stock','product'));
     }
 
     /**
@@ -256,5 +291,11 @@ class StockController extends Controller
     public function destroy(Stock $stock)
     {
         //
+    }
+
+    public function summary()
+    {
+        $categories=Category::all();
+        return view('backend.stock.summary',compact('categories'));
     }
 }

@@ -18,7 +18,7 @@ Route::get('/', function () {
    //return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 
 
@@ -38,15 +38,21 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('/product','ProductController');
         Route::get('/all-products','ProductController@allProduct');
         Route::get('/import-products','ProductController@importList')->name('import.list');
+        Route::get('/sr_import-products','ProductController@sr_importList')->name('sr_import.list');
         Route::post('/all-products','ProductController@importProduct')->name('product.import');
+        Route::post('/all-sr_products','ProductController@sr_importProduct')->name('product.sr_import');
         Route::get('/product-list/{id}','ProductController@productList')->name('product.list');
         //stock
+        Route::get('/warehouse-summary','StockController@summary')->name('warehouse.summary');
         Route::get('/stock-warehouse','StockController@warehouse')->name('stock.warehouse');
         Route::post('/stock-warehouse','StockController@filter')->name('stock.filter');
         Route::get('/stock-showroom','StockController@showroom')->name('stock.showroom');
         Route::post('/stock-showroom','StockController@filter_sr')->name('stock.filter_sr');
         Route::get('/stock-wh_sr','StockController@wh_sr')->name('stock.wh_sr');
         Route::post('/stock-wh_sr','StockController@filter_wh_sr')->name('stock.filter_wh_sr');
+
+        Route::get('/stock-wh_transfer/{id}','StockController@wh_transfer')->name('stock.wh_transfer');
+        Route::post('/stock-wh_transfer','StockController@wh_transfer_update')->name('stock.wh_transfer_update');
         Route::resource('/stock','StockController');
         //purchase
         Route::get('/all-purchase','PurchaseController@allPurchase')->name('purchase.allsales');
@@ -72,19 +78,28 @@ Route::group(['middleware' => ['auth']], function() {
         Route::resource('/sales','SalesController');
         Route::get('/all-sales','SalesController@allSales')->name('sales.allsales');
         Route::get('/all-customers-dues','CustomerController@allDues')->name('customer.all_dues');
+        Route::get('/all-customers-paid','CustomerController@allPaid')->name('customer.all_paid');
         Route::get('/all-suppliers-dues','SupplierController@allDues')->name('supplier.all_dues');
 
         Route::resource('/invoice','InvoiceController');
         Route::post('/invoice-sale','InvoiceController@save')->name('invoice.save');
+        //add product
+        Route::post('/invoice-add','InvoiceController@add')->name('product.add');
+        Route::get('/add_item_delete/{id}','InvoiceController@delete_item')->name('add_item.delete');
         Route::get('/invoice-sale','InvoiceController@sale_index')->name('invoice.sale');
+        Route::get('/invoice-edit/{id}','InvoiceController@invoice_edit')->name('invoice.invoice_edit');
         Route::any('/invoice-details/{id}','InvoiceController@details');
         Route::any('/invoice-delivery/{id}','InvoiceController@delivery');
         //Accounts Module
         Route::resource('/chart_account','ChartAccountController');
         
         //user module
+        Route::get('/settings',[ 'as' => 'user.settings','uses'=>'UserController@settings']);
+        Route::post('/settings',[ 'as' => 'user.settings','uses'=>'UserController@postSettings']);
         Route::resource('roles','RoleController');
         Route::resource('users','UserController');
+        Route::get('/my-sales','UserController@mySale')->name('user.sale');
+
         Route::resource('permission','PermissionController');
 
     });

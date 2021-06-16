@@ -8,6 +8,12 @@
 
     <section class="section">
         <div class="section-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('supplier.index') }}">Suppliers</a></li>
+                </ol>
+            </nav>
             <div class="row">
                 <div class="col-12">
                     <div class="card">

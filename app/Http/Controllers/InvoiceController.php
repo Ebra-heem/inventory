@@ -54,47 +54,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         //return $request->all();
-        $this->validate($request,[
-            'qty'=>'required',
-            'stockin_id'=>'required',
-            'vendor_id'=>'required',
-            'weight'=>'required',
-            'price'=>'required',
-            'total'=>'required'
-        ]);
-        $invoice= new Invoice(); 
-        $invoice->qty=$request->input('qty');
-        $invoice->weight=$request->input('weight');
-        $invoice->price=$request->input('price');
-        $invoice->stockin_id=$request->input('stockin_id');
-        $invoice->vendor_id=$request->input('vendor_id');
-        $invoice->commission=$request->input('commission');
-        $invoice->labour_cost=$request->input('labour_cost');
-        $invoice->bag_cost=$request->input('bag_cost');
-        $invoice->vehicle_cost=$request->input('vehicle_cost');
-        $invoice->rental_cost=$request->input('rental_cost');
-        $invoice->other_cost=$request->input('other_cost');
-        $invoice->total=$request->input('total');
-        $invoice->paid=$request->input('paid');
-        $invoice->due= $request->input('paid')==0? 0:$request->input('due');
-        //return $invoice->toArray();
-       
-        $stock =StockIn::where('id', '=', $request->input('stockin_id'))->first();
-        if($stock->stock_qty>=$request->input('qty') ||$stock->stock_qty>=$request->input('weight')){
-            $invoice->save();
-            $update_qty= $stock->stock_qty-$request->input('qty');
-            $update_weight= $stock->stock_weight-$request->input('weight');
-            
-                StockIn::where('id', '=', $request->input('stockin_id'))->update(array(
-                    'stock_qty' => $update_qty,
-                    'stock_weight' => $update_weight
-                   ));
-                   toastr()->success('Invoice Save Successfully', 'System Says');
-                   return redirect()->route('invoice.index');
-        }
-       
-        toastr()->warning('An Error Occur ', 'System Says');
-        return redirect()->back();
+        
     }
 
     /**
@@ -135,6 +95,59 @@ class InvoiceController extends Controller
         return view('backend.invoice.edit',compact('purchase','particulars_fee','particulars_fee','particulars_bill','today','details','supplier'));
        
     }
+    //invoice update code
+    public function invoice_edit($id)
+    {
+       
+        $purchase=SaleInvoice::find($id);
+        
+        $supplier= Customer::find($purchase->customer_id);
+        //return $supplier;
+        $today = Carbon::today();
+        $products= DB::table('stocks')
+        ->join('products', 'stocks.product_id', '=', 'products.id')
+        ->select('stocks.*', 'products.code')
+        ->where('stocks.sr_qty','>',0)
+        ->get();
+       
+        
+        //return $products;
+        
+        $details = DB::table('sale_invoices')
+            ->join('invoice_details', 'sale_invoices.id', '=', 'invoice_details.invoice_id')
+            ->select('sale_invoices.*', 'invoice_details.product_id', 'invoice_details.price','invoice_details.qty','invoice_details.id')
+            ->where('invoice_details.invoice_id','=',$id)
+            ->get()
+            ->toArray();
+        return view('backend.invoice.invoice_edit',compact('purchase','products','details','supplier'));
+       
+    }
+
+    public function add(Request $request)
+    {
+        //return $request;
+        try {
+            $sr_qty_check= Stock::where('product_id', $request->product_id)->first();
+            $updated_sr_qty = $sr_qty_check->sr_qty-$request->qty;
+            $updated_sale_qty = $sr_qty_check->sale_qty+$request->qty;
+            //return $updated_sale_qty;
+            DB::table('invoice_details')->insert([
+                    'product_id' => $request->product_id,
+                    'invoice_id' => $request->invoice_id,
+                    'price'=>$request->price,
+                    'qty'=>$request->qty
+            ]);
+            Stock::where('product_id', $request->product_id)
+            ->update(['sr_qty' => $updated_sr_qty,'sale_qty'=>$updated_sale_qty]);
+            toastr()->success('Invoice Added New Product', 'System Says');
+            return redirect()->back();
+
+        } catch (\Throwable $th) {
+            throw $th->getMessage();
+        }
+
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -146,29 +159,87 @@ class InvoiceController extends Controller
     public function update(Request $request, $id)
     {
         $invoice = SaleInvoice::find($id);
-        $pay =$request->input('paid');
-        $previous_paid=$invoice->paid;
-        $previous_due=$invoice->due;
-        $paid= $previous_paid+$pay;
-        
-        $total=$invoice->total;
-        $due= $total-$paid;
-        if($paid>$total){
-            
-            toastr()->warning('You have given more paid amount', 'System Says');
-            return redirect()->route('invoice.index');
-        }
-
+        $dateJunk=Carbon::now()->format('Y-m-d');
+        //return $dateJunk;
         SaleInvoice::where('id', '=', $id)->update(array(
-            'paid' => $paid,
-            'due' => $due,
-            'status' => $due<=0?1:0
+            'total' => $request->total,
+            'discount' => $request->discount,
+            'advance' => $request->advance,
+            'paid' => $request->advance,
+            'due' => $request->due
            ));
-            toastr()->success('Invoice Updated Successfully', 'System Says');
+           $customer_dr=CustomerDetail::where('customer_id',$request->customer_id)
+                                    ->where('invoice_id',$id)
+                                    ->where('account_type','Dr')
+                                    ->first();
+            $customer_dr->update(array('amount'=>$request->total));
+            $customer_cr=CustomerDetail::where('customer_id',$request->customer_id)
+                                    ->where('invoice_id',$id)
+                                    ->where('account_type','Cr')
+                                    ->first();
+            if(isset($customer_cr)){
+                $customer_cr->update(array('amount'=>$request->advance));
+            }else{
+                if($request->advance>0){
+                    CustomerDetail::create([
+                        'date'=>$dateJunk,
+                        'customer_id'=>$request->customer_id,
+                        'invoice_id'=>$id,
+                        'particular'=>'Advanced Payment',
+                        'amount'=>$request->advance,
+                        'account_type'=>'Cr',
+                        'section'=>'paid',
+                    ]);
+                }
+            }
+            
+            toastr()->warning('Invoice Updated', 'System Says');
             return redirect()->route('invoice.index');
+        
+       // $invoice = SaleInvoice::find($id);
+        // $pay =$request->input('paid');
+        // $previous_paid=$invoice->paid;
+        // $previous_due=$invoice->due;
+        // $paid= $previous_paid+$pay;
+        
+        // $total=$invoice->total;
+        // $due= $total-$paid;
+        // if($paid>$total){
+            
+        //     toastr()->warning('You have given more paid amount', 'System Says');
+        //     return redirect()->route('invoice.index');
+        // }
+
+        // SaleInvoice::where('id', '=', $id)->update(array(
+        //     'paid' => $paid,
+        //     'due' => $due,
+        //     'status' => $due<=0?1:0
+        //    ));
+        //     toastr()->success('Invoice Updated Successfully', 'System Says');
+        //     return redirect()->route('invoice.index');
 
     }
 
+    public function delete_item($id)
+    {
+       try {
+           // return $id;
+        $product= DB::table('invoice_details')->where('id',$id)->get();
+        
+        $sr_qty_check= Stock::where('product_id', $product[0]->product_id)->first();
+        //return $sr_qty_check;
+           
+            $updated_sr_qty = $sr_qty_check->sr_qty+$product[0]->qty;
+            $updated_sale_qty = $sr_qty_check->sale_qty-$product[0]->qty;
+            Stock::where('product_id', $product[0]->product_id)
+            ->update(['sr_qty' => $updated_sr_qty,'sale_qty'=>$updated_sale_qty]);
+            DB::table('invoice_details')->where('id',$id)->delete();
+            toastr()->success(' Deleted  Product from Invoice', 'System Says');
+            return redirect()->back();
+       } catch (\Throwable $th) {
+           return  $th->getMessage();
+       }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -270,7 +341,8 @@ class InvoiceController extends Controller
             'discount'=>$discount,
             'advance'=>$advanced,
             'paid'=>$advanced,
-            'total'=>$grandTotal
+            'total'=>$grandTotal,
+            'user_id'=>auth()->user()->id
         ]);
        
        
