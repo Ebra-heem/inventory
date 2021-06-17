@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('/customer-ledger','CustomerController@ledger')->name('customer.ledger');
         Route::resource('/rack','RackController');
         Route::resource('/wirehouse','WirehouseController');
+        //employee
+        Route::resource('/designation','DesignationController');
         Route::resource('/employee','EmployeeController');
 
         Route::resource('/sales','SalesController');

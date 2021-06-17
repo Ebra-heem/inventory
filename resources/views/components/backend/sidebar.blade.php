@@ -144,6 +144,8 @@
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Employee</span></a>
                             <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="{{route('designation.create')}}">Add Designation </a></li>     
+                            <li><a class="nav-link" href="{{route('designation.index')}}">Designation Manage </a></li>     
                             <li><a class="nav-link" href="{{route('employee.create')}}">Add Employee </a></li>     
                             <li><a class="nav-link" href="{{route('employee.index')}}">Employee Manage</a></li>     
                             </ul>
