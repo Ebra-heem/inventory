@@ -20,24 +20,30 @@
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>#NO</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
                                             <th>Phone</th>
+                                            <th>Image</th>
                                             <th>Address</th>
                                             <th>Status</th>
-                                            <th>Edit||View</th>
+                                            <th>Action</th>
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($employees as $employee)
                                         <tr>
+                                        <td>{{$loop->index+1}}</td>
+                                        <td>{{$employee->employee_id}}</td>
                                         <td>{{$employee->name}}</td>
                                         <td>{{$employee->phone}}</td>
+                                        <td><img src="{{ asset('images/'.$employee->image) }}" alt="{{$employee->name}}" width="75px" height="60px"/></td>
                                         <td>{{$employee->address}}</td>
-                                        <td>{{$employee->status==1?'Active':'INactive'}}</td>
+                                        <td>{{$employee->status==1?'Active':'Inactive'}}</td>
                                         <td>
+                                            <a href="{{route('employee.show',$employee->id)}}" class="btn btn-md btn-primary"><i class="fas fa-eye"></i></a>
                                             <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-md btn-success"><i class="fas fa-user-edit"></i></a> 
-                                             <a href="{{route('employee.show',$employee->id)}}" class="btn btn-md btn-info"><i class="fas fa-eye"></i></a>
                                              {!! Form::open(['method' => 'DELETE','route' => ['employee.destroy', $employee->id],'style'=>'display:inline']) !!}
                                              {!! Form::submit('Delete', ['class' => 'btn btn-danger fas fa-trash']) !!}
                                               {!! Form::close() !!}

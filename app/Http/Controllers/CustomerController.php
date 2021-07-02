@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ledger;
 use App\Customer;
+use Carbon\Carbon;
 use App\SaleInvoice;
 use App\CustomerDetail;
 use Illuminate\Http\Request;
@@ -172,10 +173,10 @@ class CustomerController extends Controller
             'amount' => 'required'
         ]);
        // return $request;
-       
+       $date=Carbon::createFromFormat('d/m/Y', $request->input('date'));
         CustomerDetail::create([
             'customer_id'=>$request->customer_id,
-            'date'=>$request->date,
+            'date'=>$date,
             'particular'=>$request->particular,
             'amount'=>$request->amount,
             'account_type'=>$request->account_type,
@@ -183,29 +184,6 @@ class CustomerController extends Controller
             'invoice_id'=>$request->invoice_id,
            ]);
 
-            //Bs Cash on Hand Dr
-           Ledger::create([
-            'date'=>$request->date,
-            'chart_account_id'=>'16',
-            'customer_id'=>$request->customer_id,
-            'particular'=>$request->particular.'(Cash received from customer)',
-            'amount'=>$request->amount,
-            'account_type'=>'Dr',
-            'sale_invoice_id'=>$request->invoice_id,
-            
-        ]);
-
-          //Bs Account receivable Cr 
-          Ledger::create([
-            'date'=>$request->date,
-            'chart_account_id'=>'9',
-            'customer_id'=>$request->customer_id,
-            'particular'=>$request->particular.'(Account receivable customer cr)',
-            'amount'=>$request->amount,
-            'account_type'=>'Cr',
-            'sale_invoice_id'=>$request->invoice_id,
-            
-        ]);
 
            $fee_total=0;
            $paid_total=0;

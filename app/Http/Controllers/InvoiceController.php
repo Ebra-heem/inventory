@@ -280,7 +280,7 @@ class InvoiceController extends Controller
             'qty'=>'required'
         ]);
         
-        // return $request;
+        //return $request;
         $product_id=$request->input('product_id');
         $customer_id=$request->input('customer_id');
         $prices=$request->input('price');
@@ -378,70 +378,12 @@ class InvoiceController extends Controller
             ]);
         }
 
-        //BS Account Receivable Dr
-
-        Ledger::create([
-            'date'=>$dateJunk,
-            'chart_account_id'=>'9',
-            'customer_id'=>$customer_id,
-            'particular'=>'Sale Invoice Account Receivable',
-            'amount'=>$grandTotal,
-            'account_type'=>'Dr',
-            'sale_invoice_id'=>$invoice->id,
-        ]);
-        //IS Inventory Sale Cr
-
-        Ledger::create([
-            'date'=>$dateJunk,
-            'chart_account_id'=>'4',
-            'customer_id'=>$customer_id,
-            'particular'=>'Sale Invoice Inventory Sale',
-            'amount'=>$grandTotal,
-            'account_type'=>'Cr',
-            'sale_invoice_id'=>$invoice->id,
-        ]);
-
-        //BS Inventory on Hand Cr
-
-        Ledger::create([
-            'date'=>$dateJunk,
-            'chart_account_id'=>'3',
-            'customer_id'=>$customer_id,
-            'particular'=>'Sale Invoice Inventory on Hand Cr',
-            'amount'=>$actual_price,
-            'account_type'=>'Cr',
-            'sale_invoice_id'=>$invoice->id,
-            ]);
-
-                //BS Inventory Cost Dr
-
-                Ledger::create([
-                    'date'=>$dateJunk,
-                    'chart_account_id'=>'15',
-                    'customer_id'=>$customer_id,
-                    'particular'=>'Sale Invoice-Inventory Cost',
-                    'amount'=>$actual_price,
-                    'account_type'=>'Dr',
-                    'sale_invoice_id'=>$invoice->id,
-                    ]);
-
-            //BS Retained Earning Cr
-
-            Ledger::create([
-                'date'=>$dateJunk,
-                'chart_account_id'=>'13',
-                'customer_id'=>$customer_id,
-                'particular'=>'Sale Invoice-Retained Earning',
-                'amount'=>$profit,
-                'account_type'=>'Cr',
-                'sale_invoice_id'=>$invoice->id,
-                ]);
-
         toastr()->success('Sale Invoice Save Successfully', 'System Says');
         return redirect()->route('invoice.index');
     }
     public function sale_index()
     {
+        return redirect()->route('invoice.index');
         $invoices=SaleInvoice::all();
         
       // return $invoices;

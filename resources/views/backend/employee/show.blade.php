@@ -9,30 +9,48 @@
     <section class="section">
         <div class="section-body">
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                             <h3>Customer Information</h3>
+                             <h3>Employee Information</h3>
                         </div>
-                        <table class="table">
-                            <tr>
-                                <td>Customer Name:</td>
-                                <td>{{ $customer->name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Customer Phone:</td>
-                                <td>{{ $customer->phone }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>Customer Email:</td>
-                                <td>{{ $customer->email }}</td>
-                            </tr>
-                            <tr>
-                                <td>Address:</td>
-                                <td>{{ $customer->address }}</td>
-                            </tr>
-                        </table>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <td>Employee ID:</td>
+                                    <td>{{ $employee->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee Name:</td>
+                                    <td>{{ $employee->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee Phone:</td>
+                                    <td>{{ $employee->phone }}</td>
+                                </tr>
+    
+                                <tr>
+                                    <td>Employee Email:</td>
+                                    <td>{{ $employee->email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee NID:</td>
+                                    <td>{{ $employee->nid }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee Joining Date:</td>
+                                    <td>{{ $employee->join_date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address:</td>
+                                    <td>{{ $employee->address }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Employee Image:</td>
+                                    <td><img src="{{ asset('images/'.$employee->image) }}" width="150px" height="150px" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -61,7 +61,7 @@ function fill_unit_select_box()
                         <thead>
                             <tr class="item-row">
                                 <td><select name="customer_id" class=" customer item @error('customer_id') is-invalid @enderror" >
-                                    <option value="">Select a Customer</option>
+                                    
                                     @foreach ($customers as $customer)
                                     <option value="{{$customer->id}}">{{$customer->name}}</option>  
                                     @endforeach
@@ -89,7 +89,7 @@ function fill_unit_select_box()
                                           </span>
                                            @enderror
                                         </div>
-                                      </div>
+                                    </div>
                                 </td>
                                 <td></td>
                             </tr>
@@ -146,7 +146,7 @@ function fill_unit_select_box()
                         <div class="delete-btn"><select name="product_id[]" class="item" ><?php echo fill_unit_select_box();?>
                         
                         </select><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
-    
+                            <td><input class="form-control qty"  name="qty[]" placeholder="Quantity" type="text"></td>
                                 <td><input class="form-control price @error('price') is-invalid @enderror" name="price[]" placeholder="Price" type="text">
                                     @error('price')
                                     <span class="invalid-feedback" role="alert">
@@ -154,7 +154,7 @@ function fill_unit_select_box()
                                     </span>
                                     @enderror
                                 </td>
-                                <td><input class="form-control qty"  name="qty[]" placeholder="Quantity" type="text"></td>
+                                
                                 <td><span class="total">0.00</span></td>
                             </tr>
                         </tbody>
@@ -299,9 +299,9 @@ function fill_unit_select_box()
 var html = '';
 html += '<tr class="item-row">';
 html += '<td class="item-name"><div class="delete-btn"><select name="product_id[]" class="item" ><?php echo fill_unit_select_box();?></select><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>';
-
-html += '<td><input class="form-control price" name="price[]" placeholder="Price" type="text"></td>';
 html += '<td><input class="form-control qty" name="qty[]" placeholder="Quantity" type="text"></td>';
+html += '<td><input class="form-control price" name="price[]" placeholder="Price" type="text"></td>';
+
 html += '<td><span class="total">0.00</span></td></tr>';
 $('#item_table').append(html);
 setTimeout(function(){

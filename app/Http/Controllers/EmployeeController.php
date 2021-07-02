@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Designation;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -25,7 +26,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('backend.employee.create');
+        $designations= Designation::all();
+        //return $designations;
+        return view('backend.employee.create',compact('designations'));
     }
 
     /**
@@ -36,7 +39,31 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        Employee::create(request()->all());
+        
+        $input = $request->all();
+        
+        if( $request->hasFile('image'))
+            { 
+                $img = $request->file('image'); 
+                $imageName = time().'.'.$img->getClientOriginalExtension();
+                $input['image'] = $imageName;
+                $img->move(public_path('images'), $imageName);
+            } else {
+                $input['image'] = 'please upload the image';
+             }
+        
+        Employee::create($input);
+        toastr()->success('Employee  Created', 'System Says');
+        return redirect()->route('employee.index');
+
+        // if($request->hasFile('image')){
+        //     // return "image received";
+        //     $img = Image::make($request->image);
+        //     $img->resize(1920,1080)->encode('jpg');
+        //     $path = public_path('files/uploads/').time().'.jpg';
+        //     $img->save($path);
+        //     return "saved";
+        // }
     }
 
     /**
@@ -47,7 +74,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return view('backend.employee.show',compact('employee'));
     }
 
     /**
@@ -58,7 +85,9 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $designations= Designation::all();
+        //return $employee;
+        return view('backend.employee.edit',compact('designations','employee'));
     }
 
     /**
@@ -70,7 +99,25 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        //return $request;
+        $employee= Employee::find($employee->id);
+
+        $input = $request->all();
+        
+        if( $request->hasFile('image'))
+            { 
+                $img = $request->file('image'); 
+                $imageName = time().'.'.$img->getClientOriginalExtension();
+                $input['image'] = $imageName;
+                $img->move(public_path('images'), $imageName);
+            } else {
+                $input['image'] = 'update photo';
+             }
+        
+             $employee->update($input);
+        
+        toastr()->success('employee Updated Successfully', 'System Says');
+        return redirect()->route('employee.index');
     }
 
     /**
@@ -81,6 +128,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        
+        $employee->delete();
+        toastr()->success('Employee Deleted Successfully', 'System Says');
+        return redirect()->route('employee.index');
     }
 }

@@ -18,10 +18,10 @@
       <div class="col-md-12 card-body">
         <form class="form-inline" action="{{ route('customer.ledger') }}" method="post">
             @csrf
-        <table>
+              <table>
                 <tr>
                     <td>
-                        <input type="date" class="form-control" id="date" name="date" value="{{$today->format('Y-m-d')}}"  required="required" />
+                        <input  class="form-control" id="datepicker"  data-date-format="dd/mm/yyyy" name="date" value="{{$today->format('d/m/Y')}}"  required="required" />
                     </td>
 
                     <td>
@@ -36,15 +36,15 @@
                     </td>
                     <td>
                                                         
-                      <select class="form-control" name="account_type" >
-                          <option value="Cr">Cr</option>
+                      <select class="form-control" name="account_type" readonly>
+                          <option readonly  value="Cr">Cr</option>
                       </select>
                   </td>
                     
                     
                     <td><button class="btn btn-success" type="submit">+Add</button></td>
                 </tr>
-        </table>
+              </table>
         </form>
     </div>
     <br>

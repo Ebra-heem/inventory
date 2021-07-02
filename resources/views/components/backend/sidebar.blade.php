@@ -135,9 +135,25 @@
                         <li class="dropdown">
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="activity"></i><span>Accounts</span></a>
                             <ul class="dropdown-menu">
-                            <li><a class="nav-link" href="{{route('chart_account.index')}}">Chart of Account</a></li>
+                            <li><a class="nav-link" href="{{route('account_group.index')}}">Account Group</a></li>
+                            <li><a class="nav-link" href="{{route('chart_of_account.index')}}">Chart of Account</a></li>
+                            <li><a class="nav-link" href="{{route('voucher.index')}}">All Vouchers</a></li>
+                            <li><a class="nav-link" href="{{route('general-ledger.index')}}">Ledger Report</a></li>
+                            <li><a class="nav-link" href="{{route('general-ledger.trail')}}">Trail Balance</a></li>
+                            <li><a class="nav-link" href="{{route('general-ledger.income')}}">Income Statment</a></li>
+                            <li><a class="nav-link" href="{{route('general-ledger.balance')}}">Balance Sheet</a></li>
+                            <li><a class="nav-link" href="{{route('chart_account.index')}}">Chart Account</a></li>
                             {{-- <li><a class="nav-link" href="{{route('chart_account.create')}}">Summary Report</a></li> --}}
                                 
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Bank</span></a>
+                            <ul class="dropdown-menu">
+                               
+                            <li><a class="nav-link" href="{{route('bank.index')}}"> Manage Bank </a></li>     
+                            <li><a class="nav-link" href="{{route('bank_ledger.index')}}"> Bank Transction</a></li> 
+                      
                             </ul>
                         </li>
                          <li class="menu-header">Human Resource</li>

@@ -39,6 +39,7 @@
                                     </thead>
                                     @php
                                         $paid_total=0;
+                                        $due_total=0;
                                     @endphp
                                     <tbody>
                                         @foreach($sales as $invoice)
@@ -64,8 +65,8 @@
                                         <td>Total:</td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>{{ $paid_total }}</td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                 </table>

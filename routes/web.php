@@ -76,6 +76,9 @@ Route::group(['middleware' => ['auth']], function() {
         //employee
         Route::resource('/designation','DesignationController');
         Route::resource('/employee','EmployeeController');
+        //BANK
+        Route::resource('/bank','BankController');
+        Route::resource('/bank_ledger','BankLedgerController');
 
         Route::resource('/sales','SalesController');
         Route::get('/all-sales','SalesController@allSales')->name('sales.allsales');
@@ -94,6 +97,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::any('/invoice-delivery/{id}','InvoiceController@delivery');
         //Accounts Module
         Route::resource('/chart_account','ChartAccountController');
+        Route::resource('/account_group','AccountGroupController');
+        Route::resource('/chart_of_account','ChartOfAccountController');
+        Route::resource('/voucher','VoucherController');
+        Route::resource('/general-ledger','GeneralLedgerController');
+        Route::get('/trail-balance','GeneralLedgerController@trail')->name('general-ledger.trail');
+        Route::get('/income-statement','GeneralLedgerController@income')->name('general-ledger.income');
+        Route::get('/balance-sheet','GeneralLedgerController@balance')->name('general-ledger.balance');
         
         //user module
         Route::get('/settings',[ 'as' => 'user.settings','uses'=>'UserController@settings']);
