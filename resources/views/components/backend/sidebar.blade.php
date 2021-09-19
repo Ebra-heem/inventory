@@ -172,7 +172,9 @@
                             <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="users"></i><span>Users</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
-                                <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>  
+                                @can('role-list')
+                                <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
+                                @endcan
                                 <li><a class="nav-link" href="{{ route('permission.index') }}">Manage Permission</a></li>  
                             </ul>
                         </li>         

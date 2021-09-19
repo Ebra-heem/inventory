@@ -33,7 +33,7 @@
                                     <tbody>
                                         @foreach($invoices as $invoice)
                                         <tr>
-                                        <td>#00{{$invoice->id}}</td>
+                                        <td>#{{$invoice->id}}</td>
                                       
                                        
                                         <td>{{$invoice->customers->name}}</td>

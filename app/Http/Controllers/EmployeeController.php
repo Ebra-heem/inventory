@@ -111,7 +111,7 @@ class EmployeeController extends Controller
                 $input['image'] = $imageName;
                 $img->move(public_path('images'), $imageName);
             } else {
-                $input['image'] = 'update photo';
+                $input['image'] = $employee->image;
              }
         
              $employee->update($input);
